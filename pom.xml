@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.cx.jenkins.image</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.cx.jenkins.sharedlib</groupId>
+    <artifactId>jenkins-cx-shared-lib</artifactId>
+    <name>Jenkins-CX Shared Library</name>
+    <description>Shared Library for Jenkins-CX</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <developers>
+        <developer>
+            <name>Wolver</name>
+            <organization>ContinuousX</organization>
+            <organizationUrl>https://cx.io</organizationUrl>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>The MIT License (MIT)</name>
+            <url>http://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx-shared-library/</url>
+    </scm>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <configuration>
+                    <sources>
+                        <source>
+                            <directory>${project.basedir}/vars</directory>
+                            <includes>
+                                <include>**/*.groovy</include>
+                            </includes>
+                        </source>
+                        <source>
+                            <directory>${project.basedir}/src</directory>
+                            <includes>
+                                <include>**/*.groovy</include>
+                            </includes>
+                        </source>
+                      <source>
+                        <directory>${project.basedir}</directory>
+                        <includes>
+                          <include>Jenkinsfile</include>
+                        </includes>
+                      </source>
+                    </sources>
+                    <testSources>
+                        <testSource>
+                            <directory>${project.basedir}/test</directory>
+                            <includes>
+                                <include>**/*.groovy</include>
+                            </includes>
+                        </testSource>
+                    </testSources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <configuration>
+                    <excludeFilterFile>resources/spotbugs-exclude-filter.xml</excludeFilterFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github-cx</id>
+            <uniqueVersion>false</uniqueVersion>
+            <name>GitHub Continuous-X Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx-shared-library/</url>
+        </repository>
+        <snapshotRepository>
+            <id>github-cx</id>
+            <name>GitHub Continuous-X Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx-shared-library/</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>
