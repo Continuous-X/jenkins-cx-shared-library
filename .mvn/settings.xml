@@ -12,6 +12,11 @@
             <username>${github.username}</username>
             <password>${github.password}</password>
         </server>
+        <server>
+            <id>github-cx-parent</id>
+            <username>${github.username}</username>
+            <password>${github.password}</password>
+        </server>
     </servers>
     <mirrors>
         <mirror>
@@ -19,6 +24,12 @@
             <name>sonatype</name>
             <url>https://oss.sonatype.org/content/repositories/releases/</url>
             <mirrorOf>*</mirrorOf>
+        </mirror>
+        <mirror>
+            <id>github-cx-parent</id>
+            <name>jenkins-cx</name>
+            <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx/</url>
+            <mirrorOf>github-cx-parent</mirrorOf>
         </mirror>
         <mirror>
             <id>jenkins-ci</id>
@@ -39,12 +50,26 @@
                 <repository>
                     <id>central</id>
                     <url>https://repo1.maven.org/maven2</url>
-                    <releases><enabled>true</enabled></releases>
-                    <snapshots><enabled>false</enabled></snapshots>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
                 </repository>
                 <repository>
                     <id>github-cx</id>
                     <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx-shared-library/</url>
+                </repository>
+                <repository>
+                    <id>github-cx-parent</id>
+                    <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
                 </repository>
             </repositories>
         </profile>

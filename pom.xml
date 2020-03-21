@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.cx.jenkins.image</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>v0.0.5</version>
     </parent>
 
     <groupId>com.cx.jenkins.sharedlib</groupId>
@@ -94,4 +94,11 @@
             <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx-shared-library/</url>
         </snapshotRepository>
     </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>github-cx</id>
+            <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx/</url>
+        </repository>
+    </repositories>
 </project>
