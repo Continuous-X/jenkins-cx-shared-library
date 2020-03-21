@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.cx.jenkins.image</groupId>
         <artifactId>parent</artifactId>
-        <version>v0.0.5</version>
+        <version>0.1.0</version>
     </parent>
 
     <groupId>com.cx.jenkins.sharedlib</groupId>
@@ -34,6 +34,15 @@
     <scm>
         <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx-shared-library/</url>
     </scm>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Jenkins packages just to have code completion & co -->
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+    </dependencies>
 
     <build>
         <plugins>
