@@ -35,7 +35,7 @@ jobs:
         run: |
           export MAVEN_REPOSITORY=$(cat MAVEN_REPOSITORY)
           #
-          mvn versions:update-parent versions:display-plugin-updates versions:display-dependency-updates -DgenerateBackupPoms=false -s .mvn/settings.xml -Xe
+          ./mvnw versions:display-plugin-updates versions:display-dependency-updates -DgenerateBackupPoms=false -s .mvn/settings.xml -Xe
           ./mvnw clean install -s .mvn/settings.xml
       - id: gh_release
         name: Release
