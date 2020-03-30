@@ -37,7 +37,7 @@ jobs:
           export GITHUB_USERNAME='x-access-token'
           export GITHUB_PASSWORD=${{ secrets.GITHUB_TOKEN }}
           #
-          ./mvnw versions:display-plugin-updates versions:display-dependency-updates -DgenerateBackupPoms=false -s .mvn/settings.xml -Xe
+          ./mvnw versions:display-plugin-updates versions:display-dependency-updates -DgenerateBackupPoms=false -s .mvn/settings.xml
           ./mvnw clean install -s .mvn/settings.xml
       - id: gh_release
         name: Release
