@@ -168,9 +168,5 @@
             <id>github-cx</id>
             <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx-shared-library/</url>
         </repository>
-        <repository>
-            <id>github-cx-parent</id>
-            <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx/</url>
-        </repository>
     </repositories>
 </project>
