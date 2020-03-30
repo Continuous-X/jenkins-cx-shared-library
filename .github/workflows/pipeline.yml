@@ -9,7 +9,7 @@ on:
       - master
 jobs:
   build:
-    name: CI Jenkins-CX Pipeline
+    name: SharedLib Job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,6 +34,8 @@ jobs:
       - name: Build & Test Groovy (branch & master)
         run: |
           export MAVEN_REPOSITORY=$(cat MAVEN_REPOSITORY)
+          export GITHUB_USERNAME='x-access-token'
+          export GITHUB_PASSWORD=${{ secrets.GITHUB_TOKEN }}
           #
           ./mvnw versions:display-plugin-updates versions:display-dependency-updates -DgenerateBackupPoms=false -s .mvn/settings.xml -Xe
           ./mvnw clean install -s .mvn/settings.xml
