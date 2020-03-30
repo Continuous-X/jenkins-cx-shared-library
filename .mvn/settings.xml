@@ -32,6 +32,12 @@
             <id>jenkins-ci</id>
             <name>jenkins-ci</name>
             <url>https://repo.jenkins-ci.org/public/</url>
+            <mirrorOf>*</mirrorOf>
+        </mirror>
+        <mirror>
+            <id>central-maven</id>
+            <name>central-maven</name>
+            <url>https://repo1.maven.org/maven2</url>
             <mirrorOf>central</mirrorOf>
         </mirror>
     </mirrors>
