@@ -23,7 +23,7 @@
             <mirrorOf>*</mirrorOf>
         </mirror>
         <mirror>
-            <id>github-cx</id>
+            <id>github-cx-parent</id>
             <name>jenkins-cx</name>
             <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx/</url>
             <mirrorOf>github-cx-parent</mirrorOf>
