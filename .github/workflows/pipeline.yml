@@ -1,0 +1,62 @@
+name: CI Jenkins-CX Pipeline
+on:
+  push:
+    branches:
+      - feature/*
+      - fix/*
+      - bugfix/*
+      - dependabot/**
+      - master
+jobs:
+  build:
+    name: SharedLib Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11.x'
+      - name: prepare
+        run: |
+          echo '.m2/repository' > MAVEN_REPOSITORY
+          chmod 777 mvnw
+      - id: tag_bump_version
+        name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.18.0
+        if: github.ref == 'refs/heads/master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: false
+          DEFAULT_BUMP: patch
+          DRY_RUN: true
+      - name: Build & Test Groovy (branch & master)
+        run: |
+          export MAVEN_REPOSITORY=$(cat MAVEN_REPOSITORY)
+          export GITHUB_USERNAME='x-access-token'
+          export GITHUB_PASSWORD=${{ secrets.GITHUB_TOKEN }}
+          #
+          ./mvnw versions:display-plugin-updates versions:display-dependency-updates -DgenerateBackupPoms=false -s .mvn/settings.xml
+          ./mvnw clean install -s .mvn/settings.xml
+      - id: gh_release
+        name: Release
+        uses: softprops/action-gh-release@v1
+        if: github.ref == 'refs/heads/master'
+        with:
+          body_path: RELEASE.md
+          draft: false
+          prerelease: false
+          name: ${{ steps.tag_bump_version.outputs.new_tag }}
+          tag_name: ${{ steps.tag_bump_version.outputs.new_tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+      - name: Build,Test & Upload Package (master)
+        if: github.ref == 'refs/heads/master'
+        run: |
+          export MAVEN_REPOSITORY=$(cat MAVEN_REPOSITORY)
+          export GITHUB_USERNAME='x-access-token'
+          export GITHUB_PASSWORD=${{ secrets.GITHUB_TOKEN }}
+          #
+          ./mvnw versions:set -DnewVersion=${{ steps.tag_bump_version.outputs.new_tag }} -s .mvn/settings.xml
+          ./mvnw clean deploy -DskipTests=true -s .mvn/settings.xml

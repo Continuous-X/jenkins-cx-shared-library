@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.cx.jenkins.image</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>v0.1.1</version>
     </parent>
 
     <groupId>com.cx.jenkins.sharedlib</groupId>
@@ -35,7 +35,51 @@
         <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx-shared-library/</url>
     </scm>
 
+    <dependencyManagement>
+        <dependencies>
+            <!-- Jenkins packages just to have code completion & co -->
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+    </dependencies>
+
     <build>
+        <sourceDirectory>${project.basedir}/src</sourceDirectory>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <version>1.8.1</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>addSources</goal>
+                                <goal>addTestSources</goal>
+                                <goal>generateStubs</goal>
+                                <goal>compile</goal>
+                                <goal>generateTestStubs</goal>
+                                <goal>compileTests</goal>
+                                <goal>groovydoc</goal>
+                                <goal>groovydocTests</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <targetBytecode>1.8</targetBytecode>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.2</version>
+                    <configuration>
+                        <failIfNoTests>false</failIfNoTests>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
@@ -43,23 +87,29 @@
                 <configuration>
                     <sources>
                         <source>
+                            <directory>${project.basedir}/src</directory>
+                            <includes>
+                                <include>**/*.groovy</include>
+                            </includes>
+                        </source>
+                        <source>
+                            <directory>${project.basedir}/resources</directory>
+                            <includes>
+                                <include>**/*.groovy</include>
+                            </includes>
+                        </source>
+                        <source>
                             <directory>${project.basedir}/vars</directory>
                             <includes>
                                 <include>**/*.groovy</include>
                             </includes>
                         </source>
                         <source>
-                            <directory>${project.basedir}/src</directory>
+                            <directory>${project.basedir}</directory>
                             <includes>
-                                <include>**/*.groovy</include>
+                                <include>Jenkinsfile</include>
                             </includes>
                         </source>
-                      <source>
-                        <directory>${project.basedir}</directory>
-                        <includes>
-                          <include>Jenkinsfile</include>
-                        </includes>
-                      </source>
                     </sources>
                     <testSources>
                         <testSource>
@@ -70,6 +120,24 @@
                         </testSource>
                     </testSources>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>test</id>
+                        <phase>test</phase>
+                        <configuration>
+                            <includes>
+                                <include>**./*Test.groovy</include>
+                            </includes>
+                        </configuration>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
@@ -94,4 +162,11 @@
             <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx-shared-library/</url>
         </snapshotRepository>
     </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>github-cx</id>
+            <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx-shared-library/</url>
+        </repository>
+    </repositories>
 </project>

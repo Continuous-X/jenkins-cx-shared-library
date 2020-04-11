@@ -2,15 +2,17 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
                           https://maven.apache.org/xsd/settings-1.0.0.xsd">
-    <localRepository>${HOME}\.m2\repository</localRepository>
-    <interactiveMode/>
-    <offline/>
-    <pluginGroups/>
+    <localRepository>${env.MAVEN_REPOSITORY}</localRepository>
     <servers>
         <server>
             <id>github-cx</id>
-            <username>${github.username}</username>
-            <password>${github.password}</password>
+            <username>${env.GITHUB_USERNAME}</username>
+            <password>${env.GITHUB_PASSWORD}</password>
+        </server>
+        <server>
+            <id>github-cx-parent</id>
+            <username>${env.GITHUB_USERNAME}</username>
+            <password>${env.GITHUB_PASSWORD}</password>
         </server>
     </servers>
     <mirrors>
@@ -21,13 +23,18 @@
             <mirrorOf>*</mirrorOf>
         </mirror>
         <mirror>
+            <id>github-cx-parent</id>
+            <name>jenkins-cx</name>
+            <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx/</url>
+            <mirrorOf>github-cx-parent</mirrorOf>
+        </mirror>
+        <mirror>
             <id>jenkins-ci</id>
             <name>jenkins-ci</name>
             <url>https://repo.jenkins-ci.org/public/</url>
             <mirrorOf>central</mirrorOf>
         </mirror>
     </mirrors>
-    <proxies/>
 
     <profiles>
         <profile>
@@ -43,8 +50,10 @@
                     <snapshots><enabled>false</enabled></snapshots>
                 </repository>
                 <repository>
-                    <id>github-cx</id>
-                    <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx-shared-library/</url>
+                    <id>github-cx-parent</id>
+                    <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx/</url>
+                    <releases><enabled>true</enabled></releases>
+                    <snapshots><enabled>true</enabled></snapshots>
                 </repository>
             </repositories>
         </profile>
