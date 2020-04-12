@@ -1,7 +1,6 @@
 import com.continuousx.jenkins.pipeline.config.PipelineConfig
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 
-@SuppressFBWarnings(value = 'SE_NO_SERIALVERSIONID')
+//@SuppressFBWarnings(value = 'SE_NO_SERIALVERSIONID')
 def call(PipelineConfig config) {
 
     pipeline {
@@ -18,26 +17,26 @@ def call(PipelineConfig config) {
                 agent { label 'master'}
                 steps {
                     milestone 10
-                    echo 'init this'
+                    Log.info 'init this'
                 }
             }
 
             stage('Build') {
                 steps {
                     milestone 20
-                    echo 'build this'
+                    Log.info 'build this'
                 }
             }
         }
         post {
             always {
-                echo 'pipeline end'
+                Log.info 'pipeline end'
             }
             success {
-                echo 'pipeline ended success'
+                Log.info 'pipeline ended success'
             }
             failure {
-                echo 'pipeline ended failed'
+                Log.info 'pipeline ended failed'
                 deleteDir()
             }
         }
