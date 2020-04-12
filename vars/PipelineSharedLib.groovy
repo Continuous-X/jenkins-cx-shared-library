@@ -1,9 +1,8 @@
+import com.continuousx.jenkins.pipeline.config.PipelineConfig
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 
 @SuppressFBWarnings(value = 'SE_NO_SERIALVERSIONID')
-def call(Map parameters = [:]) {
-
-    def script = parameters?.script
+def call(PipelineConfig config) {
 
     pipeline {
         agent any
