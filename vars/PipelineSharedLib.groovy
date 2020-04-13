@@ -17,7 +17,7 @@ def call(PipelineConfig config) {
                 agent { label 'master'}
                 steps {
                     milestone 10
-                    Log.info 'init this'
+                    Log.info('init this')
                 }
             }
 
