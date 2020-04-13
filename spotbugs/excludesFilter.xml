@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This file contains some false positive bugs detected by findbugs. Their
+  false positive nature has been analyzed individually and they have been
+  put here to instruct findbugs it must ignore them.
+
+  For more information on adding filters to this file, refer to:
+  https://spotbugs.readthedocs.io/en/stable/filter.html
+-->
+<FindBugsFilter>
+    <Bug pattern="SE_NO_SERIALVERSIONID"/>
+    <Match>
+        <Class name="~.*PipelineSharedLib.*"/>
+    </Match>
+</FindBugsFilter>

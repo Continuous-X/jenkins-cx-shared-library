@@ -142,9 +142,14 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <configuration>
-                    <excludeFilterFile>resources/spotbugs-exclude-filter.xml</excludeFilterFile>
-                </configuration>
+                <executions>
+                    <execution>
+                        <id>spotbugs</id>
+                        <configuration>
+                            <excludeFilterFile>${project.basedir}/spotbugs/excludesFilter.xml</excludeFilterFile>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

@@ -42,7 +42,7 @@ jobs:
       - id: gh_release
         name: Release
         uses: softprops/action-gh-release@v1
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master2'
         with:
           body_path: RELEASE.md
           draft: false
@@ -52,7 +52,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       - name: Build,Test & Upload Package (master)
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master2'
         run: |
           export MAVEN_REPOSITORY=$(cat MAVEN_REPOSITORY)
           export GITHUB_USERNAME='x-access-token'
