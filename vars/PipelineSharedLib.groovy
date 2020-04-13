@@ -17,26 +17,26 @@ def call(PipelineConfig config) {
                 agent { label 'master'}
                 steps {
                     milestone 10
-                    Log.info('init this')
+                    log.info 'init this'
                 }
             }
 
             stage('Build') {
                 steps {
                     milestone 20
-                    Log.info 'build this'
+                    log.info 'build this'
                 }
             }
         }
         post {
             always {
-                Log.info 'pipeline end'
+                log.info 'pipeline end'
             }
             success {
-                Log.info 'pipeline ended success'
+                log.info 'pipeline ended success'
             }
             failure {
-                Log.info 'pipeline ended failed'
+                log.info 'pipeline ended failed'
                 deleteDir()
             }
         }
