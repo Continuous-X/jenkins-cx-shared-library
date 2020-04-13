@@ -14,7 +14,7 @@ def call(PipelineConfig config) {
         }
         stages {
             stage('Init') {
-                agent { label 'master'}
+                agent { label 'master' }
                 steps {
                     milestone 10
                     script {
@@ -26,20 +26,28 @@ def call(PipelineConfig config) {
             stage('Build') {
                 steps {
                     milestone 20
-                    log.info 'build this'
+                    script {
+                        log.info 'build this'
+                    }
                 }
             }
         }
         post {
             always {
-                log.info 'pipeline end'
+                script {
+                    log.info 'pipeline end'
+                }
             }
             success {
-                log.info 'pipeline ended success'
+                script {
+                    log.info 'pipeline ended success'
+                }
             }
             failure {
-                log.info 'pipeline ended failed'
-                deleteDir()
+                script {
+                    log.info 'pipeline ended failed'
+                    deleteDir()
+                }
             }
         }
     }
