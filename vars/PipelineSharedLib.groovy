@@ -31,6 +31,14 @@ def call(PipelineConfig config) {
                     }
                 }
             }
+
+            stage('Stages') {
+                steps {
+                    milestone 50
+                    StageConvertMvnDepToJenkinsPluginsTxt(config)
+                }
+            }
+
         }
         post {
             always {

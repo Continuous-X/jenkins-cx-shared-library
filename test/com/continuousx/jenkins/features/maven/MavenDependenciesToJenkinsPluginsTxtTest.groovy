@@ -2,18 +2,19 @@ package com.continuousx.jenkins.features.maven
 
 import spock.lang.Specification
 
-class MavenDependenciesTest extends Specification {
+class MavenDependenciesToJenkinsPluginsTxtTest extends Specification {
     def "read pom.xml"() {
         given:
         String testPom = 'test-resources/pom-deptest.xml'
         String resultPluginsTxtFilename = 'test-resources/plugins-deptest.txt'
         File pomFile = new File(testPom)
+        String pomFileContent = pomFile.getText()
         File resultPluginsTxtFile = new File(resultPluginsTxtFilename)
         assert pomFile.exists()
-        MavenDependencies mvnDep = new MavenDependencies(pomFile)
+        MavenDependenciesToJenkinsPluginsTxt mvnDep = new MavenDependenciesToJenkinsPluginsTxt()
 
         when:
-        mvnDep.readPomXml().and().writePluginsTxt(resultPluginsTxtFile)
+        resultPluginsTxtFile.write( mvnDep.readPomXmlContent(pomFileContent).and().convert2PluginsTxt().and().getPluginsTxtContent() )
 
         then:
         assert resultPluginsTxtFile.readLines().size() == 22
