@@ -8,6 +8,6 @@ def call(PipelineConfig config) {
             PipelineSharedLib(config)
             break
         default:
-            log.warning 'non pipeline type found'
+            Log.warning 'non pipeline type found'
     }
 }

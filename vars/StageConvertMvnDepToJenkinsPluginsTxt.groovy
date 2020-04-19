@@ -1,6 +1,5 @@
 import com.continuousx.jenkins.features.maven.MavenDependenciesToJenkinsPluginsTxt
 import com.continuousx.jenkins.pipeline.config.PipelineConfig
-import com.continuousx.jenkins.pipeline.config.PipelineType
 
 def call(PipelineConfig config) {
 
@@ -15,7 +14,7 @@ def call(PipelineConfig config) {
                     .convert2PluginsTxt()
                     .and().getPluginsTxtContent()
             writeFile file: pluginsTxtFilename, text: pluginsTxtContent
-            log.info 'build this'
+            Log.info 'build this'
         }
     }
 }

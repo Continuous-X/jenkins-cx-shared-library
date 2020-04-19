@@ -18,7 +18,7 @@ def call(PipelineConfig config) {
                 steps {
                     milestone 10
                     script {
-                        log.info 'init this'
+                        Log.info 'init this'
                     }
                 }
             }
@@ -27,7 +27,7 @@ def call(PipelineConfig config) {
                 steps {
                     milestone 20
                     script {
-                        log.info 'build this'
+                        Log.info 'build this'
                     }
                 }
             }
@@ -43,17 +43,17 @@ def call(PipelineConfig config) {
         post {
             always {
                 script {
-                    log.info 'pipeline end'
+                    Log.info 'pipeline end'
                 }
             }
             success {
                 script {
-                    log.info 'pipeline ended success'
+                    Log.info 'pipeline ended success'
                 }
             }
             failure {
                 script {
-                    log.info 'pipeline ended failed'
+                    Log.info 'pipeline ended failed'
                     deleteDir()
                 }
             }
