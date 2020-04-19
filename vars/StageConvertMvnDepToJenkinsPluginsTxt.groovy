@@ -14,7 +14,7 @@ def call(PipelineConfig config) {
                     .convert2PluginsTxt()
                     .and().getPluginsTxtContent()
             writeFile file: pluginsTxtFilename, text: pluginsTxtContent
-            Log.info 'build this'
+            log.info 'build this'
         }
     }
 }

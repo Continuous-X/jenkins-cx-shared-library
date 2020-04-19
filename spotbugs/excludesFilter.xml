@@ -12,4 +12,8 @@
     <Match>
         <Class name="~.*PipelineSharedLib.*"/>
     </Match>
+    <Bug pattern="NM_CLASS_NAMING_CONVENTION"/>
+    <Match>
+        <Class name="~.*log.*"/>
+    </Match>
 </FindBugsFilter>
