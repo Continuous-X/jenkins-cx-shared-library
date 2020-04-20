@@ -10,7 +10,7 @@ def call(PipelineConfig config) {
         def pluginsTxtFilename = 'plugins.txt'
         def pomXml = readMavenPom file: pomXmlFilename
         MavenDependenciesToJenkinsPluginsTxt convert = new MavenDependenciesToJenkinsPluginsTxt()
-        String pluginsTxtContent = convert.readPomXmlContent(pomXml)
+        String pluginsTxtContent = convert.readPomXmlContent(pomXml.toString())
                 .and()
                 .convert2PluginsTxt()
                 .and().getPluginsTxtContent()
