@@ -9,7 +9,6 @@ def call(PipelineConfig config) {
             timeout time: 30, unit: 'MINUTES'
             timestamps()
             buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
-            skipDefaultCheckout()
             disableConcurrentBuilds()
         }
         stages {
