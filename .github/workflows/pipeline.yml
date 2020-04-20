@@ -38,7 +38,7 @@ jobs:
           export GITHUB_PASSWORD=${{ secrets.GITHUB_TOKEN }}
           #
           ./mvnw versions:display-plugin-updates versions:display-dependency-updates -DgenerateBackupPoms=false -s .mvn/settings.xml
-          ./mvnw clean install -s .mvn/settings.xml
+          ./mvnw clean install -s .mvn/settings.xml -Pspotbugs-exclusion-file
       - id: gh_release
         name: Release
         uses: softprops/action-gh-release@v1
@@ -59,4 +59,4 @@ jobs:
           export GITHUB_PASSWORD=${{ secrets.GITHUB_TOKEN }}
           #
           ./mvnw versions:set -DnewVersion=${{ steps.tag_bump_version.outputs.new_tag }} -s .mvn/settings.xml
-          ./mvnw clean deploy -DskipTests=true -s .mvn/settings.xml
+          ./mvnw clean deploy -DskipTests=true -s .mvn/settings.xml -Pspotbugs-exclusion-file
