@@ -6,9 +6,9 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Reader
 
 class MavenPomFeatureImpl {
 
-    private static final String PLUGINS_TXT_FILENAME = 'plugins.txt'
+    public static final String PLUGINS_TXT_FILENAME = 'plugins.txt'
+    public static final String POM_XML_FILENAME = 'pom.xml'
 
-    private String pluginsTxtContent
     private Model model
 
     MavenPomFeatureImpl readPomXmlContent(String pomXmlContent) {
@@ -25,7 +25,7 @@ class MavenPomFeatureImpl {
         return this
     }
 
-    MavenPomFeatureImpl convertDependencies2PluginsTxt() {
+    String convertDependencies2PluginsTxt() {
         assert this.model != null
 
         StringBuilder content = new StringBuilder()
@@ -35,13 +35,8 @@ class MavenPomFeatureImpl {
                     .append(dependency.getVersion())
                     .append('\n')
         }
-        this.pluginsTxtContent = content.toString()
 
-        return this
-    }
-
-    String getPluginsTxtContent() {
-        return this.pluginsTxtContent
+        return content.toString()
     }
 
     Parent getParent() {
