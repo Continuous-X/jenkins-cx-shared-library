@@ -4,15 +4,14 @@ import org.apache.maven.model.Model
 import org.apache.maven.model.Parent
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader
 
-class MavenPomFeatureImpl implements MavenPomFeature {
+class MavenPomFeatureImpl {
 
     private static final String PLUGINS_TXT_FILENAME = 'plugins.txt'
 
     private String pluginsTxtContent
     private Model model
 
-    @Override
-    MavenPomFeature readPomXmlContent(String pomXmlContent) {
+    MavenPomFeatureImpl readPomXmlContent(String pomXmlContent) {
         Objects.nonNull(pomXmlContent)
         assert pomXmlContent.length() > 0
 
@@ -22,13 +21,11 @@ class MavenPomFeatureImpl implements MavenPomFeature {
         return this
     }
 
-    @Override
-    MavenPomFeature and() {
+    MavenPomFeatureImpl and() {
         return this
     }
 
-    @Override
-    MavenPomFeature convertDependencies2PluginsTxt() {
+    MavenPomFeatureImpl convertDependencies2PluginsTxt() {
         assert this.model != null
 
         StringBuilder content = new StringBuilder()
@@ -43,12 +40,10 @@ class MavenPomFeatureImpl implements MavenPomFeature {
         return this
     }
 
-    @Override
     String getPluginsTxtContent() {
         return this.pluginsTxtContent
     }
 
-    @Override
     Parent getParent() {
         return this.model.getParent()
     }

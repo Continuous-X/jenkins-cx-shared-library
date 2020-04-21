@@ -11,7 +11,8 @@ def call(PipelineConfig config) {
         String pluginsTxtContent = convert.readPomXmlContent(pomXml.toString())
                 .and()
                 .convertDependencies2PluginsTxt()
-                .and().getPluginsTxtContent()
+                .and()
+                .getPluginsTxtContent()
         writeFile file: pluginsTxtFilename, text: pluginsTxtContent
         log.info 'build this'
     }

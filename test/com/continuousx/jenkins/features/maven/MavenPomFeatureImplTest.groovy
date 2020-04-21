@@ -11,7 +11,7 @@ class MavenPomFeatureImplTest extends Specification {
         String pomFileContent = pomFile.getText()
         File resultPluginsTxtFile = new File(resultPluginsTxtFilename)
         assert pomFile.exists()
-        MavenPomFeature mvnDep = new MavenPomFeatureImpl()
+        MavenPomFeatureImpl mvnDep = new MavenPomFeatureImpl()
 
         when:
         resultPluginsTxtFile.write(
@@ -32,7 +32,7 @@ class MavenPomFeatureImplTest extends Specification {
         String testPom = 'test-resources/pom-maven-feature-test.xml'
         File pomFile = new File(testPom)
         String pomFileContent = pomFile.getText()
-        MavenPomFeature mvnDep = new MavenPomFeatureImpl()
+        MavenPomFeatureImpl mvnDep = new MavenPomFeatureImpl()
 
         when:
         mvnDep.readPomXmlContent(pomFileContent)
