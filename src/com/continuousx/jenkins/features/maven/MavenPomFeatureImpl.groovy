@@ -1,50 +1,55 @@
 package com.continuousx.jenkins.features.maven
 
-
-import org.apache.maven.model.Dependency
 import org.apache.maven.model.Model
+import org.apache.maven.model.Parent
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader
 
-class MavenDependenciesToJenkinsPluginsTxt {
+class MavenPomFeatureImpl implements MavenPomFeature {
 
     private static final String PLUGINS_TXT_FILENAME = 'plugins.txt'
 
     private String pluginsTxtContent
+    private Model model
 
-    private List<Dependency> dependencyList
-
-    MavenDependenciesToJenkinsPluginsTxt readPomXmlContent(String pomXmlContent) {
+    @Override
+    MavenPomFeature readPomXmlContent(String pomXmlContent) {
         Objects.nonNull(pomXmlContent)
         assert pomXmlContent.length() > 0
 
         MavenXpp3Reader xpp3Reader = new MavenXpp3Reader()
-        Model model = xpp3Reader.read(new ByteArrayInputStream( pomXmlContent.getBytes()))
-        this.dependencyList = model.getDependencyManagement().getDependencies()
+        this.model = xpp3Reader.read(new ByteArrayInputStream( pomXmlContent.getBytes()))
 
         return this
     }
 
-    MavenDependenciesToJenkinsPluginsTxt and() {
+    @Override
+    MavenPomFeature and() {
         return this
     }
 
-    MavenDependenciesToJenkinsPluginsTxt convert2PluginsTxt() {
-        assert dependencyList != null
+    @Override
+    MavenPomFeature convertDependencies2PluginsTxt() {
+        assert this.model != null
 
         StringBuilder content = new StringBuilder()
-        this.dependencyList.each { dependency ->
+        this.model.getDependencyManagement().getDependencies().each { dependency ->
             content.append(dependency.getArtifactId())
                     .append(':')
                     .append(dependency.getVersion())
                     .append('\n')
         }
-        pluginsTxtContent = content.toString()
+        this.pluginsTxtContent = content.toString()
 
         return this
     }
 
+    @Override
     String getPluginsTxtContent() {
-        return pluginsTxtContent
+        return this.pluginsTxtContent
     }
 
+    @Override
+    Parent getParent() {
+        return this.model.getParent()
+    }
 }
