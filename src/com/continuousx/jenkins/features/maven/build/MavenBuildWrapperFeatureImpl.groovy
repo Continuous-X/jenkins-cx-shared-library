@@ -1,6 +1,6 @@
 package com.continuousx.jenkins.features.maven.build
 
-import com.cloudbees.groovy.cps.NonCPS
+
 import com.continuousx.jenkins.features.maven.MavenBuildFeature
 
 class MavenBuildWrapperFeatureImpl implements MavenBuildFeature {
@@ -18,7 +18,6 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature {
         assert isWrapperExist()
     }
 
-    @NonCPS
     private boolean isWrapperExist() {
         boolean wrapperFileExist = jenkinsContext.fileExists MVN_WRAPPER_FILENAME
         boolean settingsFileExist = jenkinsContext.fileExists MVN_SETTINGS_XML
