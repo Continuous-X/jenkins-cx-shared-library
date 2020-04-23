@@ -1,5 +1,6 @@
 package com.continuousx.jenkins.features.maven.build
 
+import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.features.maven.MavenBuildFeature
 
 class MavenBuildWrapperFeatureImpl implements MavenBuildFeature {
@@ -9,12 +10,15 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature {
     private String mvnwCmd = "./${MVN_WRAPPER_FILENAME}"
 
     private def jenkinsContext
+
+
     MavenBuildWrapperFeatureImpl(def jenkinsContext) {
         Objects.nonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
         assert isWrapperExist()
     }
 
+    @NonCPS
     private boolean isWrapperExist() {
         boolean wrapperFileExist = jenkinsContext.fileExists MVN_WRAPPER_FILENAME
         boolean settingsFileExist = jenkinsContext.fileExists MVN_SETTINGS_XML
@@ -26,14 +30,12 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature {
         }
     }
 
-    @Override
     String startGoal(String goal) {
         return jenkinsContext.sh(
                 script: "${mvnwCmd} ${goal}",
                 returnStdout: true )
     }
 
-    @Override
     String getVersion() {
         return jenkinsContext.sh(
                 script: "${mvnwCmd} --version",
