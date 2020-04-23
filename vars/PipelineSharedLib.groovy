@@ -26,7 +26,7 @@ def call(PipelineConfig config) {
                 steps {
                     milestone 20
                     script {
-                        log.info 'build this'
+                        StageMvnWrapperBuild(config)
                     }
                 }
             }

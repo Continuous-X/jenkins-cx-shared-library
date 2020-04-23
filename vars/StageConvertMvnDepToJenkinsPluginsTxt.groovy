@@ -12,6 +12,6 @@ def call(PipelineConfig config) {
                 .and()
                 .convertDependencies2PluginsTxt()
         writeFile file: pluginsTxtFilename, text: pluginsTxtContent
-        log.info 'build this'
+        log.info "file created: ${pluginsTxtFilename}"
     }
 }
