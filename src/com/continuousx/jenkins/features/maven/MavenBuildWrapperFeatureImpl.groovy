@@ -1,6 +1,8 @@
 package com.continuousx.jenkins.features.maven
 
-class MavenBuildWrapperFeatureImpl {
+import com.cloudbees.groovy.cps.NonCPS
+
+class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
     public final static MVN_WRAPPER_FILENAME = 'mvnw'
     public final static MVN_SETTINGS_XML = '.mvn/settings.xml'
 
@@ -15,6 +17,7 @@ class MavenBuildWrapperFeatureImpl {
         assert isWrapperExist()
     }
 
+    @NonCPS
     private boolean isWrapperExist() {
         boolean wrapperFileExist = jenkinsContext.fileExists MVN_WRAPPER_FILENAME
         boolean settingsFileExist = jenkinsContext.fileExists MVN_SETTINGS_XML
@@ -26,12 +29,14 @@ class MavenBuildWrapperFeatureImpl {
         }
     }
 
+    @NonCPS
     String startGoal(String goal) {
         return jenkinsContext.sh(
                 script: "${mvnwCmd} ${goal}",
                 returnStdout: true )
     }
 
+    @NonCPS
     String getVersion() {
         return jenkinsContext.sh(
                 script: "${mvnwCmd} --version",
