@@ -1,5 +1,6 @@
 package com.continuousx.jenkins.pipeline.utils
 
+import com.cloudbees.groovy.cps.NonCPS
 import hudson.PluginWrapper
 import jenkins.model.Jenkins
 
@@ -8,6 +9,7 @@ class JenkinsPluginCheck {
     private List<String> pluginCheckList
     private List<PluginWrapper> jenkinsPluginList
 
+    @NonCPS
     JenkinsPluginCheck addPluginList(List<String> pluginsList) {
         Objects.nonNull(pluginsList)
         assert pluginsList.size() > 0
@@ -16,10 +18,12 @@ class JenkinsPluginCheck {
         return this
     }
 
+    @NonCPS
     JenkinsPluginCheck and() {
         return this
     }
 
+    @NonCPS
     public boolean isPluginListInstalled() {
         pluginCheckList.each { plugin ->
             if(!isPluginInstalled(plugin)){
@@ -29,7 +33,8 @@ class JenkinsPluginCheck {
         return true
     }
 
-    public boolean isPluginInstalled(String pluginName) {
+    @NonCPS
+    private boolean isPluginInstalled(String pluginName) {
         jenkinsPluginList.each { plugin ->
             if(plugin.getShortName().equals(pluginName)){
                 return true
