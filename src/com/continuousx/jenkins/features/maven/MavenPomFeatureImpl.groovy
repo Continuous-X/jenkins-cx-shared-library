@@ -21,10 +21,6 @@ class MavenPomFeatureImpl {
         return this
     }
 
-    MavenPomFeatureImpl and() {
-        return this
-    }
-
     String convertDependencies2PluginsTxt() {
         assert this.model != null
 

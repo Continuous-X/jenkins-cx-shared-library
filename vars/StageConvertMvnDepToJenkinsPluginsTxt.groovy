@@ -9,9 +9,8 @@ def call(PipelineConfig config) {
         def pomXml = readFile file: pomXmlFilename
         MavenPomFeatureImpl convert = new MavenPomFeatureImpl()
         String pluginsTxtContent = convert.readPomXmlContent(pomXml.toString())
-                .and()
                 .convertDependencies2PluginsTxt()
         writeFile file: pluginsTxtFilename, text: pluginsTxtContent
-        log.info 'build this'
+        log.info "file created: ${pluginsTxtFilename}"
     }
 }
