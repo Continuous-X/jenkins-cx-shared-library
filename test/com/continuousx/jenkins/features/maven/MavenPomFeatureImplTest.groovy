@@ -16,10 +16,7 @@ class MavenPomFeatureImplTest extends Specification {
         when:
         resultPluginsTxtFile.write(
                 mvnDep.readPomXmlContent(pomFileContent)
-                        .and()
                         .convertDependencies2PluginsTxt()
-                        .and()
-                        .getPluginsTxtContent()
         )
 
         then:
