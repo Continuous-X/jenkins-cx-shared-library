@@ -10,7 +10,8 @@ PipelineConfig pipelineConfig = new PipelineConfig(
         metadata: new PipelineMetadata(
                 name: 'jenkins-cx-shared-library',
                 type: PipelineType.PIPELINE_JENKINS_SHARED_LIB
-        )
+        ),
+        jenkinsContext: this
 )
 
 PipelineGlobal( pipelineConfig )

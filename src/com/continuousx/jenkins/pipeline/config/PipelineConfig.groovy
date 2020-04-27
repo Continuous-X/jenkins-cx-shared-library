@@ -3,6 +3,7 @@ package com.continuousx.jenkins.pipeline.config
 import groovy.transform.TypeChecked
 
 @TypeChecked
-class PipelineConfig {
+class PipelineConfig implements Serializable {
     PipelineMetadata metadata
+    def jenkinsContext
 }
