@@ -6,7 +6,7 @@ def call(PipelineConfig config) {
 
     stage('build') {
         log.info "run build"
-        MavenBuildFeature maven = new MavenBuildWrapperFeatureImpl(config.jenkinsContext)
+        MavenBuildFeature maven = new MavenBuildWrapperFeatureImpl( config.jenkinsContext )
         maven.getVersion()
         maven.startGoal('clean install')
     }
