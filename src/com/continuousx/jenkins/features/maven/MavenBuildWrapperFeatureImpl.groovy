@@ -2,9 +2,7 @@ package com.continuousx.jenkins.features.maven
 
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.pipeline.utils.JenkinsPluginCheck
-import groovy.transform.TupleConstructor
 
-@TupleConstructor(includeFields = true)
 class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
     public final static MVN_WRAPPER_FILENAME = 'mvnw'
     public final static MVN_SETTINGS_XML = '.mvn/settings.xml'
