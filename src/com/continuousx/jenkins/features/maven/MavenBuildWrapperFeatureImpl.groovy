@@ -34,6 +34,7 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
     }
 
     @NonCPS
+    @Override
     String startGoal(String goal) {
         assert isWrapperExist()
         assert checkNeededPlugins()
@@ -44,6 +45,7 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
     }
 
     @NonCPS
+    @Override
     String getVersion() {
         assert isWrapperExist()
         assert checkNeededPlugins()
