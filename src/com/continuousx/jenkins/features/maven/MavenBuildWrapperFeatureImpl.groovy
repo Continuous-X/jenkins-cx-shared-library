@@ -25,7 +25,6 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
         assert isWrapperExist()
     }
 
-    @NonCPS
     private boolean isWrapperExist() {
         boolean wrapperFileExist = jenkinsContext.fileExists MVN_WRAPPER_FILENAME
         boolean settingsFileExist = jenkinsContext.fileExists MVN_SETTINGS_XML
