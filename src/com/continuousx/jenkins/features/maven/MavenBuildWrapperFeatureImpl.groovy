@@ -12,6 +12,13 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
 
     def jenkinsContext
 
+    MavenBuildWrapperFeatureImpl(def jenkinsContext) {
+        Objects.nonNull(jenkinsContext)
+        this.jenkinsContext = jenkinsContext
+
+        assert checkNeededPlugins()
+    }
+
     boolean checkNeededPlugins() {
         return new JenkinsPluginCheck()
                 .addPluginList(neededPlugins)
@@ -34,8 +41,6 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
     @NonCPS
     @Override
     String startGoal(String goal) {
-        assert isWrapperExist()
-        assert checkNeededPlugins()
 
         return jenkinsContext.sh(
                 script: "${mvnwCmd} ${goal}",
@@ -45,8 +50,6 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
     @NonCPS
     @Override
     String getVersion() {
-        assert isWrapperExist()
-        assert checkNeededPlugins()
 
         return jenkinsContext.sh(
                 script: "${mvnwCmd} --version",
