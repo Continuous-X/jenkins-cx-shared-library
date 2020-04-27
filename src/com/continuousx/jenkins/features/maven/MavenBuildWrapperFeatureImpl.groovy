@@ -22,7 +22,8 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
                 .and()
                 .isPluginListInstalled()
 
-        assert isWrapperExist()
+        assert this.jenkinsContext.fileExists(MVN_WRAPPER_FILENAME)
+        assert this.jenkinsContext.fileExists(MVN_SETTINGS_XML)
     }
 
     @NonCPS
