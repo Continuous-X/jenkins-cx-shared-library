@@ -48,7 +48,6 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
                 returnStdout: true )
     }
 
-    @NonCPS
     @Override
     String getVersion() {
 
