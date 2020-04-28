@@ -21,7 +21,6 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
         setPermissions()
     }
 
-    @NonCPS
     private String setPermissions() {
         return jenkinsContext.sh(
                 script: "ls -la && pwd",
