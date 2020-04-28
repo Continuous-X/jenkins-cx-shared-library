@@ -18,6 +18,15 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
 
         assert checkNeededPlugins()
         //assert isWrapperExist()
+        setPermissions()
+    }
+
+    @NonCPS
+    private String setPermissions() {
+        return jenkinsContext.sh(
+                script: "ls -la && pwd",
+                returnStdout: true )
+
     }
 
     @NonCPS
@@ -43,7 +52,6 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
     @NonCPS
     @Override
     String startGoal(String goal) {
-
         return jenkinsContext.sh(
                 script: "${mvnwCmd} ${goal}",
                 returnStdout: true )
@@ -51,10 +59,8 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
 
     @Override
     String getVersion() {
-
         return jenkinsContext.sh(
                 script: "${mvnwCmd} --version",
                 returnStdout: true )
-
     }
 }

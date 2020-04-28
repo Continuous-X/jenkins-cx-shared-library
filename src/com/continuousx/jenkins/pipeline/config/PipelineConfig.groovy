@@ -5,5 +5,4 @@ import groovy.transform.TypeChecked
 @TypeChecked
 class PipelineConfig implements Serializable {
     PipelineMetadata metadata
-    def jenkinsContext
 }
