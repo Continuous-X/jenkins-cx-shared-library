@@ -17,7 +17,7 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
         this.jenkinsContext = jenkinsContext
 
         assert checkNeededPlugins()
-        assert isWrapperExist()
+        //assert isWrapperExist()
     }
 
     @NonCPS
