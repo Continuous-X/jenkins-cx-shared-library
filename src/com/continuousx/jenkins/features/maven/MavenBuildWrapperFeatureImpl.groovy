@@ -18,10 +18,9 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
 
         assert checkNeededPlugins()
         //assert isWrapperExist()
-        setPermissions()
     }
 
-    private String setPermissions() {
+    String setPermissions() {
         return jenkinsContext.sh(
                 script: "ls -la && pwd",
                 returnStdout: true )
