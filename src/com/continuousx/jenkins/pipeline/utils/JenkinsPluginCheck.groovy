@@ -40,7 +40,6 @@ class JenkinsPluginCheck {
     @NonCPS
     private boolean isPluginInstalled(String pluginName) {
         jenkinsPluginList.each { plugin ->
-            jenkinsContext.echo "check ${pluginName} -> ${plugin.getShortName()} / ${plugin.getDisplayName()} / ${plugin.getVersion()}"
             if(plugin.getShortName().equals(pluginName)){
                 jenkinsContext.echo "found ${pluginName} -> ${plugin.getShortName()} / ${plugin.getDisplayName()} / ${plugin.getVersion()}"
                 return true
