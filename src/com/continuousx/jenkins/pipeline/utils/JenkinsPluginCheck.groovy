@@ -9,12 +9,16 @@ class JenkinsPluginCheck {
     private List<String> pluginCheckList
     private List<PluginWrapper> jenkinsPluginList
 
+    private def jenkinsContext
+
     @NonCPS
-    JenkinsPluginCheck addPluginList(List<String> pluginsList) {
+    JenkinsPluginCheck addPluginList(List<String> pluginsList, def jenkinsContext) {
         Objects.nonNull(pluginsList)
+        Objects.nonNull(jenkinsContext)
         assert pluginsList.size() > 0
         this.pluginCheckList = pluginsList
         this.jenkinsPluginList = Jenkins.getInstanceOrNull().getPluginManager().getPlugins()
+        this.jenkinsContext = jenkinsContext
         return this
     }
 
@@ -37,7 +41,7 @@ class JenkinsPluginCheck {
     private boolean isPluginInstalled(String pluginName) {
         jenkinsPluginList.each { plugin ->
             if(plugin.getShortName().equals(pluginName)){
-                println "found ${pluginName} -> ${plugin.getShortName()} / ${plugin.getDisplayName()} / ${plugin.getVersion()}"
+                jenkinsContext.log.debug "found ${pluginName} -> ${plugin.getShortName()} / ${plugin.getDisplayName()} / ${plugin.getVersion()}"
                 return true
             }
         }
