@@ -51,7 +51,7 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
     @Override
     String startGoal(String goal) {
         return jenkinsContext.sh(
-                script: "${mvnwCmd} ${goal}",
+                script: "${mvnwCmd} ${goal} -s ${MVN_SETTINGS_XML}",
                 returnStdout: true )
     }
 
