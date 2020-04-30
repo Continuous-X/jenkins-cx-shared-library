@@ -7,7 +7,7 @@ def call(PipelineConfig config) {
     stage('build') {
         log.info "run build"
         assert fileExists(file: MavenBuildWrapperFeatureImpl.MVN_WRAPPER_FILENAME)
-        assert fileExist(file: MavenBuildWrapperFeatureImpl.MVN_SETTINGS_XML)
+        assert fileExists(file: MavenBuildWrapperFeatureImpl.MVN_SETTINGS_XML)
 
         MavenBuildFeature maven = new MavenBuildWrapperFeatureImpl(this)
         maven.checkUsage()
