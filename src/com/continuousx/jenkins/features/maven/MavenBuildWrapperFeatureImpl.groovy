@@ -16,8 +16,10 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
         Objects.nonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
 
+        assert jenkinsContext.fileExists(file: MVN_WRAPPER_FILENAME)
+        assert jenkinsContext.fileExists(file: MVN_SETTINGS_XML)
         assert checkNeededPlugins()
-        //assert isWrapperExist()
+
     }
 
     String setPermissions() {
