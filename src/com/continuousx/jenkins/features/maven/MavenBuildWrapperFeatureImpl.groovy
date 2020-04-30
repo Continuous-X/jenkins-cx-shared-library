@@ -17,12 +17,6 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
         this.jenkinsContext = jenkinsContext
     }
 
-    private String setPermissions() {
-        return jenkinsContext.sh(
-                script: "ls -la && pwd && chmod 555 ${mvnwCmd}",
-                returnStdout: true )
-    }
-
     @NonCPS
     @Override
     MavenBuildFeature checkUsage() {
@@ -30,10 +24,10 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
                 .addPluginList(neededPlugins, jenkinsContext)
                 .and()
                 .isPluginListInstalled()
-        /*assert jenkinsContext.fileExists(file: MVN_WRAPPER_FILENAME)
-        assert jenkinsContext.fileExists(file: MVN_SETTINGS_XML)*/
 
-        setPermissions()
+        jenkinsContext.sh(
+                script: "ls -la && pwd && chmod 555 ${mvnwCmd}",
+                returnStdout: true )
 
         return this
     }
