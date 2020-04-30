@@ -10,7 +10,8 @@ def call(PipelineConfig config) {
         assert fileExists(file: MavenBuildWrapperFeatureImpl.MVN_SETTINGS_XML)
 
         MavenBuildFeature maven = new MavenBuildWrapperFeatureImpl(this)
-        maven.checkUsage()
+        log.info maven.prepare()
+        maven.checkNeededPlugins()
         log.info maven.getVersion()
         maven.startGoal('clean install')
     }

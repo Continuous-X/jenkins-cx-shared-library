@@ -19,20 +19,20 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
 
     @NonCPS
     @Override
-    MavenBuildFeature checkUsage() {
-        jenkinsContext.echo jenkinsContext.sh(
+    String prepare() {
+        return jenkinsContext.sh(
                 script: "ls -la && pwd && chmod 555 ${mvnwCmd}",
                 returnStdout: true )
+    }
 
-        assert new JenkinsPluginCheck()
+    @NonCPS
+    @Override
+    boolean checkNeededPlugins() {
+        return new JenkinsPluginCheck()
                 .addPluginList(neededPlugins, jenkinsContext)
                 .and()
                 .isPluginListInstalled()
-
-        return this
     }
-
-
 
     @NonCPS
     @Override

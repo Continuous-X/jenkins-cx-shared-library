@@ -1,7 +1,8 @@
 package com.continuousx.jenkins.features.maven
 
 interface MavenBuildFeature {
-    MavenBuildFeature checkUsage()
+    String prepare()
+    boolean checkNeededPlugins()
     String startGoal(String goal)
     String getVersion()
 }
