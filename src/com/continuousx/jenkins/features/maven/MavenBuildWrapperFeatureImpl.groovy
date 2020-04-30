@@ -15,38 +15,27 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
     MavenBuildWrapperFeatureImpl(def jenkinsContext) {
         Objects.nonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
-
-        assert jenkinsContext.fileExists(file: MVN_WRAPPER_FILENAME)
-        assert jenkinsContext.fileExists(file: MVN_SETTINGS_XML)
-        assert checkNeededPlugins()
-
     }
 
-    String setPermissions() {
+    private String setPermissions() {
         return jenkinsContext.sh(
                 script: "ls -la && pwd && chmod 555 ${mvnwCmd}",
                 returnStdout: true )
-
     }
 
     @NonCPS
-    boolean checkNeededPlugins() {
-        return new JenkinsPluginCheck()
+    @Override
+    MavenBuildFeature checkUsage() {
+        assert new JenkinsPluginCheck()
                 .addPluginList(neededPlugins, jenkinsContext)
                 .and()
                 .isPluginListInstalled()
-    }
+        assert jenkinsContext.fileExists(file: MVN_WRAPPER_FILENAME)
+        assert jenkinsContext.fileExists(file: MVN_SETTINGS_XML)
 
-    @NonCPS
-    boolean isWrapperExist() {
-        boolean wrapperFileExist = jenkinsContext.fileExists(file: MVN_WRAPPER_FILENAME)
-        boolean settingsFileExist = jenkinsContext.fileExists(file: MVN_SETTINGS_XML)
+        setPermissions()
 
-        if( wrapperFileExist && settingsFileExist ) {
-            return true
-        } else {
-            return false
-        }
+        return this
     }
 
     @NonCPS

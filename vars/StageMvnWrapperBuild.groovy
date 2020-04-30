@@ -7,7 +7,7 @@ def call(PipelineConfig config) {
     stage('build') {
         log.info "run build"
         MavenBuildFeature maven = new MavenBuildWrapperFeatureImpl(this)
-        maven.setPermissions()
+        maven.checkUsage()
         log.info maven.getVersion()
         maven.startGoal('clean install')
     }
