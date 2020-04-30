@@ -25,7 +25,7 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
                 .and()
                 .isPluginListInstalled()
 
-        jenkinsContext.sh(
+        jenkinsContext.echo jenkinsContext.sh(
                 script: "ls -la && pwd && chmod 555 ${mvnwCmd}",
                 returnStdout: true )
 
