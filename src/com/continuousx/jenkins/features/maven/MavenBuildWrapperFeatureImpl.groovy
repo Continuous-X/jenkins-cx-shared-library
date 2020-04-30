@@ -30,8 +30,8 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
                 .addPluginList(neededPlugins, jenkinsContext)
                 .and()
                 .isPluginListInstalled()
-        assert jenkinsContext.fileExists(file: MVN_WRAPPER_FILENAME)
-        assert jenkinsContext.fileExists(file: MVN_SETTINGS_XML)
+        /*assert jenkinsContext.fileExists(file: MVN_WRAPPER_FILENAME)
+        assert jenkinsContext.fileExists(file: MVN_SETTINGS_XML)*/
 
         setPermissions()
 
