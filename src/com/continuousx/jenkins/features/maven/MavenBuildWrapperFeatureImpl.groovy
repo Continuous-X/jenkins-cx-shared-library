@@ -8,13 +8,18 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
     public final static MVN_SETTINGS_XML = '.mvn/settings.xml'
 
     private String mvnwCmd = "./${MVN_WRAPPER_FILENAME}"
-    private List<String> neededPlugins = ["workflow-basic-steps", "maven-plugin" ]
+    private List<String> neededPlugins = [
+            "workflow-basic-steps",
+            "maven-plugin",
+            "wumpe"
+    ]
 
     def jenkinsContext
 
     MavenBuildWrapperFeatureImpl(def jenkinsContext) {
         Objects.nonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
+        assert checkNeededPlugins()
     }
 
     @NonCPS
