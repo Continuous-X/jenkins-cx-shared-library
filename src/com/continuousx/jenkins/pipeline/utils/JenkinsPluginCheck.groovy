@@ -31,6 +31,7 @@ class JenkinsPluginCheck {
     public boolean isPluginListInstalled() {
         pluginCheckList.each { plugin ->
             if(!isPluginInstalled(plugin)){
+                jenkinsContext.echo "listet plugin not found ${plugin}"
                 return false
             }
         }
@@ -41,10 +42,11 @@ class JenkinsPluginCheck {
     private boolean isPluginInstalled(String pluginName) {
         jenkinsPluginList.each { plugin ->
             if(plugin.getShortName().equals(pluginName)){
-                jenkinsContext.echo "found ${pluginName} -> ${plugin.getShortName()} / ${plugin.getDisplayName()} / ${plugin.getVersion()}"
+                jenkinsContext.echo "plugin found ${pluginName} -> ${plugin.getShortName()} / ${plugin.getDisplayName()} / ${plugin.getVersion()}"
                 return true
             }
         }
+        jenkinsContext.echo "plugin not found ${pluginName}"
         return false
     }
 }
