@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.cx.jenkins.image</groupId>
         <artifactId>parent</artifactId>
-        <version>v0.1.4</version>
+        <version>v0.1.5</version>
     </parent>
 
     <groupId>com.cx.jenkins.sharedlib</groupId>
@@ -35,7 +35,7 @@
         <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx-shared-library/</url>
     </scm>
 
-    <dependencyManagement>
+    <!--<dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.spockframework</groupId>
@@ -45,45 +45,54 @@
                 <scope>import</scope>
             </dependency>
         </dependencies>
-    </dependencyManagement>
+    </dependencyManagement>-->
 
     <dependencies>
         <!-- Mandatory dependencies for using Spock -->
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
+            <version>2.0-M2-groovy-3.0</version>
             <scope>test</scope>
         </dependency>
+<!--
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-junit4</artifactId>
             <scope>test</scope>
         </dependency>
+-->
         <!-- Optional dependencies for using Spock -->
         <!-- use a specific Groovy version rather than the one specified by spock-core -->
-            <!--<dependency>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy</artifactId>
-                <version>2.5.8</version>
-            </dependency>-->
-        <dependency> <!-- enables mocking of classes (in addition to interfaces) -->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.4.19</version>
+        </dependency>
+<!--
+        <dependency> &lt;!&ndash; enables mocking of classes (in addition to interfaces) &ndash;&gt;
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.10.9</version>
+            <version>1.10.10</version>
             <scope>test</scope>
         </dependency>
-        <dependency> <!-- enables mocking of classes without default constructor (together with CGLIB) -->
+-->
+<!--
+        <dependency> &lt;!&ndash; enables mocking of classes without default constructor (together with CGLIB) &ndash;&gt;
             <groupId>org.objenesis</groupId>
             <artifactId>objenesis</artifactId>
             <version>3.1</version>
             <scope>test</scope>
         </dependency>
-        <dependency> <!-- only required if Hamcrest matchers are used -->
+-->
+<!--
+        <dependency> &lt;!&ndash; only required if Hamcrest matchers are used &ndash;&gt;
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-core</artifactId>
             <version>2.2</version>
             <scope>test</scope>
         </dependency>
+-->
     </dependencies>
 
     <build>
@@ -99,12 +108,18 @@
                             <goals>
                                 <goal>addSources</goal>
                                 <goal>addTestSources</goal>
+<!--
                                 <goal>generateStubs</goal>
+-->
                                 <goal>compile</goal>
+<!--
                                 <goal>generateTestStubs</goal>
+-->
                                 <goal>compileTests</goal>
+<!--
                                 <goal>groovydoc</goal>
                                 <goal>groovydocTests</goal>
+-->
                             </goals>
                         </execution>
                     </executions>
@@ -189,6 +204,30 @@
                         <id>spotbugs</id>
                         <configuration>
                             <excludeFilterFile>${project.basedir}/spotbugs/excludesFilter.xml</excludeFilterFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>display-info</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>display-info</goal>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>[3.6.3,)</version>
+                                    <message>3.6.3 required to at least look at .mvn/ if it exists.</message>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>[1.8.0,)</version>
+                                </requireJavaVersion>
+                            </rules>
                         </configuration>
                     </execution>
                 </executions>

@@ -33,8 +33,10 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
     @NonCPS
     @Override
     boolean checkNeededPlugins() {
-        return new JenkinsPluginCheck()
-                .addPluginList(neededPlugins, jenkinsContext)
+        return new JenkinsPluginCheck(jenkinsContext)
+                .addInstalledPlugins()
+                .and()
+                .addNeededPluginList(neededPlugins)
                 .and()
                 .isPluginListInstalled()
     }

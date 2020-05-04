@@ -6,19 +6,43 @@ import jenkins.model.Jenkins
 
 class JenkinsPluginCheck {
 
-    private List<String> pluginCheckList
-    private List<PluginWrapper> jenkinsPluginList
+    private List<String> pluginListNeeded = []
+    private List<String> pluginListInstalled = []
 
     private def jenkinsContext
 
-    @NonCPS
-    JenkinsPluginCheck addPluginList(List<String> pluginsList, def jenkinsContext) {
-        Objects.nonNull(pluginsList)
+    JenkinsPluginCheck(def jenkinsContext) {
         Objects.nonNull(jenkinsContext)
-        assert pluginsList.size() > 0
-        this.pluginCheckList = pluginsList
-        this.jenkinsPluginList = Jenkins.getInstanceOrNull().getPluginManager().getPlugins()
         this.jenkinsContext = jenkinsContext
+    }
+
+    @NonCPS
+    public loadInstalledPlugins(def jenkins = Jenkins.getInstanceOrNull()) {
+        Objects.nonNull(jenkins)
+        this.pluginListInstalled = mapInstalledPlugins(jenkins.getPluginManager().getPlugins())
+    }
+
+    private List<String> mapInstalledPlugins(List<PluginWrapper> jenkinsPluginList) {
+        List<String> installedList = []
+        jenkinsPluginList.each { plugin ->
+            installedList << plugin.getShortName()
+        }
+        return installedList
+    }
+
+    @NonCPS
+    public addInstalledPlugins(List<String> pluginsList = loadInstalledPlugins()) {
+        Objects.nonNull(pluginsList)
+        this.pluginListInstalled = pluginsList
+        return this
+    }
+
+    @NonCPS
+    JenkinsPluginCheck addNeededPluginList(List<String> pluginsList) {
+        Objects.nonNull(pluginsList)
+        assert pluginsList.size() > 0
+
+        this.pluginListNeeded = pluginsList
         return this
     }
 
@@ -29,24 +53,23 @@ class JenkinsPluginCheck {
 
     @NonCPS
     public boolean isPluginListInstalled() {
-        pluginCheckList.each { plugin ->
+        boolean checkInstalled = true
+        pluginListNeeded.each { plugin ->
             if(!isPluginInstalled(plugin)){
                 jenkinsContext.echo "listet plugin not found ${plugin}"
-                return false
+                return checkInstalled = false
+            } else {
+                jenkinsContext.echo "listet plugin found ${plugin}"
+                checkInstalled = true
             }
         }
-        return true
+        return checkInstalled
     }
 
     @NonCPS
     private boolean isPluginInstalled(String pluginName) {
-        jenkinsPluginList.each { plugin ->
-            if(plugin.getShortName().equals(pluginName)){
-                jenkinsContext.echo "plugin found ${pluginName} -> ${plugin.getShortName()} / ${plugin.getDisplayName()} / ${plugin.getVersion()}"
-                return true
-            }
-        }
-        jenkinsContext.echo "plugin not found ${pluginName}"
-        return false
+        Objects.nonNull(pluginName)
+        assert pluginName.length() > 0
+        return pluginListInstalled.find{ it.equals(pluginName) }
     }
 }
