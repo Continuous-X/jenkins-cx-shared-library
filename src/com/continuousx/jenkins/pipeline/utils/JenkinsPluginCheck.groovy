@@ -17,11 +17,12 @@ class JenkinsPluginCheck {
     }
 
     @NonCPS
-    public loadInstalledPlugins(def jenkins = Jenkins.getInstanceOrNull()) {
+    private loadInstalledPlugins(def jenkins = Jenkins.getInstanceOrNull()) {
         Objects.nonNull(jenkins)
         this.pluginListInstalled = mapInstalledPlugins(jenkins.getPluginManager().getPlugins())
     }
 
+    @NonCPS
     private List<String> mapInstalledPlugins(List<PluginWrapper> jenkinsPluginList) {
         List<String> installedList = []
         jenkinsPluginList.each { plugin ->
@@ -31,7 +32,7 @@ class JenkinsPluginCheck {
     }
 
     @NonCPS
-    public addInstalledPlugins(List<String> pluginsList = loadInstalledPlugins()) {
+    JenkinsPluginCheck addInstalledPlugins(List<String> pluginsList = loadInstalledPlugins()) {
         Objects.nonNull(pluginsList)
         this.pluginListInstalled = pluginsList
         return this
