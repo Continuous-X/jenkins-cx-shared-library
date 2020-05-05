@@ -8,14 +8,14 @@ class MavenBuildWrapperFeatureImpl extends AbstractFeature implements MavenBuild
     public final static MVN_SETTINGS_XML = '.mvn/settings.xml'
 
     private String mvnwCmd = "./${MVN_WRAPPER_FILENAME}"
-    List<String> neededPlugins = [
-            "workflow-basic-steps",
-            "maven-plugin",
-            "wumpe"
-    ]
+
 
     MavenBuildWrapperFeatureImpl(def jenkinsContext) {
-        super(jenkinsContext)
+        super(jenkinsContext, [
+                "workflow-basic-steps",
+                "maven-plugin",
+                "wumpe"
+        ])
         prepare()
     }
 

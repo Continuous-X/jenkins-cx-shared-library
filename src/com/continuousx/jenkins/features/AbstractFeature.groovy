@@ -8,11 +8,13 @@ class AbstractFeature implements Feature, Serializable{
     private def jenkinsContext
     List<String> neededPlugins = []
 
-    AbstractFeature(def jenkinsContext) {
+    AbstractFeature(def jenkinsContext, List<String> neededPlugins) {
         Objects.nonNull(jenkinsContext)
+        Objects.nonNull(neededPlugins)
         this.jenkinsContext = jenkinsContext
+        this.neededPlugins = neededPlugins
         if(!checkNeededPlugins())
-            throw new JenkinsPluginNotInstalledException("Plugins 4 Maven Wrapper not installed")
+            throw new JenkinsPluginNotInstalledException("needed plugins not installed - please check ${neededPlugins.toString()}")
     }
 
     @NonCPS
