@@ -18,15 +18,15 @@ class MavenPomFeatureImpl extends AbstractFeature {
     MavenPomFeatureImpl(def jenkinsContext) {
         super(jenkinsContext, [
                 "workflow-basic-steps",
-                "maven-plugin"
+                "maven-plugin",
+                "dingens"
         ])
         prepare()
     }
 
     @NonCPS
     private void prepare() {
-        pomContent = jenkinsContext.readFile(
-                file: POM_XML_FILENAME )
+        pomContent = jenkinsContext.readFile(file: POM_XML_FILENAME )
     }
 
     MavenPomFeatureImpl readPomXmlContent() {
