@@ -1,15 +1,23 @@
 package com.continuousx.jenkins.features.maven
 
+import com.continuousx.jenkins.features.AbstractFeature
 import org.apache.maven.model.Model
 import org.apache.maven.model.Parent
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader
 
-class MavenPomFeatureImpl {
+class MavenPomFeatureImpl extends AbstractFeature {
 
     public static final String PLUGINS_TXT_FILENAME = 'plugins.txt'
     public static final String POM_XML_FILENAME = 'pom.xml'
 
     private Model model
+
+    MavenPomFeatureImpl(def jenkinsContext) {
+        super(jenkinsContext, [
+                "workflow-basic-steps",
+                "maven-plugin"
+        ])
+    }
 
     MavenPomFeatureImpl readPomXmlContent(String pomXmlContent) {
         Objects.nonNull(pomXmlContent)
