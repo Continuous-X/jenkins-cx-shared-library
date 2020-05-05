@@ -1,6 +1,7 @@
 package com.continuousx.jenkins.features.maven
 
 import com.cloudbees.groovy.cps.NonCPS
+import com.continuousx.jenkins.pipeline.exceptions.JenkinsPluginNotInstalledException
 import com.continuousx.jenkins.pipeline.utils.JenkinsPluginCheck
 
 class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
@@ -19,7 +20,8 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
     MavenBuildWrapperFeatureImpl(def jenkinsContext) {
         Objects.nonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
-        assert checkNeededPlugins()
+        if(!checkNeededPlugins())
+            throw new JenkinsPluginNotInstalledException("Plugins 4 Maven Wrapper not installed")
     }
 
     @NonCPS
