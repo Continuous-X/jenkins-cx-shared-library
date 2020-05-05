@@ -5,7 +5,7 @@ import com.continuousx.jenkins.pipeline.exceptions.JenkinsPluginNotInstalledExce
 import com.continuousx.jenkins.pipeline.utils.JenkinsPluginCheck
 
 class AbstractFeature implements Feature, Serializable{
-    private def jenkinsContext
+    def jenkinsContext
     List<String> neededPlugins = []
 
     AbstractFeature(def jenkinsContext, List<String> neededPlugins) {
