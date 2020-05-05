@@ -18,8 +18,7 @@ class MavenPomFeatureImpl extends AbstractFeature {
     MavenPomFeatureImpl(def jenkinsContext) {
         super(jenkinsContext, [
                 "workflow-basic-steps",
-                "maven-plugin",
-                "dingens"
+                "maven-plugin"
         ])
         prepare()
     }
