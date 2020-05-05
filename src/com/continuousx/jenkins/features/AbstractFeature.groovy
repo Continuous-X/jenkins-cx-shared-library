@@ -6,7 +6,7 @@ import com.continuousx.jenkins.pipeline.utils.JenkinsPluginCheck
 
 class AbstractFeature implements Feature, Serializable{
     private def jenkinsContext
-    private List<String> neededPlugins = []
+    List<String> neededPlugins = []
 
     AbstractFeature(def jenkinsContext) {
         Objects.nonNull(jenkinsContext)

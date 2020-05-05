@@ -8,7 +8,7 @@ class MavenBuildWrapperFeatureImpl extends AbstractFeature implements MavenBuild
     public final static MVN_SETTINGS_XML = '.mvn/settings.xml'
 
     private String mvnwCmd = "./${MVN_WRAPPER_FILENAME}"
-    private List<String> neededPlugins = [
+    List<String> neededPlugins = [
             "workflow-basic-steps",
             "maven-plugin",
             "wumpe"
