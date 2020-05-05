@@ -6,9 +6,8 @@ def call(PipelineConfig config) {
     stage('Create Jenkins plugins.txt') {
         def pomXmlFilename = MavenPomFeatureImpl.POM_XML_FILENAME
         def pluginsTxtFilename = MavenPomFeatureImpl.PLUGINS_TXT_FILENAME
-        def pomXml = readFile file: pomXmlFilename
-        MavenPomFeatureImpl convert = new MavenPomFeatureImpl()
-        String pluginsTxtContent = convert.readPomXmlContent(pomXml.toString())
+        MavenPomFeatureImpl convert = new MavenPomFeatureImpl(this)
+        String pluginsTxtContent = convert.readPomXmlContent()
                 .convertDependencies2PluginsTxt()
         writeFile file: pluginsTxtFilename, text: pluginsTxtContent
         log.info "file created: ${pluginsTxtFilename}"
