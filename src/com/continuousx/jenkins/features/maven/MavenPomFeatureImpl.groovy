@@ -22,10 +22,10 @@ class MavenPomFeatureImpl {
     }
 
     String convertDependencies2PluginsTxt() {
-        assert this.model != null
+        Objects.nonNull(model)
 
         StringBuilder content = new StringBuilder()
-        this.model.getDependencyManagement().getDependencies().each { dependency ->
+        model.getDependencyManagement().getDependencies().each { dependency ->
             content.append(dependency.getArtifactId())
                     .append(':')
                     .append(dependency.getVersion())

@@ -1,10 +1,9 @@
 package com.continuousx.jenkins.features.maven
 
 import com.cloudbees.groovy.cps.NonCPS
-import com.continuousx.jenkins.pipeline.exceptions.JenkinsPluginNotInstalledException
-import com.continuousx.jenkins.pipeline.utils.JenkinsPluginCheck
+import com.continuousx.jenkins.features.AbstractFeature
 
-class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
+class MavenBuildWrapperFeatureImpl extends AbstractFeature implements MavenBuildFeature {
     public final static MVN_WRAPPER_FILENAME = 'mvnw'
     public final static MVN_SETTINGS_XML = '.mvn/settings.xml'
 
@@ -15,13 +14,9 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
             "wumpe"
     ]
 
-    def jenkinsContext
-
     MavenBuildWrapperFeatureImpl(def jenkinsContext) {
-        Objects.nonNull(jenkinsContext)
-        this.jenkinsContext = jenkinsContext
-        if(!checkNeededPlugins())
-            throw new JenkinsPluginNotInstalledException("Plugins 4 Maven Wrapper not installed")
+        super(jenkinsContext)
+        prepare()
     }
 
     @NonCPS
@@ -30,17 +25,6 @@ class MavenBuildWrapperFeatureImpl implements MavenBuildFeature, Serializable {
         return jenkinsContext.sh(
                 script: "ls -la && pwd && chmod 555 ${mvnwCmd}",
                 returnStdout: true )
-    }
-
-    @NonCPS
-    @Override
-    boolean checkNeededPlugins() {
-        return new JenkinsPluginCheck(jenkinsContext)
-                .addInstalledPlugins()
-                .and()
-                .addNeededPluginList(neededPlugins)
-                .and()
-                .isPluginListInstalled()
     }
 
     @NonCPS
