@@ -40,6 +40,7 @@ class MavenPomFeatureImpl extends AbstractFeature {
     String convertDependencies2PluginsTxt() {
         Objects.nonNull(model)
 
+        jenkinsContext.echo "readMvnModel: ${model}"
         StringBuilder content = new StringBuilder()
         model.getDependencyManagement().getDependencies().each { dependency ->
             content.append(dependency.getArtifactId())
