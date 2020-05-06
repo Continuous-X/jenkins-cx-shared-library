@@ -28,5 +28,5 @@ abstract class AbstractFeature implements Feature, Serializable{
                 .isPluginListInstalled()
     }
 
-    abstract void prepare()
+    abstract Feature prepare()
 }

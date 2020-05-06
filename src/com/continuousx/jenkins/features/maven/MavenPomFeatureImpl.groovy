@@ -24,8 +24,9 @@ class MavenPomFeatureImpl extends AbstractFeature {
     }
 
     @NonCPS
-    void prepare() {
+    MavenPomFeatureImpl prepare() {
         pomContent = jenkinsContext.readFile(file: POM_XML_FILENAME )
+        return this
     }
 
     MavenPomFeatureImpl readPomXmlContent() {

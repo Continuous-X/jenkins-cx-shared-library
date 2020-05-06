@@ -15,18 +15,15 @@ class MavenBuildWrapperFeatureImpl extends AbstractFeature implements MavenBuild
                 "workflow-basic-steps",
                 "maven-plugin"
         ])
-        
-        jenkinsContext.sh(
-                script: "ls -la && pwd && chmod 555 ${mvnwCmd}",
-                returnStdout: true )
     }
 
     @NonCPS
     @Override
-    void prepare() {
+    MavenBuildWrapperFeatureImpl prepare() {
         jenkinsContext.sh(
                 script: "ls -la && pwd && chmod 555 ${mvnwCmd}",
                 returnStdout: true )
+        return this
     }
 
     @NonCPS
