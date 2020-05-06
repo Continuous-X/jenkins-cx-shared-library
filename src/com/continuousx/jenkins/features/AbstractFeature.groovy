@@ -15,7 +15,6 @@ abstract class AbstractFeature implements Feature, Serializable{
         this.neededPlugins = neededPlugins
         if(!checkNeededPlugins())
             throw new JenkinsPluginNotInstalledException("needed plugins not installed - please check ${neededPlugins.toString()}")
-        prepare()
     }
 
     @NonCPS

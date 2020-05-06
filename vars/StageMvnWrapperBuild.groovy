@@ -11,7 +11,7 @@ def call(PipelineConfig config) {
         assert fileExists(file: MavenBuildWrapperFeatureImpl.MVN_SETTINGS_XML)
 
         try {
-            MavenBuildFeature maven = new MavenBuildWrapperFeatureImpl(this)
+            MavenBuildFeature maven = new MavenBuildWrapperFeatureImpl(this).prepare()
             log.info maven.getVersion()
             maven.startGoal('clean install')
         } catch( JenkinsPluginNotInstalledException e ) {
