@@ -10,6 +10,7 @@ def call(PipelineConfig config) {
             MavenPomFeatureImpl convert = new MavenPomFeatureImpl(this).prepare()
             String pluginsTxtContent = convert.readPomXmlContent()
                     .convertDependencies2PluginsTxt()
+            log.info "plugin.txt content: ${pluginsTxtContent}"
             writeFile file: pluginsTxtFilename, text: pluginsTxtContent
             log.info "file created: ${pluginsTxtFilename}"
         } catch (JenkinsPluginNotInstalledException e) {
