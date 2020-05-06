@@ -22,19 +22,19 @@ def call(PipelineConfig config) {
                 }
             }
 
-            stage('Build') {
+            stage('Convert DepToFile') {
                 steps {
                     milestone 20
-                    script {
-                        StageMvnWrapperBuild(config)
-                    }
+                    StageConvertMvnDepToJenkinsPluginsTxt(config)
                 }
             }
 
-            stage('Stages') {
+            stage('Build') {
                 steps {
                     milestone 50
-                    StageConvertMvnDepToJenkinsPluginsTxt(config)
+                    script {
+                        StageMvnWrapperBuild(config)
+                    }
                 }
             }
 
