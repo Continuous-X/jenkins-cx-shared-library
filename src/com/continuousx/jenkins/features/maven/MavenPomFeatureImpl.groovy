@@ -23,13 +23,13 @@ class MavenPomFeatureImpl extends AbstractFeature {
     }
 
     MavenPomFeatureImpl prepare() {
-        pomContent = jenkinsContext.readFile(file: POM_XML_FILENAME )
         return this
     }
 
     MavenPomFeatureImpl readPomXmlContent() {
-        Objects.nonNull(pomContent)
-        assert pomContent.length() > 0
+        pomContent = jenkinsContext.readFile(file: POM_XML_FILENAME )
+        jenkinsContext.echo "pomContent: ${pomContent}"
+
 
         MavenXpp3Reader xpp3Reader = new MavenXpp3Reader()
         this.model = xpp3Reader.read(new ByteArrayInputStream(pomContent.getBytes()))
