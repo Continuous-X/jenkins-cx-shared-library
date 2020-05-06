@@ -20,7 +20,6 @@ class MavenPomFeatureImpl extends AbstractFeature {
                 "workflow-basic-steps",
                 "maven-plugin"
         ])
-        prepare()
     }
 
     MavenPomFeatureImpl prepare() {
