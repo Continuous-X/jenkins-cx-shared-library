@@ -4,7 +4,7 @@ import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.pipeline.exceptions.JenkinsPluginNotInstalledException
 import com.continuousx.jenkins.pipeline.utils.JenkinsPluginCheck
 
-class AbstractFeature implements Feature, Serializable{
+abstract class AbstractFeature implements Feature, Serializable{
     def jenkinsContext
     List<String> neededPlugins = []
 
@@ -27,4 +27,6 @@ class AbstractFeature implements Feature, Serializable{
                 .and()
                 .isPluginListInstalled()
     }
+
+    abstract void prepare()
 }

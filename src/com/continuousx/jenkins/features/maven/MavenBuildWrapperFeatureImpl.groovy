@@ -13,16 +13,15 @@ class MavenBuildWrapperFeatureImpl extends AbstractFeature implements MavenBuild
     MavenBuildWrapperFeatureImpl(def jenkinsContext) {
         super(jenkinsContext, [
                 "workflow-basic-steps",
-                "maven-plugin",
-                "wumpe"
+                "maven-plugin"
         ])
         prepare()
     }
 
     @NonCPS
     @Override
-    String prepare() {
-        return jenkinsContext.sh(
+    void prepare() {
+        jenkinsContext.sh(
                 script: "ls -la && pwd && chmod 555 ${mvnwCmd}",
                 returnStdout: true )
     }
@@ -41,4 +40,5 @@ class MavenBuildWrapperFeatureImpl extends AbstractFeature implements MavenBuild
                 script: "${mvnwCmd} --version",
                 returnStdout: true )
     }
+
 }
