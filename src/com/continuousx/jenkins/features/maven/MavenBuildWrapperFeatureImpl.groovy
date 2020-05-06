@@ -17,8 +17,6 @@ class MavenBuildWrapperFeatureImpl extends AbstractFeature implements MavenBuild
         ])
     }
 
-    @NonCPS
-    @Override
     MavenBuildWrapperFeatureImpl prepare() {
         jenkinsContext.sh(
                 script: "ls -la && pwd && chmod 555 ${mvnwCmd}",

@@ -28,5 +28,6 @@ abstract class AbstractFeature implements Feature, Serializable{
                 .isPluginListInstalled()
     }
 
+    @NonCPS
     abstract Feature prepare()
 }
