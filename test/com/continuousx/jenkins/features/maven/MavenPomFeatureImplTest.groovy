@@ -1,5 +1,6 @@
 package com.continuousx.jenkins.features.maven
 
+import com.continuousx.jenkins.JenkinsMock
 import spock.lang.Specification
 
 class MavenPomFeatureImplTest extends Specification {
@@ -11,7 +12,7 @@ class MavenPomFeatureImplTest extends Specification {
         String pomFileContent = pomFile.getText()
         File resultPluginsTxtFile = new File(resultPluginsTxtFilename)
         assert pomFile.exists()
-        MavenPomFeatureImpl mvnDep = new MavenPomFeatureImpl()
+        MavenPomFeatureImpl mvnDep = new MavenPomFeatureImpl(new JenkinsMock())
 
         when:
         resultPluginsTxtFile.write(
@@ -29,7 +30,7 @@ class MavenPomFeatureImplTest extends Specification {
         String testPom = 'test-resources/pom-maven-feature-test.xml'
         File pomFile = new File(testPom)
         String pomFileContent = pomFile.getText()
-        MavenPomFeatureImpl mvnDep = new MavenPomFeatureImpl()
+        MavenPomFeatureImpl mvnDep = new MavenPomFeatureImpl(new JenkinsMock())
 
         when:
         mvnDep.readPomXmlContent(pomFileContent)
