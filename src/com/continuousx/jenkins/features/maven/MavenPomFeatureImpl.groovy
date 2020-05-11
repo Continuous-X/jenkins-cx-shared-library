@@ -27,7 +27,7 @@ class MavenPomFeatureImpl extends AbstractFeature {
     }
 
     private String loadPomContent() {
-        pomContent = jenkinsContext.readFile(file: POM_XML_FILENAME )
+        return jenkinsContext.readFile(file: POM_XML_FILENAME )
     }
 
     MavenPomFeatureImpl readPomXmlContent(String pomContent = loadPomContent()) {
