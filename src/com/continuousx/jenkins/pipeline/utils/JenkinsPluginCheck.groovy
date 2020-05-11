@@ -19,11 +19,11 @@ class JenkinsPluginCheck {
     @NonCPS
     private loadInstalledPlugins(def jenkins = Jenkins.getInstanceOrNull()) {
         Objects.nonNull(jenkins)
-        this.pluginListInstalled = mapInstalledPlugins(jenkins.getPluginManager().getPlugins())
+        this.pluginListInstalled = mapInstalledPlugins(jenkins?.getPluginManager()?.getPlugins())
     }
 
     @NonCPS
-    private List<String> mapInstalledPlugins(List<PluginWrapper> jenkinsPluginList) {
+    private List<String> mapInstalledPlugins(List<PluginWrapper> jenkinsPluginList = []) {
         List<String> installedList = []
         jenkinsPluginList.each { plugin ->
             installedList << plugin.getShortName()

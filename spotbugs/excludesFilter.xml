@@ -16,4 +16,8 @@
     <Match>
         <Class name="~.*logy.*"/>
     </Match>
+    <Bug pattern="UPM_UNCALLED_PRIVATE_METHOD"/>
+    <Match>
+        <Class name="~.*JenkinsPluginCheck.*"/>
+    </Match>
 </FindBugsFilter>

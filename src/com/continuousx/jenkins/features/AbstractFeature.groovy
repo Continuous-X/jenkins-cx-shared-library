@@ -1,7 +1,7 @@
 package com.continuousx.jenkins.features
 
 import com.cloudbees.groovy.cps.NonCPS
-import com.continuousx.jenkins.pipeline.exceptions.JenkinsPluginNotInstalledException
+
 import com.continuousx.jenkins.pipeline.utils.JenkinsPluginCheck
 
 abstract class AbstractFeature implements Feature, Serializable{
@@ -13,8 +13,6 @@ abstract class AbstractFeature implements Feature, Serializable{
         Objects.nonNull(neededPlugins)
         this.jenkinsContext = jenkinsContext
         this.neededPlugins = neededPlugins
-        if(!checkNeededPlugins())
-            throw new JenkinsPluginNotInstalledException("needed plugins not installed - please check ${neededPlugins.toString()}")
     }
 
     @NonCPS
