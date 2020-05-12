@@ -34,7 +34,6 @@ class MavenPomFeatureImpl extends AbstractFeature {
 
     MavenPomFeatureImpl readPomXmlContent(String pomContent = loadPomContent()) {
         Objects.nonNull(pomContent)
-        jenkinsContext.echo "pomContent: ${pomContent}"
 
         MavenXpp3Reader xpp3Reader = new MavenXpp3Reader()
         this.model = xpp3Reader.read(new ByteArrayInputStream(pomContent.getBytes()))
@@ -49,7 +48,6 @@ class MavenPomFeatureImpl extends AbstractFeature {
     String convertDependencies2PluginsTxt() {
         Objects.nonNull(model)
 
-        jenkinsContext.echo "readMvnModel: ${model}"
         StringBuilder content = new StringBuilder()
         model.getDependencyManagement().getDependencies().each { dependency ->
             content.append(dependency.getArtifactId())
