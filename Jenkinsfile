@@ -1,4 +1,5 @@
 #!/usr/bin/env groovy
+import com.continuousx.jenkins.pipeline.config.LogLevelType
 import com.continuousx.jenkins.pipeline.config.PipelineConfig
 import com.continuousx.jenkins.pipeline.config.PipelineMetadata
 import com.continuousx.jenkins.pipeline.config.PipelineType
@@ -10,7 +11,8 @@ PipelineConfig pipelineConfig = new PipelineConfig(
         metadata: new PipelineMetadata(
                 name: 'jenkins-cx-shared-library',
                 type: PipelineType.PIPELINE_JENKINS_SHARED_LIB
-        )
+        ),
+        logLevel: LogLevelType.DEBUG
 )
 
 PipelineGlobal( pipelineConfig )

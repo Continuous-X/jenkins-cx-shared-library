@@ -2,6 +2,7 @@ package com.continuousx.jenkins.features.maven
 
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.features.AbstractFeature
+import com.continuousx.jenkins.pipeline.config.LogLevelType
 import org.apache.maven.model.Model
 import org.apache.maven.model.Parent
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader
@@ -13,11 +14,12 @@ class MavenPomFeatureImpl extends AbstractFeature {
 
     private Model model
 
-    MavenPomFeatureImpl(def jenkinsContext) {
+    MavenPomFeatureImpl(def jenkinsContext, LogLevelType logLevel = LogLevelType.INFO) {
         super(jenkinsContext, [
                 "workflow-basic-steps",
                 "maven-plugin"
-        ])
+        ],
+        logLevel)
     }
 
     MavenPomFeatureImpl prepare() {
@@ -35,6 +37,7 @@ class MavenPomFeatureImpl extends AbstractFeature {
     MavenPomFeatureImpl readPomXmlContent(String pomContent = loadPomContent()) {
         Objects.nonNull(pomContent)
 
+        logLevel == LogLevelType.DEBUG ? jenkinsContext.log.info("pomContent: \n ${pomContent}") :
         MavenXpp3Reader xpp3Reader = new MavenXpp3Reader()
         this.model = xpp3Reader.read(new ByteArrayInputStream(pomContent.getBytes()))
 

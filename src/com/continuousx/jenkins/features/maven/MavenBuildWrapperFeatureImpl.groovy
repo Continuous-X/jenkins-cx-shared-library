@@ -2,6 +2,7 @@ package com.continuousx.jenkins.features.maven
 
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.features.AbstractFeature
+import com.continuousx.jenkins.pipeline.config.LogLevelType
 
 class MavenBuildWrapperFeatureImpl extends AbstractFeature implements MavenBuildFeature {
     public final static MVN_WRAPPER_FILENAME = 'mvnw'
@@ -10,11 +11,12 @@ class MavenBuildWrapperFeatureImpl extends AbstractFeature implements MavenBuild
     private String mvnwCmd = "./${MVN_WRAPPER_FILENAME}"
 
 
-    MavenBuildWrapperFeatureImpl(def jenkinsContext) {
+    MavenBuildWrapperFeatureImpl(def jenkinsContext, LogLevelType logLevel = LogLevelType.INFO) {
         super(jenkinsContext, [
                 "workflow-basic-steps",
                 "maven-plugin"
-        ])
+        ],
+        logLevel)
     }
 
     MavenBuildWrapperFeatureImpl prepare() {

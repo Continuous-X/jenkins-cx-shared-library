@@ -1,18 +1,20 @@
 package com.continuousx.jenkins.features
 
 import com.cloudbees.groovy.cps.NonCPS
-
+import com.continuousx.jenkins.pipeline.config.LogLevelType
 import com.continuousx.jenkins.pipeline.utils.JenkinsPluginCheck
 
 abstract class AbstractFeature implements Feature, Serializable{
     def jenkinsContext
     List<String> neededPlugins = []
+    LogLevelType logLevel = LogLevelType.INFO
 
-    AbstractFeature(def jenkinsContext, List<String> neededPlugins) {
+    AbstractFeature(def jenkinsContext, List<String> neededPlugins, LogLevelType logLevel) {
         Objects.nonNull(jenkinsContext)
         Objects.nonNull(neededPlugins)
         this.jenkinsContext = jenkinsContext
         this.neededPlugins = neededPlugins
+        this.logLevel = logLevel
     }
 
     @NonCPS
