@@ -37,7 +37,7 @@ class MavenPomFeatureImpl extends AbstractFeature {
     MavenPomFeatureImpl readPomXmlContent(String pomContent = loadPomContent()) {
         Objects.nonNull(pomContent)
 
-        logLevel == LogLevelType.DEBUG ? jenkinsContext.log.info("pomContent: \n ${pomContent}") : and()
+        logLevel == LogLevelType.DEBUG ? jenkinsContext.echo("pomContent: \n ${pomContent}") : and()
         MavenXpp3Reader xpp3Reader = new MavenXpp3Reader()
         this.model = xpp3Reader.read(new ByteArrayInputStream(pomContent.getBytes()))
 
