@@ -4,7 +4,7 @@ import com.continuousx.jenkins.pipeline.config.PipelineConfig
 def call(PipelineConfig config) {
 
     stage('Create Jenkins plugins.txt') {
-        new MavenPomFeatureImpl(this).prepare()
+        new MavenPomFeatureImpl(this, config.logLevel).prepare()
                 .and()
                 .readPomXmlContent()
                 .and()
