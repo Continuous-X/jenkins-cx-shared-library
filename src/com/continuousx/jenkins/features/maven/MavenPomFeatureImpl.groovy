@@ -11,8 +11,6 @@ class MavenPomFeatureImpl extends AbstractFeature {
     public static final String PLUGINS_TXT_FILENAME = 'plugins.txt'
     public static final String POM_XML_FILENAME = 'pom.xml'
 
-    private String pomContent
-
     private Model model
 
     MavenPomFeatureImpl(def jenkinsContext) {
@@ -23,6 +21,10 @@ class MavenPomFeatureImpl extends AbstractFeature {
     }
 
     MavenPomFeatureImpl prepare() {
+        return this
+    }
+
+    MavenPomFeatureImpl and() {
         return this
     }
 
@@ -38,6 +40,10 @@ class MavenPomFeatureImpl extends AbstractFeature {
         this.model = xpp3Reader.read(new ByteArrayInputStream(pomContent.getBytes()))
 
         return this
+    }
+
+    String writePluginsTxt(String pluginsTxtContent = convertDependencies2PluginsTxt()) {
+        jenkinsContext.writeFile( file: PLUGINS_TXT_FILENAME, text: pluginsTxtContent)
     }
 
     String convertDependencies2PluginsTxt() {
