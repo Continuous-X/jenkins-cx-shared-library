@@ -1,8 +1,13 @@
 package com.continuousx.jenkins.pipeline.config
 
 class PipelineConfigMavenBuild implements PipelineConfig {
-    final static PipelineType pipelineType = PipelineType.PIPELINE_MAVEN_BUILD
+    private final static PipelineType pipelineType = PipelineType.PIPELINE_MAVEN_BUILD
     LogLevelType logLevelType
+
+    @Override
+    PipelineType getPipelineType() {
+        return pipelineType
+    }
 
     @Override
     LogLevelType logLevelType() {

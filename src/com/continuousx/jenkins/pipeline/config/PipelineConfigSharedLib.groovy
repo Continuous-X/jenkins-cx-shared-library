@@ -1,8 +1,13 @@
 package com.continuousx.jenkins.pipeline.config
 
 class PipelineConfigSharedLib implements PipelineConfig {
-    final static PipelineType pipelineType = PipelineType.PIPELINE_JENKINS_SHARED_LIB
+    private final static PipelineType pipelineType = PipelineType.PIPELINE_JENKINS_SHARED_LIB
     LogLevelType logLevelType
+
+    @Override
+    PipelineType getPipelineType() {
+        return pipelineType
+    }
 
     @Override
     LogLevelType logLevelType() {
