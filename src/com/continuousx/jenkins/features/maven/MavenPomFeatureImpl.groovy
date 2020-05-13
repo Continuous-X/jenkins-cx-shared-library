@@ -1,7 +1,7 @@
 package com.continuousx.jenkins.features.maven
 
-import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.features.AbstractFeature
+import com.continuousx.jenkins.features.exceptions.FeatureException
 import com.continuousx.jenkins.pipeline.config.LogLevelType
 import org.apache.maven.model.Model
 import org.apache.maven.model.Parent
@@ -34,12 +34,17 @@ class MavenPomFeatureImpl extends AbstractFeature {
         return jenkinsContext.readFile(file: POM_XML_FILENAME )
     }
 
-    MavenPomFeatureImpl readPomXmlContent(String pomContent = loadPomContent()) {
+    MavenPomFeatureImpl readPomXmlContent(String pomContent = loadPomContent()) throws FeatureException {
         Objects.nonNull(pomContent)
 
         logLevel == LogLevelType.DEBUG ? jenkinsContext.log.debug("pomContent: \n ${pomContent}") : and()
         MavenXpp3Reader xpp3Reader = new MavenXpp3Reader()
-        this.model = xpp3Reader.read(new ByteArrayInputStream(pomContent.getBytes()))
+        try {
+            this.model = xpp3Reader.read(new ByteArrayInputStream(pomContent.getBytes()))
+        } catch (Exception e) {
+            jenkinsContext.log.error("${e.getMessage()}")
+            throw FeatureException(e.getMessage())
+        }
 
         return this
     }

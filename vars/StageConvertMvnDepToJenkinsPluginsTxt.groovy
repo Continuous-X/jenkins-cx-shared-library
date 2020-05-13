@@ -12,5 +12,6 @@ def call(PipelineConfig config) {
 
         def checkPluginsTxt = fileExists file: MavenPomFeatureImpl.PLUGINS_TXT_FILENAME
         log.info "check ${MavenPomFeatureImpl.PLUGINS_TXT_FILENAME}: ${checkPluginsTxt}"
+        log.info checkPluginsTxt ? readFile( file: MavenPomFeatureImpl.PLUGINS_TXT_FILENAME) : "not exist"
     }
 }
