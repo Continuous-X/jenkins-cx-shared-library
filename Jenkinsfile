@@ -1,5 +1,6 @@
 #!/usr/bin/env groovy
 import com.continuousx.jenkins.pipeline.config.LogLevelType
+import com.continuousx.jenkins.pipeline.config.PipelineConfig
 import com.continuousx.jenkins.pipeline.config.PipelineConfigMavenBuild
 import org.jenkinsci.plugins.workflow.libs.Library
 
