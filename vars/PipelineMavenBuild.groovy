@@ -1,7 +1,6 @@
-import com.continuousx.jenkins.pipeline.config.PipelineConfigTmp
+import com.continuousx.jenkins.pipeline.config.PipelineConfigMavenBuild
 
-//@SuppressFBWarnings(value = 'SE_NO_SERIALVERSIONID')
-def call(PipelineConfigTmp config) {
+def call(PipelineConfigMavenBuild config) {
 
     pipeline {
         agent any

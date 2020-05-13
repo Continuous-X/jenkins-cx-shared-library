@@ -3,7 +3,10 @@ import com.continuousx.jenkins.pipeline.config.PipelineType
 
 def call(PipelineConfig config) {
 
-    switch(config.metadata.type) {
+    switch(config.getPipelineType()) {
+        case PipelineType.PIPELINE_MAVEN_BUILD:
+            PipelineMavenBuild(config)
+            break
         case PipelineType.PIPELINE_JENKINS_SHARED_LIB:
             PipelineSharedLib(config)
             break
