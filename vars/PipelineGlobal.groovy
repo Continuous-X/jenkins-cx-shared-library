@@ -1,5 +1,5 @@
-import com.continuousx.jenkins.pipeline.config.PipelineConfig
-import com.continuousx.jenkins.pipeline.config.PipelineType
+import com.continuousx.jenkins.pipelines.PipelineType
+import com.continuousx.jenkins.pipelines.config.PipelineConfig
 
 def call(PipelineConfig config) {
 

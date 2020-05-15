@@ -1,0 +1,9 @@
+package com.continuousx.jenkins.stages
+
+enum StageType {
+    STAGE_MAVEN_BUILD_COMPILE,
+    STAGE_MAVEN_BUILD_PACKAGE,
+    STAGE_MAVEN_BUILD_INSTALL,
+    STAGE_MAVEN_BUILD_DEPLOY,
+    STAGE_JENKINS_CONVERT_PLUGINS_TXT
+}

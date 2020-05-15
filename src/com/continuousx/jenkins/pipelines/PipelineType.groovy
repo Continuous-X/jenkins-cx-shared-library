@@ -1,4 +1,4 @@
-package com.continuousx.jenkins.pipeline.config
+package com.continuousx.jenkins.pipelines
 
 enum PipelineType {
     PIPELINE_JENKINS_SHARED_LIB,
