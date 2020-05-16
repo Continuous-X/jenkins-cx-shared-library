@@ -1,10 +1,11 @@
 package com.continuousx.jenkins.pipelines.config
 
 import com.continuousx.jenkins.stages.StageConfig
+import com.continuousx.jenkins.stages.StageType
 import groovy.transform.TypeChecked
 
 @TypeChecked
 class PipelineConfigStageConfigEntry implements Serializable {
-    String name
+    StageType name
     StageConfig stageConfig
 }
