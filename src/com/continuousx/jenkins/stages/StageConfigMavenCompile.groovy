@@ -2,9 +2,9 @@ package com.continuousx.jenkins.stages
 
 import com.continuousx.jenkins.LogLevelType
 
-class StageConfigJenkinsConvertPluginsTxt implements StageConfig {
+class StageConfigMavenCompile implements StageConfig {
 
-    private final static StageType stageType = StageType.STAGE_JENKINS_CONVERT_PLUGINS_TXT
+    private final static StageType stageType = StageType.STAGE_MAVEN_COMPILE
     boolean active = true
     boolean failOnError = true
 

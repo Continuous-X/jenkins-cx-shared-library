@@ -1,4 +1,4 @@
-import com.continuousx.jenkins.pipeline.config.PipelineConfigMavenBuild
+import com.continuousx.jenkins.pipelines.config.PipelineConfigMavenBuild
 
 def call(PipelineConfigMavenBuild config) {
 

@@ -1,7 +1,7 @@
 import com.continuousx.jenkins.features.maven.MavenPomFeatureImpl
-import com.continuousx.jenkins.pipeline.config.PipelineConfig
+import com.continuousx.jenkins.stages.StageConfigJenkinsConvertPluginsTxt
 
-def call(PipelineConfig config) {
+def call(StageConfigJenkinsConvertPluginsTxt config) {
 
     stage('Create Jenkins plugins.txt') {
         new MavenPomFeatureImpl(this, config.logLevelType()).prepare()

@@ -1,8 +1,8 @@
 package com.continuousx.jenkins.features.maven
 
+import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.features.AbstractFeature
 import com.continuousx.jenkins.features.exceptions.FeatureException
-import com.continuousx.jenkins.pipeline.config.LogLevelType
 import org.apache.maven.model.Model
 import org.apache.maven.model.Parent
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader
@@ -43,7 +43,7 @@ class MavenPomFeatureImpl extends AbstractFeature {
             this.model = xpp3Reader.read(new ByteArrayInputStream(pomContent.getBytes()))
         } catch (Exception e) {
             jenkinsContext.log.error("${e.getMessage()}")
-            throw FeatureException(e.getMessage())
+            throw new FeatureException(e.getMessage())
         }
 
         return this

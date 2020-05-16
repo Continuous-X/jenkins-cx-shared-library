@@ -1,8 +1,8 @@
 package com.continuousx.jenkins.features.maven
 
 import com.cloudbees.groovy.cps.NonCPS
+import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.features.AbstractFeature
-import com.continuousx.jenkins.pipeline.config.LogLevelType
 
 class MavenBuildWrapperFeatureImpl extends AbstractFeature implements MavenBuildFeature {
     public final static MVN_WRAPPER_FILENAME = 'mvnw'

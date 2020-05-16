@@ -1,8 +1,8 @@
 import com.continuousx.jenkins.features.maven.MavenBuildFeature
 import com.continuousx.jenkins.features.maven.MavenBuildWrapperFeatureImpl
-import com.continuousx.jenkins.pipeline.config.PipelineConfig
+import com.continuousx.jenkins.pipelines.config.PipelineConfigMavenBuild
 
-def call(PipelineConfig config) {
+def call(PipelineConfigMavenBuild config) {
 
     stage('build') {
         log.info "run build"

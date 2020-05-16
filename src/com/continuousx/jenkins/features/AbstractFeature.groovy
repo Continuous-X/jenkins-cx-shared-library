@@ -1,8 +1,8 @@
 package com.continuousx.jenkins.features
 
 import com.cloudbees.groovy.cps.NonCPS
-import com.continuousx.jenkins.pipeline.config.LogLevelType
-import com.continuousx.jenkins.pipeline.utils.JenkinsPluginCheck
+import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.pipelines.utils.JenkinsPluginCheck
 
 abstract class AbstractFeature implements Feature, Serializable{
     def jenkinsContext
