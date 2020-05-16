@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.cx.jenkins.image</groupId>
         <artifactId>parent</artifactId>
-        <version>v0.1.6</version>
+        <version>v0.1.7</version>
     </parent>
 
     <groupId>com.cx.jenkins.sharedlib</groupId>
@@ -99,18 +99,8 @@
                             <goals>
                                 <goal>addSources</goal>
                                 <goal>addTestSources</goal>
-<!--
-                                <goal>generateStubs</goal>
--->
                                 <goal>compile</goal>
-<!--
-                                <goal>generateTestStubs</goal>
--->
                                 <goal>compileTests</goal>
-<!--
-                                <goal>groovydoc</goal>
-                                <goal>groovydocTests</goal>
--->
                             </goals>
                         </execution>
                     </executions>

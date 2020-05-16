@@ -1,4 +1,5 @@
 import com.continuousx.jenkins.pipelines.config.PipelineConfigMavenBuild
+import com.continuousx.jenkins.stages.StageType
 
 def call(PipelineConfigMavenBuild config) {
 
@@ -24,7 +25,7 @@ def call(PipelineConfigMavenBuild config) {
             stage('Convert DepToFile') {
                 steps {
                     milestone 20
-                    StageConvertMvnDepToJenkinsPluginsTxt(config)
+                    StageConvertMvnDepToJenkinsPluginsTxt(config.stageList.get(StageType.STAGE_JENKINS_CONVERT_PLUGINS_TXT).stageConfig)
                 }
             }
 
