@@ -15,6 +15,7 @@ class StageConfigMavenCompile implements StageConfig, Serializable {
         return stageType
     }
 
+    @Override
     boolean isActive() {
         return active
     }
