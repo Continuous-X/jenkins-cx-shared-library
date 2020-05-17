@@ -49,8 +49,14 @@ class MavenPomFeatureImpl extends AbstractFeature {
         return this
     }
 
-    String writePluginsTxt(String pluginsTxtContent = convertDependencies2PluginsTxt()) {
+    MavenPomFeatureImpl writePluginsTxt(String pluginsTxtContent = convertDependencies2PluginsTxt()) {
         jenkinsContext.writeFile( file: PLUGINS_TXT_FILENAME, text: pluginsTxtContent)
+    }
+
+    void checkPluginsTxt() {
+        def checkPluginsTxt = jenkinsContext.fileExists( file: MavenPomFeatureImpl.PLUGINS_TXT_FILENAME)
+        jenkinsContext.log.info "check ${MavenPomFeatureImpl.PLUGINS_TXT_FILENAME}: ${checkPluginsTxt}"
+        jenkinsContext.log.info checkPluginsTxt ? jenkinsContext.readFile(file: MavenPomFeatureImpl.PLUGINS_TXT_FILENAME) : "not exist"
     }
 
     String convertDependencies2PluginsTxt() {
@@ -66,6 +72,8 @@ class MavenPomFeatureImpl extends AbstractFeature {
 
         return content.toString()
     }
+
+
 
     Parent getParent() {
         return this.model.getParent()
