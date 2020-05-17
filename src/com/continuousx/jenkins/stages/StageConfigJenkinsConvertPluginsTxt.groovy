@@ -17,16 +17,16 @@ class StageConfigJenkinsConvertPluginsTxt implements StageConfig {
 
     @Override
     boolean isActive() {
-        return active
+        return this.active
     }
 
     @Override
     boolean isFailOnError() {
-        return failOnError
+        return this.failOnError
     }
 
     @Override
     LogLevelType logLevelType() {
-        return logLevelType
+        return this.logLevelType
     }
 }
