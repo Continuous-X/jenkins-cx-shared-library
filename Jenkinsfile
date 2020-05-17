@@ -5,9 +5,10 @@ import org.jenkinsci.plugins.workflow.libs.Library
 
 @Library(['jenkins-cx-shared-library@dependabot/maven/master/org.spockframework-spock-bom-2.0-M2-groovy-3.0']) _
 
-PipelineGlobal(new PipelineConfigMavenBuild(
+PipelineConfigMavenBuild pipelineConfig = new PipelineConfigMavenBuild(
         logLevelType: LogLevelType.DEBUG
-).setStageConfigJenkinsConvertPluginsTxt(
-        active: false,
-        failOnError: true
-))
+)
+
+pipelineConfig.configStageJenkinsConvertPluginsTxt(false,true)
+
+PipelineGlobal(pipelineConfig)

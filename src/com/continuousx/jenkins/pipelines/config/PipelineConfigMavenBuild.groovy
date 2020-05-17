@@ -19,7 +19,7 @@ class PipelineConfigMavenBuild implements PipelineConfig {
         return stageConfigJenkinsConvertPluginsTxt
     }
 
-    void setStageConfigJenkinsConvertPluginsTxt(boolean active, boolean failOnError) {
+    void configStageJenkinsConvertPluginsTxt(boolean active, boolean failOnError) {
         stageConfigJenkinsConvertPluginsTxt.setActive(active)
         stageConfigJenkinsConvertPluginsTxt.setFailOnError(failOnError)
     }
