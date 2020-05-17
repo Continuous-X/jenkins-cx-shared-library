@@ -51,6 +51,7 @@ class MavenPomFeatureImpl extends AbstractFeature {
 
     MavenPomFeatureImpl writePluginsTxt(String pluginsTxtContent = convertDependencies2PluginsTxt()) {
         jenkinsContext.writeFile( file: PLUGINS_TXT_FILENAME, text: pluginsTxtContent)
+        return this
     }
 
     void checkPluginsTxt() {
