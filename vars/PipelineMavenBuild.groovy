@@ -25,7 +25,7 @@ def call(PipelineConfigMavenBuild config) {
             stage('Convert DepToFile') {
                 steps {
                     milestone 20
-                    StageConvertMvnDepToJenkinsPluginsTxt(config.stageList.get(StageType.STAGE_JENKINS_CONVERT_PLUGINS_TXT).stageConfig)
+                    StageConvertMvnDepToJenkinsPluginsTxt(config.stageList.get(StageType.STAGE_JENKINS_CONVERT_PLUGINS_TXT))
                 }
             }
 
