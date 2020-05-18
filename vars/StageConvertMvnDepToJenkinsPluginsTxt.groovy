@@ -4,12 +4,12 @@ import com.continuousx.jenkins.stages.StageConfigJenkinsConvertPluginsTxt
 def call(StageConfigJenkinsConvertPluginsTxt config) {
 
     stage('Create Jenkins plugins.txt') {
-        new MavenPomFeatureImpl(this, config.logLevelType()).prepare()
+        config.active ? new MavenPomFeatureImpl(this, config.logLevelType()).prepare()
                 .and()
                 .readPomXmlContent()
                 .and()
                 .writePluginsTxt()
                 .and()
-                .checkPluginsTxt()
+                .checkPluginsTxt() : log.info( "inactive ${config.getStageType()}" )
     }
 }

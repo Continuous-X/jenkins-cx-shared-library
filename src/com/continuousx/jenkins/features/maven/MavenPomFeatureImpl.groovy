@@ -55,9 +55,9 @@ class MavenPomFeatureImpl extends AbstractFeature {
     }
 
     void checkPluginsTxt() {
-        def checkPluginsTxt = jenkinsContext.fileExists( file: MavenPomFeatureImpl.PLUGINS_TXT_FILENAME)
-        jenkinsContext.log.info "check ${MavenPomFeatureImpl.PLUGINS_TXT_FILENAME}: ${checkPluginsTxt}"
-        jenkinsContext.log.info checkPluginsTxt ? jenkinsContext.readFile(file: MavenPomFeatureImpl.PLUGINS_TXT_FILENAME) : "not exist"
+        def checkPluginsTxt = jenkinsContext.fileExists( file: PLUGINS_TXT_FILENAME)
+        jenkinsContext.log.info "check ${PLUGINS_TXT_FILENAME}: ${checkPluginsTxt}"
+        jenkinsContext.log.info checkPluginsTxt ? jenkinsContext.readFile(file: PLUGINS_TXT_FILENAME) : "not exist"
     }
 
     String convertDependencies2PluginsTxt() {
