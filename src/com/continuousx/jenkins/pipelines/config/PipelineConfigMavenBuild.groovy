@@ -24,6 +24,8 @@ class PipelineConfigMavenBuild implements PipelineConfig {
         stageConfigJenkinsConvertPluginsTxt.setFailOnError(failOnError)
     }
 
+    boolean isActive() {return false}
+
     @Override
     PipelineType getPipelineType() {
         return pipelineType
