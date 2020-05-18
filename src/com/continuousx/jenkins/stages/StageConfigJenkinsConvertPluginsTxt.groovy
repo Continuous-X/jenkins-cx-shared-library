@@ -2,7 +2,7 @@ package com.continuousx.jenkins.stages
 
 import com.continuousx.jenkins.LogLevelType
 
-class StageConfigJenkinsConvertPluginsTxt implements StageConfig, Serializable {
+class StageConfigJenkinsConvertPluginsTxt implements StageConfig {
 
     private final static StageType stageType = StageType.STAGE_JENKINS_CONVERT_PLUGINS_TXT
     boolean active = true
@@ -15,6 +15,7 @@ class StageConfigJenkinsConvertPluginsTxt implements StageConfig, Serializable {
         return stageType
     }
 
+    @Override
     boolean isActive() {
         return this.active
     }
