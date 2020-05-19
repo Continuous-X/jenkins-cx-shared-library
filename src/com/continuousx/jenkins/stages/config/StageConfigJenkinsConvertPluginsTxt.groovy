@@ -19,6 +19,7 @@ class StageConfigJenkinsConvertPluginsTxt implements StageConfig {
     }
 
     @Override
+    @NonCPS
     boolean isActive() {
         return active
     }
