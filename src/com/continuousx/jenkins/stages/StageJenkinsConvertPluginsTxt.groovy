@@ -6,17 +6,26 @@ import com.continuousx.jenkins.stages.config.StageConfigJenkinsConvertPluginsTxt
 
 class StageJenkinsConvertPluginsTxt extends AbstractStage {
     StageJenkinsConvertPluginsTxt(def jenkinsContext, StageConfigJenkinsConvertPluginsTxt config, LogLevelType logLevel = LogLevelType.INFO) {
-        super(jenkinsContext, config, logLevel)
+        super(jenkinsContext,
+                config, [
+                    "workflow-basic-steps",
+                    "maven-plugin"
+                ],
+                logLevel)
     }
 
     @Override
     void run() {
-        new MavenPomFeatureImpl(jenkinsContext, config.logLevelType()).prepare()
-                .and()
-                .readPomXmlContent()
-                .and()
-                .writePluginsTxt()
-                .and()
-                .checkPluginsTxt()
+        if (checkNeededPlugins()) {
+            new MavenPomFeatureImpl(jenkinsContext, config.logLevelType()).prepare()
+                    .and()
+                    .readPomXmlContent()
+                    .and()
+                    .writePluginsTxt()
+                    .and()
+                    .checkPluginsTxt()
+        } else {
+            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
+        }
     }
 }
