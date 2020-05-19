@@ -11,7 +11,7 @@ class StageJenkinsConvertPluginsTxt extends AbstractStage {
 
     @Override
     void run() {
-        new MavenPomFeatureImpl(this, config.logLevelType()).prepare()
+        new MavenPomFeatureImpl(jenkinsContext, config.logLevelType()).prepare()
                 .and()
                 .readPomXmlContent()
                 .and()
