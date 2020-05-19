@@ -15,7 +15,7 @@ class PipelineConfigSharedLib implements PipelineConfig {
     }
 
     @Override
-    LogLevelType logLevelType() {
+    LogLevelType getLogLevelType() {
         return logLevelType
     }
 }

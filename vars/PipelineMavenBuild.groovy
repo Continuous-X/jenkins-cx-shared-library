@@ -1,8 +1,7 @@
 import com.continuousx.jenkins.pipelines.config.PipelineConfigMavenBuild
+import com.continuousx.jenkins.stages.StageJenkinsConvertPluginsTxt
 
 def call(PipelineConfigMavenBuild config) {
-
-    boolean test = config.getStageConfigJenkinsConvertPluginsTxt().isActive()
 
     pipeline {
         agent any
@@ -25,11 +24,13 @@ def call(PipelineConfigMavenBuild config) {
 
             stage('Convert DepToFile') {
                 when {
-                    expression { test }
+                    expression { return config.stageConfigJenkinsConvertPluginsTxt.isActive() }
                 }
                 steps {
                     milestone 20
-                    StageConvertMvnDepToJenkinsPluginsTxt(config.getStageConfigJenkinsConvertPluginsTxt())
+                    script {
+                        new StageJenkinsConvertPluginsTxt(this, config.getStageConfigJenkinsConvertPluginsTxt()).run()
+                    }
                 }
             }
 

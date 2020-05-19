@@ -1,6 +1,9 @@
-package com.continuousx.jenkins.stages
+package com.continuousx.jenkins.stages.config
 
+import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.stages.StageType
+import com.continuousx.jenkins.stages.config.StageConfig
 
 class StageConfigJenkinsConvertPluginsTxt implements StageConfig {
 
@@ -17,16 +20,16 @@ class StageConfigJenkinsConvertPluginsTxt implements StageConfig {
 
     @Override
     boolean isActive() {
-        return this.active
+        return active
     }
 
     @Override
     boolean isFailOnError() {
-        return this.failOnError
+        return failOnError
     }
 
     @Override
     LogLevelType logLevelType() {
-        return this.logLevelType
+        return logLevelType
     }
 }

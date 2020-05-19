@@ -1,5 +1,5 @@
 import com.continuousx.jenkins.features.maven.MavenPomFeatureImpl
-import com.continuousx.jenkins.stages.StageConfigJenkinsConvertPluginsTxt
+import com.continuousx.jenkins.stages.config.StageConfigJenkinsConvertPluginsTxt
 
 def call(StageConfigJenkinsConvertPluginsTxt config) {
     if( config.isActive() ) {

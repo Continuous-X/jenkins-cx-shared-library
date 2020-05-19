@@ -5,6 +5,5 @@ import com.continuousx.jenkins.pipelines.PipelineType
 
 interface PipelineConfig extends Serializable {
     PipelineType getPipelineType()
-
-    LogLevelType logLevelType()
+    LogLevelType getLogLevelType()
 }

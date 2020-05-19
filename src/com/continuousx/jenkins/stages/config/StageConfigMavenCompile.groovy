@@ -1,6 +1,8 @@
-package com.continuousx.jenkins.stages
+package com.continuousx.jenkins.stages.config
 
 import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.stages.StageType
+import com.continuousx.jenkins.stages.config.StageConfig
 
 class StageConfigMavenCompile implements StageConfig, Serializable {
 
