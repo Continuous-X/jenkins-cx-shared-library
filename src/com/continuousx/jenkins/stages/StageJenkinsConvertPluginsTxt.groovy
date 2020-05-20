@@ -1,7 +1,7 @@
 package com.continuousx.jenkins.stages
 
 import com.continuousx.jenkins.LogLevelType
-import com.continuousx.jenkins.features.maven.MavenPomFeatureImpl
+import com.continuousx.jenkins.features.maven.MavenFeaturePomImpl
 import com.continuousx.jenkins.stages.config.StageConfigJenkinsConvertPluginsTxt
 
 class StageJenkinsConvertPluginsTxt extends AbstractStage {
@@ -17,7 +17,7 @@ class StageJenkinsConvertPluginsTxt extends AbstractStage {
     @Override
     void run() {
         if (checkNeededPlugins()) {
-            new MavenPomFeatureImpl(jenkinsContext, config.logLevelType()).prepare()
+            new MavenFeaturePomImpl(jenkinsContext, config.logLevelType()).prepare()
                     .and()
                     .readPomXmlContent()
                     .and()

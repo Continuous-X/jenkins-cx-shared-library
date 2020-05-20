@@ -1,15 +1,15 @@
-import com.continuousx.jenkins.features.maven.MavenBuildFeature
-import com.continuousx.jenkins.features.maven.MavenBuildWrapperFeatureImpl
+import com.continuousx.jenkins.features.maven.MavenFeature
+import com.continuousx.jenkins.features.maven.MavenFeatureWrapperImpl
 import com.continuousx.jenkins.pipelines.config.PipelineConfigMavenBuild
 
 def call(PipelineConfigMavenBuild config) {
 
     stage('build') {
         log.info "run build"
-        assert fileExists(file: MavenBuildWrapperFeatureImpl.MVN_WRAPPER_FILENAME)
-        assert fileExists(file: MavenBuildWrapperFeatureImpl.MVN_SETTINGS_XML)
+        assert fileExists(file: MavenFeatureWrapperImpl.MVN_WRAPPER_FILENAME)
+        assert fileExists(file: MavenFeatureWrapperImpl.MVN_SETTINGS_XML)
 
-        MavenBuildFeature maven = new MavenBuildWrapperFeatureImpl(this, config.getLogLevelType()).prepare()
+        MavenFeature maven = new MavenFeatureWrapperImpl(this, config.getLogLevelType()).prepare()
         log.info maven.getVersion()
         maven.startGoal('clean install')
 

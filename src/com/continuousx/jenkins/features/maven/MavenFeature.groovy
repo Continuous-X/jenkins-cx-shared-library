@@ -1,6 +1,6 @@
 package com.continuousx.jenkins.features.maven
 
-interface MavenBuildFeature {
+interface MavenFeature {
     String startGoal(String goal)
     String getVersion()
 }

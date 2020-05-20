@@ -59,10 +59,8 @@ class JenkinsPluginCheck {
             if(!isPluginInstalled(plugin)){
                 jenkinsContext.echo "listet plugin not found ${plugin}"
                 return checkInstalled = false
-            } else {
-                jenkinsContext.echo "listet plugin found ${plugin}"
-                checkInstalled = true
             }
+            jenkinsContext.echo "listet plugin found ${plugin}"
         }
         return checkInstalled
     }

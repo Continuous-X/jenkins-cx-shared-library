@@ -7,14 +7,14 @@ import org.apache.maven.model.Model
 import org.apache.maven.model.Parent
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader
 
-class MavenPomFeatureImpl extends AbstractFeature {
+class MavenFeaturePomImpl extends AbstractFeature {
 
     public static final String PLUGINS_TXT_FILENAME = 'plugins.txt'
     public static final String POM_XML_FILENAME = 'pom.xml'
 
     private Model model
 
-    MavenPomFeatureImpl(def jenkinsContext, LogLevelType logLevel = LogLevelType.INFO) {
+    MavenFeaturePomImpl(def jenkinsContext, LogLevelType logLevel = LogLevelType.INFO) {
         super(jenkinsContext, [
                 "workflow-basic-steps",
                 "maven-plugin"
@@ -22,11 +22,11 @@ class MavenPomFeatureImpl extends AbstractFeature {
         logLevel)
     }
 
-    MavenPomFeatureImpl prepare() {
+    MavenFeaturePomImpl prepare() {
         return this
     }
 
-    MavenPomFeatureImpl and() {
+    MavenFeaturePomImpl and() {
         return this
     }
 
@@ -34,7 +34,7 @@ class MavenPomFeatureImpl extends AbstractFeature {
         return jenkinsContext.readFile(file: POM_XML_FILENAME )
     }
 
-    MavenPomFeatureImpl readPomXmlContent(String pomContent = loadPomContent()) throws FeatureException {
+    MavenFeaturePomImpl readPomXmlContent(String pomContent = loadPomContent()) throws FeatureException {
         Objects.nonNull(pomContent)
 
         logLevel == LogLevelType.DEBUG ? jenkinsContext.log.debug("pomContent: \n ${pomContent}") : and()
@@ -49,7 +49,7 @@ class MavenPomFeatureImpl extends AbstractFeature {
         return this
     }
 
-    MavenPomFeatureImpl writePluginsTxt(String pluginsTxtContent = convertDependencies2PluginsTxt()) {
+    MavenFeaturePomImpl writePluginsTxt(String pluginsTxtContent = convertDependencies2PluginsTxt()) {
         jenkinsContext.writeFile( file: PLUGINS_TXT_FILENAME, text: pluginsTxtContent)
         return this
     }
