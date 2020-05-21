@@ -1,3 +1,5 @@
+import com.continuousx.jenkins.features.maven.MavenFeature
+import com.continuousx.jenkins.features.maven.MavenFeatureWrapperImpl
 import com.continuousx.jenkins.pipelines.config.PipelineConfigMavenBuild
 import com.continuousx.jenkins.stages.StageJenkinsConvertPluginsTxt
 
@@ -35,10 +37,17 @@ def call(PipelineConfigMavenBuild config) {
             }
 
             stage('Build') {
+                when {
+                    expression { return config.stageConfigMavenCompile.isActive() }
+                }
                 steps {
                     milestone 50
                     script {
-                        StageMvnWrapperBuild(config)
+                        log.info "run maven feature"
+                        assert fileExists(file: MavenFeatureWrapperImpl.MVN_WRAPPER_FILENAME)
+                        assert fileExists(file: MavenFeatureWrapperImpl.MVN_SETTINGS_XML)
+
+                        MavenFeature maven = new MavenFeatureWrapperImpl(this, config.getLogLevelType()).run()
                     }
                 }
             }

@@ -10,5 +10,6 @@ PipelineConfigMavenBuild pipelineConfig = new PipelineConfigMavenBuild(
 )
 
 pipelineConfig.configStageJenkinsConvertPluginsTxt(true,true)
+pipelineConfig.configStageMavenCompile(true,true)
 
 PipelineGlobal(pipelineConfig)

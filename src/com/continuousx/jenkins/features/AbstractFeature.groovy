@@ -18,7 +18,6 @@ abstract class AbstractFeature implements Feature, Serializable{
     }
 
     @NonCPS
-    @Override
     boolean checkNeededPlugins() {
         return new JenkinsPluginCheck(jenkinsContext)
                 .addInstalledPlugins()
@@ -29,5 +28,5 @@ abstract class AbstractFeature implements Feature, Serializable{
     }
 
     @NonCPS
-    abstract Feature prepare()
+    abstract Feature run()
 }

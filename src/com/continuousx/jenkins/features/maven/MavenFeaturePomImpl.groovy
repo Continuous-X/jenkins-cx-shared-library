@@ -2,6 +2,7 @@ package com.continuousx.jenkins.features.maven
 
 import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.features.AbstractFeature
+import com.continuousx.jenkins.features.Feature
 import com.continuousx.jenkins.features.exceptions.FeatureException
 import org.apache.maven.model.Model
 import org.apache.maven.model.Parent
@@ -20,14 +21,6 @@ class MavenFeaturePomImpl extends AbstractFeature {
                 "maven-plugin"
         ],
         logLevel)
-    }
-
-    MavenFeaturePomImpl prepare() {
-        return this
-    }
-
-    MavenFeaturePomImpl and() {
-        return this
     }
 
     private String loadPomContent() {
@@ -74,9 +67,19 @@ class MavenFeaturePomImpl extends AbstractFeature {
         return content.toString()
     }
 
-
-
     Parent getParent() {
         return this.model.getParent()
+    }
+
+    @Override
+    MavenFeaturePomImpl run() {
+        if(checkNeededPlugins()) {
+            readPomXmlContent()
+            writePluginsTxt()
+            checkPluginsTxt()
+        } else {
+            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
+        }
+        return this
     }
 }

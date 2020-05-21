@@ -8,7 +8,7 @@ class MavenFeatureWrapperImpl extends AbstractFeature implements MavenFeature {
     public final static MVN_WRAPPER_FILENAME = 'mvnw'
     public final static MVN_SETTINGS_XML = '.mvn/settings.xml'
 
-    private String mvnwCmd = "./${MVN_WRAPPER_FILENAME}"
+    private String mavenCmd = "./${MVN_WRAPPER_FILENAME}"
 
 
     MavenFeatureWrapperImpl(def jenkinsContext, LogLevelType logLevel = LogLevelType.INFO) {
@@ -16,29 +16,41 @@ class MavenFeatureWrapperImpl extends AbstractFeature implements MavenFeature {
                 "workflow-basic-steps",
                 "maven-plugin"
         ],
-        logLevel)
+                logLevel)
     }
 
-    MavenFeatureWrapperImpl prepare() {
+    private void setPermission() {
         jenkinsContext.sh(
-                script: "ls -la && pwd && chmod 555 ${mvnwCmd}",
-                returnStdout: true )
-        return this
+                script: "ls -la && pwd && chmod 555 ${mavenCmd}",
+                returnStdout: true)
     }
 
     @NonCPS
     @Override
-    String startGoal(String goal) {
-        return jenkinsContext.sh(
-                script: "${mvnwCmd} ${goal} -s ${MVN_SETTINGS_XML}",
-                returnStdout: true )
+    MavenFeatureWrapperImpl startGoal(String goal) {
+        jenkinsContext.sh(
+                script: "${mavenCmd} ${goal} -s ${MVN_SETTINGS_XML}",
+                returnStdout: true)
+        return this
+    }
+
+
+    @Override
+    MavenFeatureWrapperImpl showVersion() {
+        jenkinsContext.sh(
+                script: "${mavenCmd} --version",
+                returnStdout: true)
+        return this
     }
 
     @Override
-    String getVersion() {
-        return jenkinsContext.sh(
-                script: "${mvnwCmd} --version",
-                returnStdout: true )
+    MavenFeatureWrapperImpl run() {
+        if(checkNeededPlugins()) {
+            setPermission()
+            showVersion()
+        } else {
+            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
+        }
+        return this
     }
-
 }
