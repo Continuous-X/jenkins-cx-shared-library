@@ -9,3 +9,7 @@ def info(String message) {
 def warning(String message) {
     echo "WARNING: ${message}"
 }
+
+def error(String message) {
+    echo "ERROR: ${message}"
+}

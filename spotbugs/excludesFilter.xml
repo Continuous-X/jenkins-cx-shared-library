@@ -16,4 +16,12 @@
     <Match>
         <Class name="~.*logy.*"/>
     </Match>
+    <Bug pattern="UPM_UNCALLED_PRIVATE_METHOD"/>
+    <Match>
+        <Class name="~.*JenkinsPluginCheck.*"/>
+    </Match>
+    <Bug pattern="RANGE_ARRAY_INDEX"/>
+    <Match>
+        <Class name="~.*FeatureException.groovy"/>
+    </Match>
 </FindBugsFilter>

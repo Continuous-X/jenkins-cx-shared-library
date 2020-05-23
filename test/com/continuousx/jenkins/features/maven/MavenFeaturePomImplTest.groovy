@@ -1,8 +1,10 @@
 package com.continuousx.jenkins.features.maven
 
+
+import com.continuousx.jenkins.PipelineMock
 import spock.lang.Specification
 
-class MavenPomFeatureImplTest extends Specification {
+class MavenFeaturePomImplTest extends Specification {
     def "should be create plugins txt from mvn dependencyManagement"() {
         given:
         String testPom = 'test-resources/pom-maven-feature-test.xml'
@@ -11,7 +13,7 @@ class MavenPomFeatureImplTest extends Specification {
         String pomFileContent = pomFile.getText()
         File resultPluginsTxtFile = new File(resultPluginsTxtFilename)
         assert pomFile.exists()
-        MavenPomFeatureImpl mvnDep = new MavenPomFeatureImpl()
+        MavenFeaturePomImpl mvnDep = new MavenFeaturePomImpl(new PipelineMock())
 
         when:
         resultPluginsTxtFile.write(
@@ -29,7 +31,7 @@ class MavenPomFeatureImplTest extends Specification {
         String testPom = 'test-resources/pom-maven-feature-test.xml'
         File pomFile = new File(testPom)
         String pomFileContent = pomFile.getText()
-        MavenPomFeatureImpl mvnDep = new MavenPomFeatureImpl()
+        MavenFeaturePomImpl mvnDep = new MavenFeaturePomImpl(new PipelineMock())
 
         when:
         mvnDep.readPomXmlContent(pomFileContent)

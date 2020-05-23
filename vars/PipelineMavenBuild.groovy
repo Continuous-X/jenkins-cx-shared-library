@@ -1,6 +1,10 @@
-import com.continuousx.jenkins.pipelines.config.PipelineConfigSharedLib
+import com.continuousx.jenkins.features.maven.MavenFeature
+import com.continuousx.jenkins.features.maven.MavenFeatureImpl
+import com.continuousx.jenkins.features.maven.MavenFeatureWrapperImpl
+import com.continuousx.jenkins.pipelines.config.PipelineConfigMavenBuild
+import com.continuousx.jenkins.stages.StageJenkinsConvertPluginsTxt
 
-def call(PipelineConfigSharedLib config) {
+def call(PipelineConfigMavenBuild config) {
 
     pipeline {
         agent any
@@ -22,17 +26,30 @@ def call(PipelineConfigSharedLib config) {
             }
 
             stage('Convert DepToFile') {
+                when {
+                    expression { return config.stageConfigJenkinsConvertPluginsTxt.isActive() }
+                }
                 steps {
                     milestone 20
-                    StageConvertMvnDepToJenkinsPluginsTxt(config)
+                    script {
+                        new StageJenkinsConvertPluginsTxt(this, config.getStageConfigJenkinsConvertPluginsTxt()).run()
+                    }
                 }
             }
 
             stage('Build') {
+                when {
+                    expression { return config.stageConfigMavenCompile.isActive() }
+                }
                 steps {
                     milestone 50
                     script {
-                        StageMvnWrapperBuild(config)
+                        log.info "run maven feature"
+                        assert fileExists(file: MavenFeatureWrapperImpl.MVN_WRAPPER_FILENAME)
+                        assert fileExists(file: MavenFeatureWrapperImpl.MVN_SETTINGS_XML)
+
+                        new MavenFeatureWrapperImpl(this, config.stageConfigMavenCompile.getLogLevelType()).run()
+                        new MavenFeatureImpl(this, config.stageConfigMavenCompile.getLogLevelType()).run()
                     }
                 }
             }

@@ -1,16 +1,15 @@
 #!/usr/bin/env groovy
-import com.continuousx.jenkins.pipeline.config.PipelineConfig
-import com.continuousx.jenkins.pipeline.config.PipelineMetadata
-import com.continuousx.jenkins.pipeline.config.PipelineType
+import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.pipelines.config.PipelineConfigMavenBuild
 import org.jenkinsci.plugins.workflow.libs.Library
 
-@Library(['jenkins-cx-shared-library']) _
+@Library(['jenkins-cx-shared-library@dependabot/maven/master/org.spockframework-spock-bom-2.0-M2-groovy-3.0']) _
 
-PipelineConfig pipelineConfig = new PipelineConfig(
-        metadata: new PipelineMetadata(
-                name: 'jenkins-cx-shared-library',
-                type: PipelineType.PIPELINE_JENKINS_SHARED_LIB
-        )
+PipelineConfigMavenBuild pipelineConfig = new PipelineConfigMavenBuild(
+        logLevelType: LogLevelType.DEBUG
 )
 
-PipelineGlobal( pipelineConfig )
+pipelineConfig.configStageJenkinsConvertPluginsTxt(true,true)
+pipelineConfig.configStageMavenCompile(true,true)
+
+PipelineGlobal(pipelineConfig)
