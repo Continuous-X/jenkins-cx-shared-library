@@ -4,7 +4,7 @@ import com.continuousx.jenkins.features.maven.MavenFeatureWrapperImpl
 import com.continuousx.jenkins.pipelines.config.PipelineConfigMavenBuild
 import com.continuousx.jenkins.stages.StageJenkinsConvertPluginsTxt
 
-def call(PipelineConfigMavenBuild config) {
+def call(PipelineMavenBuild pipelineInstance) {
 
     pipeline {
         agent any

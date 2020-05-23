@@ -1,11 +1,12 @@
 import com.continuousx.jenkins.pipelines.PipelineType
 import com.continuousx.jenkins.pipelines.config.PipelineConfig
 
+@SuppressWarnings(['GroovyAssignabilityCheck', 'GroovyVariableCanBeFinal'])
 def call(PipelineConfig config) {
 
     switch(config.getPipelineType()) {
         case PipelineType.PIPELINE_MAVEN_BUILD:
-            PipelineMavenBuild(config)
+            PipelineMavenBuild(new com.continuousx.jenkins.pipelines.PipelineMavenBuild(this, config))
             break
         case PipelineType.PIPELINE_JENKINS_SHARED_LIB:
             PipelineSharedLib(config)

@@ -21,9 +21,7 @@ abstract class AbstractFeature implements Feature, Serializable{
     boolean checkNeededPlugins() {
         return new JenkinsPluginCheck(jenkinsContext)
                 .addInstalledPlugins()
-                .and()
                 .addNeededPluginList(neededPlugins)
-                .and()
                 .isPluginListInstalled()
     }
 

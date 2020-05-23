@@ -1,16 +1,16 @@
-package com.continuousx.jenkins.stages
+package com.continuousx.jenkins.pipelines
 
 import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.pipelines.config.PipelineConfig
 import com.continuousx.jenkins.pipelines.utils.JenkinsPluginCheck
-import com.continuousx.jenkins.stages.config.StageConfig
 
-abstract class AbstractStage implements Stage, Serializable {
+abstract class AbstractPipeline implements Pipeline, Serializable {
     def jenkinsContext
     List<String> neededPlugins = []
-    StageConfig config
+    PipelineConfig config
     LogLevelType logLevel
 
-    AbstractStage(def jenkinsContext, StageConfig config, List<String> neededPlugins, LogLevelType logLevel = LogLevelType.INFO) {
+    AbstractPipeline(def jenkinsContext, PipelineConfig config, List<String> neededPlugins, LogLevelType logLevel = LogLevelType.INFO) {
         Objects.nonNull(jenkinsContext)
         Objects.nonNull(config)
         Objects.nonNull(neededPlugins)
@@ -27,5 +27,4 @@ abstract class AbstractStage implements Stage, Serializable {
                 .isPluginListInstalled()
     }
 
-    abstract void run()
 }
