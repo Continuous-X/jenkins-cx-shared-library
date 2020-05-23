@@ -25,7 +25,7 @@ def call(com.continuousx.jenkins.pipelines.PipelineMavenBuild mavenPipeline) {
 
             stage('Convert DepToFile') {
                 when {
-                    expression { return mavenPipeline.getConfig().getStageConfigJenkinsConvertPluginsTxt.isActive() }
+                    expression { return mavenPipeline.getConfig().getStageConfigJenkinsConvertPluginsTxt().isActive() }
                 }
                 steps {
                     milestone 20
@@ -37,7 +37,7 @@ def call(com.continuousx.jenkins.pipelines.PipelineMavenBuild mavenPipeline) {
 
             stage('Build') {
                 when {
-                    expression { return mavenPipeline.getConfig().getStageConfigMavenCompile.isActive() }
+                    expression { return mavenPipeline.getConfig().getStageConfigMavenCompile().isActive() }
                 }
                 steps {
                     milestone 50
@@ -46,8 +46,8 @@ def call(com.continuousx.jenkins.pipelines.PipelineMavenBuild mavenPipeline) {
                         assert fileExists(file: MavenFeatureWrapperImpl.MVN_WRAPPER_FILENAME)
                         assert fileExists(file: MavenFeatureWrapperImpl.MVN_SETTINGS_XML)
 
-                        new MavenFeatureWrapperImpl(this, mavenPipeline.getConfig().getStageConfigMavenCompile.getLogLevelType()).run()
-                        new MavenFeatureImpl(this, mavenPipeline.getConfig().getStageConfigMavenCompile.getLogLevelType()).run()
+                        new MavenFeatureWrapperImpl(this, mavenPipeline.getConfig().getStageConfigMavenCompile().getLogLevelType()).run()
+                        new MavenFeatureImpl(this, mavenPipeline.getConfig().getStageConfigMavenCompile().getLogLevelType()).run()
                     }
                 }
             }
