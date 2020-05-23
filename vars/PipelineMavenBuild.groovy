@@ -1,10 +1,8 @@
-import com.continuousx.jenkins.features.maven.MavenFeature
 import com.continuousx.jenkins.features.maven.MavenFeatureImpl
 import com.continuousx.jenkins.features.maven.MavenFeatureWrapperImpl
-import com.continuousx.jenkins.pipelines.config.PipelineConfigMavenBuild
 import com.continuousx.jenkins.stages.StageJenkinsConvertPluginsTxt
 
-def call(PipelineMavenBuild pipelineInstance) {
+def call(com.continuousx.jenkins.pipelines.PipelineMavenBuild mavenPipeline) {
 
     pipeline {
         agent any
@@ -27,19 +25,19 @@ def call(PipelineMavenBuild pipelineInstance) {
 
             stage('Convert DepToFile') {
                 when {
-                    expression { return config.stageConfigJenkinsConvertPluginsTxt.isActive() }
+                    expression { return mavenPipeline.getConfig().getStageConfigJenkinsConvertPluginsTxt.isActive() }
                 }
                 steps {
                     milestone 20
                     script {
-                        new StageJenkinsConvertPluginsTxt(this, config.getStageConfigJenkinsConvertPluginsTxt()).run()
+                        new StageJenkinsConvertPluginsTxt(this, mavenPipeline.getConfig().getStageConfigJenkinsConvertPluginsTxt()).run()
                     }
                 }
             }
 
             stage('Build') {
                 when {
-                    expression { return config.stageConfigMavenCompile.isActive() }
+                    expression { return mavenPipeline.getConfig().getStageConfigMavenCompile.isActive() }
                 }
                 steps {
                     milestone 50
@@ -48,8 +46,8 @@ def call(PipelineMavenBuild pipelineInstance) {
                         assert fileExists(file: MavenFeatureWrapperImpl.MVN_WRAPPER_FILENAME)
                         assert fileExists(file: MavenFeatureWrapperImpl.MVN_SETTINGS_XML)
 
-                        new MavenFeatureWrapperImpl(this, config.stageConfigMavenCompile.getLogLevelType()).run()
-                        new MavenFeatureImpl(this, config.stageConfigMavenCompile.getLogLevelType()).run()
+                        new MavenFeatureWrapperImpl(this, mavenPipeline.getConfig().getStageConfigMavenCompile.getLogLevelType()).run()
+                        new MavenFeatureImpl(this, mavenPipeline.getConfig().getStageConfigMavenCompile.getLogLevelType()).run()
                     }
                 }
             }
