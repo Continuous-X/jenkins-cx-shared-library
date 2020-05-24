@@ -1,3 +1,4 @@
+import com.continuousx.jenkins.pipelines.PipelineNextLevel
 import com.continuousx.jenkins.pipelines.PipelineType
 import com.continuousx.jenkins.pipelines.config.PipelineConfig
 
@@ -10,6 +11,9 @@ def call(PipelineConfig config) {
             break
         case PipelineType.PIPELINE_JENKINS_SHARED_LIB:
             PipelineSharedLib(config)
+            break
+        case PipelineType.PIPELINE_NEXT_LEVEL:
+            new PipelineNextLevel(this, config)
             break
         default:
             log.warning 'non pipeline type found'

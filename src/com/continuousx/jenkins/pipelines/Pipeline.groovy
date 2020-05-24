@@ -1,5 +1,7 @@
 package com.continuousx.jenkins.pipelines
 
-interface Pipeline {
+import com.continuousx.jenkins.pipelines.config.PipelineConfig
 
+interface Pipeline {
+    PipelineConfig getConfig()
 }

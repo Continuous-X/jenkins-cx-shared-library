@@ -15,4 +15,8 @@ class PipelineMavenBuild extends AbstractPipeline {
                 logLevel)
     }
 
+    @Override
+    PipelineConfigMavenBuild getConfig() {
+        return config
+    }
 }
