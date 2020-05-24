@@ -13,7 +13,8 @@ def call(PipelineConfig config) {
             PipelineSharedLib(config)
             break
         case PipelineType.PIPELINE_NEXT_LEVEL:
-            new PipelineNextLevel(this, config)
+            log.info "run Pipeline: ${config.getPipelineType()}"
+            new PipelineNextLevel(this, config).run()
             break
         default:
             log.warning 'non pipeline type found'
