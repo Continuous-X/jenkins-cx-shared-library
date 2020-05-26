@@ -16,7 +16,7 @@ class PipelineNextLevel extends AbstractPipeline {
 
     @SuppressWarnings('GroovyUntypedAccess')
     void run() {
-        jenkinsContext.pipeline {
+        pipeline {
             jenkinsContext.agent jenkinsContext.any
             jenkinsContext.options {
                 jenkinsContext.timeout time: 30, unit: 'MINUTES'
