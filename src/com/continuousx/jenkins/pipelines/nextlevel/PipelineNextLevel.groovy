@@ -1,7 +1,8 @@
-package com.continuousx.jenkins.pipelines
+package com.continuousx.jenkins.pipelines.nextlevel
 
 import com.continuousx.jenkins.LogLevelType
-import com.continuousx.jenkins.pipelines.config.PipelineConfigNextLevel
+import com.continuousx.jenkins.pipelines.AbstractPipeline
+import com.continuousx.jenkins.pipelines.nextlevel.PipelineConfigNextLevel
 import com.continuousx.jenkins.stages.StageJenkinsConvertPluginsTxt
 
 class PipelineNextLevel extends AbstractPipeline {

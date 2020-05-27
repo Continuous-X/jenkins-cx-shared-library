@@ -1,15 +1,17 @@
-package com.continuousx.jenkins.pipelines.config
+package com.continuousx.jenkins.pipelines.mavenbuild
 
 
 import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
 import com.continuousx.jenkins.stages.config.StageConfigJenkinsConvertPluginsTxt
 import com.continuousx.jenkins.stages.config.StageConfigMavenCompile
 import groovy.transform.TypeChecked
 
 @TypeChecked
-class PipelineConfigNextLevel implements PipelineConfig {
-    private final static PipelineType pipelineType = PipelineType.PIPELINE_NEXT_LEVEL
+class PipelineMavenBuildConfig implements PipelineConfig {
+
+    private final static PipelineType pipelineType = PipelineType.PIPELINE_MAVEN_BUILD
     LogLevelType logLevelType
 
     StageConfigJenkinsConvertPluginsTxt stageConfigJenkinsConvertPluginsTxt = new StageConfigJenkinsConvertPluginsTxt(
@@ -22,18 +24,20 @@ class PipelineConfigNextLevel implements PipelineConfig {
             failOnError: true
     )
 
-    void configStageJenkinsConvertPluginsTxt(boolean active, boolean failOnError) {
+    PipelineMavenBuildConfig configStageJenkinsConvertPluginsTxt(boolean active, boolean failOnError) {
         stageConfigJenkinsConvertPluginsTxt.setActive(active)
         stageConfigJenkinsConvertPluginsTxt.setFailOnError(failOnError)
+        return this
     }
 
-    void configStageMavenCompile(boolean active, boolean failOnError) {
+    PipelineMavenBuildConfig configStageMavenCompile(boolean active, boolean failOnError) {
         stageConfigMavenCompile.setActive(active)
         stageConfigMavenCompile.setFailOnError(failOnError)
+        return this
     }
 
     @Override
-    PipelineType getPipelineType() {
+    PipelineType getType() {
         return pipelineType
     }
 

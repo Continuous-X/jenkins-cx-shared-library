@@ -1,6 +1,7 @@
-package com.continuousx.jenkins.pipelines.config
+package com.continuousx.jenkins.pipelines.sharedlib
 
 import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
 import groovy.transform.TypeChecked
 
@@ -10,7 +11,7 @@ class PipelineConfigSharedLib implements PipelineConfig {
     LogLevelType logLevelType
 
     @Override
-    PipelineType getPipelineType() {
+    PipelineType getType() {
         return pipelineType
     }
 

@@ -2,7 +2,7 @@ import com.continuousx.jenkins.features.maven.MavenFeatureImpl
 import com.continuousx.jenkins.features.maven.MavenFeatureWrapperImpl
 import com.continuousx.jenkins.stages.StageJenkinsConvertPluginsTxt
 
-def call(com.continuousx.jenkins.pipelines.PipelineMavenBuild mavenPipeline) {
+def call(com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuild mavenPipeline) {
 
     pipeline {
         agent any

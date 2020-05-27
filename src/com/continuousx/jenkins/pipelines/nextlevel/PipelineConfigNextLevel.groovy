@@ -1,15 +1,16 @@
-package com.continuousx.jenkins.pipelines.config
+package com.continuousx.jenkins.pipelines.nextlevel
 
 
 import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
 import com.continuousx.jenkins.stages.config.StageConfigJenkinsConvertPluginsTxt
 import com.continuousx.jenkins.stages.config.StageConfigMavenCompile
 import groovy.transform.TypeChecked
 
 @TypeChecked
-class PipelineConfigMavenBuild implements PipelineConfig {
-    private final static PipelineType pipelineType = PipelineType.PIPELINE_MAVEN_BUILD
+class PipelineConfigNextLevel implements PipelineConfig {
+    private final static PipelineType pipelineType = PipelineType.PIPELINE_NEXT_LEVEL
     LogLevelType logLevelType
 
     StageConfigJenkinsConvertPluginsTxt stageConfigJenkinsConvertPluginsTxt = new StageConfigJenkinsConvertPluginsTxt(
@@ -33,7 +34,7 @@ class PipelineConfigMavenBuild implements PipelineConfig {
     }
 
     @Override
-    PipelineType getPipelineType() {
+    PipelineType getType() {
         return pipelineType
     }
 

@@ -1,7 +1,6 @@
 package com.continuousx.jenkins.pipelines
 
 import com.continuousx.jenkins.LogLevelType
-import com.continuousx.jenkins.pipelines.config.PipelineConfig
 import com.continuousx.jenkins.pipelines.utils.JenkinsPluginCheck
 
 abstract class AbstractPipeline implements Pipeline, Serializable {
