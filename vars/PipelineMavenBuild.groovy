@@ -1,8 +1,16 @@
 import com.continuousx.jenkins.features.maven.MavenFeatureImpl
 import com.continuousx.jenkins.features.maven.MavenFeatureWrapperImpl
+import com.continuousx.jenkins.pipelines.Pipeline
+import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
+import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildImpl
 import com.continuousx.jenkins.stages.StageJenkinsConvertPluginsTxt
 
-def call(com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuild mavenPipeline) {
+def call(PipelineMavenBuildConfig pipelineConfig) {
+
+    Pipeline pipelineMavenBuild = new PipelineMavenBuildImpl(
+            jenkinsContext: this,
+            config: pipelineConfig
+    )
 
     pipeline {
         agent any
@@ -25,19 +33,19 @@ def call(com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuild mavenPi
 
             stage('Convert DepToFile') {
                 when {
-                    expression { return mavenPipeline.getConfig().getStageConfigJenkinsConvertPluginsTxt().isActive() }
+                    expression { return pipelineConfig.getStageConfigJenkinsConvertPluginsTxt().isActive() }
                 }
                 steps {
                     milestone 20
                     script {
-                        new StageJenkinsConvertPluginsTxt(this, mavenPipeline.getConfig().getStageConfigJenkinsConvertPluginsTxt()).run()
+                        new StageJenkinsConvertPluginsTxt(this, pipelineConfig.getStageConfigJenkinsConvertPluginsTxt()).run()
                     }
                 }
             }
 
             stage('Build') {
                 when {
-                    expression { return mavenPipeline.getConfig().getStageConfigMavenCompile().isActive() }
+                    expression { return pipelineConfig.getStageConfigMavenCompile().isActive() }
                 }
                 steps {
                     milestone 50
@@ -46,8 +54,8 @@ def call(com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuild mavenPi
                         assert fileExists(file: MavenFeatureWrapperImpl.MVN_WRAPPER_FILENAME)
                         assert fileExists(file: MavenFeatureWrapperImpl.MVN_SETTINGS_XML)
 
-                        new MavenFeatureWrapperImpl(this, mavenPipeline.getConfig().getStageConfigMavenCompile().getLogLevelType()).run()
-                        new MavenFeatureImpl(this, mavenPipeline.getConfig().getStageConfigMavenCompile().getLogLevelType()).run()
+                        new MavenFeatureWrapperImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).run()
+                        new MavenFeatureImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).run()
                     }
                 }
             }

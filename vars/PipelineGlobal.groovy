@@ -7,7 +7,7 @@ def call(PipelineConfig config) {
 
     switch(config.getType()) {
         case PipelineType.PIPELINE_MAVEN_BUILD:
-            PipelineMavenBuild(new com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuild(this, config))
+            PipelineMavenBuild(config)
             break
         case PipelineType.PIPELINE_JENKINS_SHARED_LIB:
             PipelineSharedLib(config)
