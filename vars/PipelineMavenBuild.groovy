@@ -1,16 +1,16 @@
 import com.continuousx.jenkins.features.maven.MavenFeatureImpl
 import com.continuousx.jenkins.features.maven.MavenFeatureWrapperImpl
 import com.continuousx.jenkins.pipelines.Pipeline
+import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildBuilder
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildImpl
 import com.continuousx.jenkins.stages.StageJenkinsConvertPluginsTxt
 
 def call(PipelineMavenBuildConfig pipelineConfig) {
 
-    Pipeline pipelineMavenBuild = new PipelineMavenBuildImpl(
-            jenkinsContext: this,
-            config: pipelineConfig
-    )
+    Pipeline pipelineMavenBuild = new PipelineMavenBuildBuilder(this)
+            .withPipelineConfig(pipelineConfig)
+            .build()
 
     pipeline {
         agent any

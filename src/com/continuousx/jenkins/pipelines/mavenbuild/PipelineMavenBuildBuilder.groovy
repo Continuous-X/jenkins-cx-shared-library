@@ -1,21 +1,29 @@
 package com.continuousx.jenkins.pipelines.mavenbuild
 
-import com.cloudbees.groovy.cps.NonCPS
-import com.continuousx.jenkins.LogLevelType
-import com.continuousx.jenkins.pipelines.AbstractPipeline
+class PipelineMavenBuildBuilder {
 
-class PipelineMavenBuildBuilder extends AbstractPipeline {
+    private def m_jenkinsContext
+    private PipelineMavenBuildConfig m_pipelineConfig
 
-    protected PipelineMavenBuildBuilder(def jenkinsContext, PipelineMavenBuildConfig config, LogLevelType logLevel = LogLevelType.INFO) {
-        super(jenkinsContext,
-                config,
-                ["workflow-basic-steps","maven-plugin"],
-                logLevel)
+    @SuppressWarnings('GroovyUntypedAccess')
+    PipelineMavenBuildBuilder(final def jenkinsContext) {
+        Objects.nonNull(jenkinsContext)
+        this.m_jenkinsContext = jenkinsContext
     }
 
-    @Override
-    @NonCPS
-    PipelineMavenBuildConfig getConfig() {
-        return config
+    PipelineMavenBuildBuilder withPipelineConfig(final PipelineMavenBuildConfig pipelineConfig) {
+        Objects.nonNull(pipelineConfig)
+        this.m_pipelineConfig = pipelineConfig
+        return this
     }
+
+    @SuppressWarnings(['GroovyUntypedAccess', 'GroovyAssignabilityCheck'])
+    PipelineMavenBuildImpl build() {
+        new PipelineMavenBuildImpl(
+                jenkinsContext: m_jenkinsContext,
+                config: m_pipelineConfig,
+                logLevel: m_pipelineConfig.logLevelType
+        )
+    }
+
 }
