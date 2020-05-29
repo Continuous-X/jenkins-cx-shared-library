@@ -8,7 +8,9 @@ import com.continuousx.jenkins.stages.StageJenkinsConvertPluginsTxt
 
 def call(PipelineMavenBuildConfig pipelineConfig) {
 
-    Pipeline pipelineMavenBuild
+    Pipeline pipelineMavenBuild = new PipelineMavenBuildBuilder(this)
+            .withPipelineConfig(pipelineConfig)
+            .build()
 
     pipeline {
         agent any
@@ -25,9 +27,7 @@ def call(PipelineMavenBuildConfig pipelineConfig) {
                     milestone 10
                     script {
                         log.info 'init this'
-                        pipelineMavenBuild = new PipelineMavenBuildBuilder(this)
-                                .withPipelineConfig(pipelineConfig)
-                                .build()
+
                     }
                 }
             }
