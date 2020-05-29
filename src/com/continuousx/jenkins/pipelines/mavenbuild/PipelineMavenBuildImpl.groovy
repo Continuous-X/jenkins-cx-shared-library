@@ -6,8 +6,11 @@ import com.continuousx.jenkins.pipelines.AbstractPipeline
 
 class PipelineMavenBuildImpl extends AbstractPipeline {
 
-    @SuppressWarnings('GroovyUntypedAccess')
-    PipelineMavenBuildImpl(final def jenkinsContext, final PipelineMavenBuildConfig config, final LogLevelType logLevel = LogLevelType.INFO) {
+    @SuppressWarnings(['GroovyUntypedAccess', 'GroovyVariableCanBeFinal'])
+    protected PipelineMavenBuildImpl(
+            def jenkinsContext,
+            PipelineMavenBuildConfig config,
+            LogLevelType logLevel = LogLevelType.INFO) {
         super(jenkinsContext,
                 config,
                 ["workflow-basic-steps","maven-plugin"],
