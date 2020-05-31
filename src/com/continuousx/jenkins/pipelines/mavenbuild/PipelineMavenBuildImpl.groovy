@@ -37,6 +37,10 @@ class PipelineMavenBuildImpl extends AbstractPipeline {
     }
 
     void setOptions() {
-        jenkinsContext.options
+        jenkinsContext.options {
+            if (true) {
+                timestamps()
+            }
+        }
     }
 }

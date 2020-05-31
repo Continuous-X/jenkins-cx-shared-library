@@ -14,7 +14,6 @@ def call(PipelineMavenBuildConfig pipelineConfig) {
         agent any
         options {
             timeout time: 30, unit: 'MINUTES'
-            timestamps()
             buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
             disableConcurrentBuilds()
         }
