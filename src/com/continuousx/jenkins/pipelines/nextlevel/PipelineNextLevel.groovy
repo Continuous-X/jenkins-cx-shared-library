@@ -2,8 +2,7 @@ package com.continuousx.jenkins.pipelines.nextlevel
 
 import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.pipelines.AbstractPipeline
-import com.continuousx.jenkins.pipelines.nextlevel.PipelineConfigNextLevel
-import com.continuousx.jenkins.stages.StageJenkinsConvertPluginsTxt
+import com.continuousx.jenkins.stages.jenkins.convertpluginstxt.StageJenkinsConvertPluginsTxtImpl
 
 class PipelineNextLevel extends AbstractPipeline {
 
@@ -43,7 +42,7 @@ class PipelineNextLevel extends AbstractPipeline {
                     jenkinsContext.steps {
                         jenkinsContext.milestone 20
                         jenkinsContext.script {
-                            new StageJenkinsConvertPluginsTxt(this, config.getStageConfigJenkinsConvertPluginsTxt()).run()
+                            new StageJenkinsConvertPluginsTxtImpl(this, config.getStageConfigJenkinsConvertPluginsTxt()).run()
                         }
                     }
                 }

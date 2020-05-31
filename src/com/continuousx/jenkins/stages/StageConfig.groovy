@@ -1,11 +1,10 @@
-package com.continuousx.jenkins.stages.config
+package com.continuousx.jenkins.stages
 
 import com.continuousx.jenkins.LogLevelType
-import com.continuousx.jenkins.stages.StageType
-
 
 interface StageConfig extends Serializable {
-    StageType getStageType()
+
+    StageType getType()
     boolean isActive()
     boolean isFailOnError()
 

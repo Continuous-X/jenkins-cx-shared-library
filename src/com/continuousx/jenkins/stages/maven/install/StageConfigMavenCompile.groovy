@@ -1,20 +1,20 @@
-package com.continuousx.jenkins.stages.config
+package com.continuousx.jenkins.stages.maven.install
 
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.stages.StageType
-import com.continuousx.jenkins.stages.config.StageConfig
+import com.continuousx.jenkins.stages.StageConfig
 
-class StageConfigJenkinsConvertPluginsTxt implements StageConfig {
+class StageConfigMavenCompile implements StageConfig, Serializable {
 
-    private final static StageType stageType = StageType.STAGE_JENKINS_CONVERT_PLUGINS_TXT
+    private final static StageType stageType = StageType.STAGE_MAVEN_COMPILE
     boolean active = true
     boolean failOnError = true
 
     LogLevelType logLevelType
 
     @Override
-    StageType getStageType() {
+    StageType getType() {
         return stageType
     }
 
@@ -25,11 +25,13 @@ class StageConfigJenkinsConvertPluginsTxt implements StageConfig {
     }
 
     @Override
+    @NonCPS
     boolean isFailOnError() {
         return failOnError
     }
 
     @Override
+    @NonCPS
     LogLevelType logLevelType() {
         return logLevelType
     }

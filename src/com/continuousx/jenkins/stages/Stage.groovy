@@ -1,5 +1,8 @@
 package com.continuousx.jenkins.stages
 
 interface Stage {
-    void run()
+
+    void runStage()
+    StageConfig getConfig()
+
 }

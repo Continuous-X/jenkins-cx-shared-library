@@ -1,14 +1,12 @@
 import com.continuousx.jenkins.features.maven.MavenFeatureImpl
 import com.continuousx.jenkins.features.maven.MavenFeatureWrapperImpl
-import com.continuousx.jenkins.pipelines.Pipeline
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildBuilder
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildImpl
-import com.continuousx.jenkins.stages.StageJenkinsConvertPluginsTxt
 
 def call(PipelineMavenBuildConfig pipelineConfig) {
 
-    Pipeline pipelineMavenBuild = new PipelineMavenBuildBuilder(this)
+    PipelineMavenBuildImpl pipelineMavenBuild = new PipelineMavenBuildBuilder(this)
             .withPipelineConfig(pipelineConfig)
             .build()
 
@@ -34,12 +32,12 @@ def call(PipelineMavenBuildConfig pipelineConfig) {
 
             stage('Convert DepToFile') {
                 when {
-                    expression { return pipelineConfig.getStageConfigJenkinsConvertPluginsTxt().isActive() }
+                    expression { return pipelineMavenBuild.stageJenkinsConvertPluginsTxt.config.active }
                 }
                 steps {
                     milestone 20
                     script {
-                        new StageJenkinsConvertPluginsTxt(this, pipelineConfig.getStageConfigJenkinsConvertPluginsTxt()).run()
+                        pipelineMavenBuild.stageJenkinsConvertPluginsTxt.runStage()
                     }
                 }
             }

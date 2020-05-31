@@ -1,8 +1,8 @@
-package com.continuousx.jenkins.stages
+package com.continuousx.jenkins.stages.maven.install
 
 import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.features.maven.MavenFeatureWrapperImpl
-import com.continuousx.jenkins.stages.config.StageConfigMavenCompile
+import com.continuousx.jenkins.stages.AbstractStage
 
 class StageMavenCompile extends AbstractStage {
     StageMavenCompile(def jenkinsContext, StageConfigMavenCompile config, LogLevelType logLevel = LogLevelType.INFO) {
@@ -15,11 +15,11 @@ class StageMavenCompile extends AbstractStage {
     }
 
     @Override
-    void run() {
+    void runStage() {
         if (checkNeededPlugins()) {
-            new MavenFeatureWrapperImpl(jenkinsContext, config.logLevelType()).run()
+            new MavenFeatureWrapperImpl(m_jenkinsContext, m_config.logLevelType()).run()
         } else {
-            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
+            m_jenkinsContext.log.error("check needed plugins: ${m_neededPlugins}")
         }
     }
 }

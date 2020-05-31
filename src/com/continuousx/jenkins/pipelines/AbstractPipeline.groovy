@@ -1,9 +1,10 @@
 package com.continuousx.jenkins.pipelines
 
 import com.continuousx.jenkins.LogLevelType
-import com.continuousx.jenkins.pipelines.utils.JenkinsPluginCheck
+import com.continuousx.jenkins.features.jenkins.utils.JenkinsPluginCheck
 
 abstract class AbstractPipeline implements Pipeline, Serializable {
+
     def jenkinsContext
     List<String> neededPlugins = []
     PipelineConfig config
@@ -29,5 +30,7 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
     }
 
     abstract PipelineConfig getConfig()
+
+    abstract void runPipeline()
 
 }

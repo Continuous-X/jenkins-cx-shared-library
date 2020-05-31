@@ -3,8 +3,12 @@ package com.continuousx.jenkins.pipelines.mavenbuild
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.pipelines.AbstractPipeline
+import com.continuousx.jenkins.stages.Stage
+import com.continuousx.jenkins.stages.jenkins.convertpluginstxt.StageJenkinsConvertPluginsTxtBuilder
 
 class PipelineMavenBuildImpl extends AbstractPipeline {
+
+    Stage stageJenkinsConvertPluginsTxt
 
     @SuppressWarnings(['GroovyUntypedAccess', 'GroovyVariableCanBeFinal'])
     protected PipelineMavenBuildImpl(
@@ -13,13 +17,26 @@ class PipelineMavenBuildImpl extends AbstractPipeline {
             LogLevelType logLevel = LogLevelType.INFO) {
         super(jenkinsContext,
                 config,
-                ["workflow-basic-steps","maven-plugin"],
+                ["workflow-basic-steps", "maven-plugin"],
                 logLevel)
+        stageJenkinsConvertPluginsTxt = new StageJenkinsConvertPluginsTxtBuilder()
+                .withStageConfig(config.getStageJenkinsConvertPluginsTxtConfig())
+                .build()
     }
 
     @Override
     @NonCPS
     PipelineMavenBuildConfig getConfig() {
         return config
+    }
+
+    @Override
+    @NonCPS
+    void runPipeline() {
+
+    }
+
+    void setOptions() {
+        jenkinsContext.options
     }
 }

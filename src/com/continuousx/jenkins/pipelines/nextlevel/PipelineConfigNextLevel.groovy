@@ -4,8 +4,8 @@ package com.continuousx.jenkins.pipelines.nextlevel
 import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
-import com.continuousx.jenkins.stages.config.StageConfigJenkinsConvertPluginsTxt
-import com.continuousx.jenkins.stages.config.StageConfigMavenCompile
+import com.continuousx.jenkins.stages.jenkins.convertplugintxt.StageConfigJenkinsConvertPluginsTxt
+import com.continuousx.jenkins.stages.maven.install.StageConfigMavenCompile
 import groovy.transform.TypeChecked
 
 @TypeChecked
