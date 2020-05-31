@@ -36,6 +36,7 @@ def call(PipelineMavenBuildConfig pipelineConfig) {
                 steps {
                     milestone 20
                     script {
+                        pipelineMavenBuild.setOptions()
                         pipelineMavenBuild.stageJenkinsConvertPluginsTxt.runStage()
                     }
                 }
