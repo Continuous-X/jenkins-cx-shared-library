@@ -21,6 +21,7 @@ class StageJenkinsConvertPluginsTxtImpl extends AbstractStage {
     void runStage() {
         if (checkNeededPlugins()) {
             new MavenFeaturePomImpl(m_jenkinsContext, m_config.logLevelType()).run()
+            m_jenkinsContext.log.info "stage ready"
         } else {
             m_jenkinsContext.log.error("check needed plugins: ${m_neededPlugins}")
         }
