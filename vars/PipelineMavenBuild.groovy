@@ -9,6 +9,7 @@ def call(PipelineMavenBuildConfig pipelineConfig) {
     PipelineMavenBuildImpl pipelineMavenBuild = new PipelineMavenBuildBuilder(this)
             .withPipelineConfig(pipelineConfig)
             .build()
+    pipelineMavenBuild.setOptions()
 
     pipeline {
         agent any
@@ -36,7 +37,6 @@ def call(PipelineMavenBuildConfig pipelineConfig) {
                 steps {
                     milestone 20
                     script {
-                        pipelineMavenBuild.setOptions()
                         pipelineMavenBuild.stageJenkinsConvertPluginsTxt.runStage()
                     }
                 }
