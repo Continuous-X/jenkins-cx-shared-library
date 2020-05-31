@@ -1,5 +1,7 @@
 package com.continuousx.jenkins.stages.jenkins.convertpluginstxt
 
+import com.cloudbees.groovy.cps.NonCPS
+
 class StageJenkinsConvertPluginsTxtBuilder {
 
     private def m_jenkinsContext
@@ -11,6 +13,7 @@ class StageJenkinsConvertPluginsTxtBuilder {
         this.m_jenkinsContext = jenkinsContext
     }
 
+    @NonCPS
     StageJenkinsConvertPluginsTxtBuilder withStageConfig(final StageJenkinsConvertPluginsTxtConfig stageConfig) {
         Objects.nonNull(stageConfig)
         this.m_stageConfig = stageConfig
