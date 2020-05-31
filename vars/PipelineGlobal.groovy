@@ -1,6 +1,5 @@
-import com.continuousx.jenkins.pipelines.nextlevel.PipelineNextLevel
-import com.continuousx.jenkins.pipelines.PipelineType
 import com.continuousx.jenkins.pipelines.PipelineConfig
+import com.continuousx.jenkins.pipelines.PipelineType
 
 @SuppressWarnings(['GroovyAssignabilityCheck', 'GroovyVariableCanBeFinal'])
 def call(PipelineConfig config) {
@@ -14,7 +13,6 @@ def call(PipelineConfig config) {
             break
         case PipelineType.PIPELINE_NEXT_LEVEL:
             log.info "run Pipeline: ${config.getType()}"
-            new PipelineNextLevel(this, config).run()
             break
         default:
             log.warning 'non pipeline type found'
