@@ -19,7 +19,7 @@ class PipelineMavenBuildImpl extends AbstractPipeline {
                 config,
                 ["workflow-basic-steps", "maven-plugin"],
                 logLevel)
-        stageJenkinsConvertPluginsTxt = new StageJenkinsConvertPluginsTxtBuilder()
+        stageJenkinsConvertPluginsTxt = new StageJenkinsConvertPluginsTxtBuilder(jenkinsContext)
                 .withStageConfig(config.getStageJenkinsConvertPluginsTxtConfig())
                 .build()
     }
