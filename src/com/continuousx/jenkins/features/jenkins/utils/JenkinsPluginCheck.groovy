@@ -48,12 +48,7 @@ class JenkinsPluginCheck {
     }
 
     @NonCPS
-    JenkinsPluginCheck and() {
-        return this
-    }
-
-    @NonCPS
-    public boolean isPluginListInstalled() {
+    boolean isPluginListInstalled() {
         boolean checkInstalled = true
         pluginListNeeded.each { plugin ->
             if(!isPluginInstalled(plugin)){
@@ -71,4 +66,5 @@ class JenkinsPluginCheck {
         assert pluginName.length() > 0
         return pluginListInstalled.find{ it.equals(pluginName) }
     }
+
 }

@@ -15,9 +15,7 @@ class JenkinsPluginCheckTest extends Specification {
 
         when:
         boolean checkResult = pluginCheck.addInstalledPlugins(pluginListInstalled)
-                .and()
                 .addNeededPluginList(pluginListNeeded)
-                .and()
                 .isPluginListInstalled()
 
         then:
@@ -32,9 +30,7 @@ class JenkinsPluginCheckTest extends Specification {
 
         when:
         boolean checkResult = pluginCheck.addInstalledPlugins(pluginListInstalled)
-                .and()
                 .addNeededPluginList(pluginListNeeded)
-                .and()
                 .isPluginListInstalled()
 
         then:
@@ -49,9 +45,7 @@ class JenkinsPluginCheckTest extends Specification {
 
         when:
         boolean checkResult = pluginCheck.addInstalledPlugins(pluginListInstalled)
-                .and()
                 .addNeededPluginList(pluginListNeeded)
-                .and()
                 .isPluginListInstalled()
 
         then:
@@ -65,9 +59,7 @@ class JenkinsPluginCheckTest extends Specification {
 
         when:
         boolean checkResult = pluginCheck.addInstalledPlugins(pluginListInstalled)
-                .and()
                 .addNeededPluginList(null)
-                .and()
                 .isPluginListInstalled()
 
         then:
@@ -81,9 +73,7 @@ class JenkinsPluginCheckTest extends Specification {
 
         when:
         boolean checkResult = pluginCheck.addInstalledPlugins(null)
-                .and()
                 .addNeededPluginList(pluginListNeeded)
-                .and()
                 .isPluginListInstalled()
 
         then:
