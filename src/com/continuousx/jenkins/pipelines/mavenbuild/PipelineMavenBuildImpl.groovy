@@ -39,12 +39,10 @@ class PipelineMavenBuildImpl extends AbstractPipeline {
     void setOptions() {
 
         try {
-            jenkinsContext.options {
-                if (true) {
-                    timestamps()
-                }
+            if (true) {
+                jenkinsContext.timestamps()
             }
-        } catch(NoSuchMethodError ex) {
+        } catch (NoSuchMethodError ex) {
             jenkinsContext.log.error "Fehler beim Aufruf \n ${ex.message}"
 
         }
