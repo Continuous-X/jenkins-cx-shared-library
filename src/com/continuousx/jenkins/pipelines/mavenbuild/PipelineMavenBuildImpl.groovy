@@ -48,9 +48,10 @@ class PipelineMavenBuildImpl extends AbstractPipeline {
         }
         try {
             if (true) {
+                new hudson.plugins.timestamper.pipeline.TimestamperStep().start(jenkinsContext)
                 jenkinsContext.timestamps()
             }
-        } catch (NoSuchMethodError ex) {
+        } catch (Exception ex) {
             jenkinsContext.log.error "Fehler beim Aufruf \n ${ex.message}"
 
         }
