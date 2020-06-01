@@ -40,6 +40,7 @@ class PipelineMavenBuildImpl extends AbstractPipeline {
 
         try {
             if (true) {
+                jenkinsContext.options()
                 jenkinsContext.timestamps()
             }
         } catch (NoSuchMethodError ex) {
