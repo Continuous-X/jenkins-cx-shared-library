@@ -9,7 +9,6 @@ def call(PipelineMavenBuildConfig pipelineConfig) {
     PipelineMavenBuildImpl pipelineMavenBuild = new PipelineMavenBuildBuilder(this)
             .withPipelineConfig(pipelineConfig)
             .build()
-    pipelineMavenBuild.setOptions()
 
     pipeline {
         agent any
@@ -25,7 +24,7 @@ def call(PipelineMavenBuildConfig pipelineConfig) {
                     milestone 10
                     script {
                         log.info 'init this'
-
+                        pipelineMavenBuild.setOptions()
                     }
                 }
             }
