@@ -34,7 +34,7 @@ class MavenFeatureImpl extends AbstractFeature implements MavenFeature {
     }
 
     @Override
-    MavenFeatureImpl run() {
+    MavenFeatureImpl runImpl() {
         if(checkNeededPlugins()) {
             showVersion()
         } else {

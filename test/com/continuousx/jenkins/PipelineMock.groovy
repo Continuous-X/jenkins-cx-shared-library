@@ -1,21 +1,9 @@
 package com.continuousx.jenkins
 
-class PipelineMock {
-    String commandCalled
-    String echoCalled
-    Map readFile
+interface PipelineMock {
 
-    def sh(String command) {
-        commandCalled = command
-    }
-
-    def echo(String echo) {
-        echoCalled = echo
-    }
-
-    def readFile(def file) {
-        readFile = file
-        return
-    }
+    def sh(String command)
+    def echo(String echo)
+    def readFile(def file)
 
 }

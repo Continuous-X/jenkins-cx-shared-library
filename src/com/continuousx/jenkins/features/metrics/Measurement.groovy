@@ -1,5 +1,7 @@
 package com.continuousx.jenkins.features.metrics
 
-interface Metric {
+interface Measurement {
+
+    String getType()
 
 }

@@ -36,24 +36,4 @@ class PipelineMavenBuildImpl extends AbstractPipeline {
 
     }
 
-    void setOptions() {
-
-        try {
-            if (true) {
-                jenkinsContext.options()
-            }
-        } catch (NoSuchMethodError ex) {
-            jenkinsContext.log.error "Fehler beim Aufruf \n ${ex.message}"
-
-        }
-        try {
-            if (true) {
-                new hudson.plugins.timestamper.pipeline.TimestamperStep().start(jenkinsContext)
-                jenkinsContext.timestamps()
-            }
-        } catch (Exception ex) {
-            jenkinsContext.log.error "Fehler beim Aufruf \n ${ex.message}"
-
-        }
-    }
 }

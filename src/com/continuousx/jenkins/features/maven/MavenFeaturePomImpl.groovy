@@ -74,7 +74,7 @@ class MavenFeaturePomImpl extends AbstractFeature {
     }
 
     @Override
-    MavenFeaturePomImpl run() {
+    MavenFeaturePomImpl runImpl() {
         if(checkNeededPlugins()) {
             readPomXmlContent()
             writePluginsTxt()

@@ -24,7 +24,6 @@ def call(PipelineMavenBuildConfig pipelineConfig) {
                     milestone 10
                     script {
                         log.info 'init this'
-                        pipelineMavenBuild.setOptions()
                     }
                 }
             }
