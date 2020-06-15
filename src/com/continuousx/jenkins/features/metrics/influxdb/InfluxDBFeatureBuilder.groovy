@@ -1,17 +1,17 @@
 package com.continuousx.jenkins.features.metrics.influxdb
 
-class InfluxDBBuilder {
+class InfluxDBFeatureBuilder {
 
     def jenkinsContext
 
     @SuppressWarnings('GroovyUntypedAccess')
-    InfluxDBBuilder(final def jenkinsContext) {
+    InfluxDBFeatureBuilder(final def jenkinsContext) {
         Objects.requireNonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
-    InfluxDBImpl build() {
-        new InfluxDBImpl(jenkinsContext)
+    InfluxDBFeatureImpl build() {
+        new InfluxDBFeatureImpl(jenkinsContext)
     }
 }

@@ -4,7 +4,7 @@ package com.continuousx.jenkins.features.metrics.influxdb
 import resource.jenkins.PipelineMock
 import spock.lang.Specification
 
-class InfluxDBBuilderTest extends Specification {
+class InfluxDBFeatureBuilderTest extends Specification {
 
     PipelineMock pipelineMock
 
@@ -14,14 +14,14 @@ class InfluxDBBuilderTest extends Specification {
 
     def "should be create instance"() {
         given:
-        final InfluxDBBuilder influxDBBuilder = new InfluxDBBuilder(pipelineMock)
+        final InfluxDBFeatureBuilder influxDBBuilder = new InfluxDBFeatureBuilder(pipelineMock)
 
         when:
-        final Metric metric = influxDBBuilder.build()
+        final InfluxDBFeature metric = influxDBBuilder.build()
 
         then:
         assert metric != null
-        assert metric instanceof InfluxDBImpl
+        assert metric instanceof InfluxDBFeatureImpl
     }
 
 }

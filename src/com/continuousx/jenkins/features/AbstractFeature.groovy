@@ -3,9 +3,9 @@ package com.continuousx.jenkins.features
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.features.jenkins.utils.JenkinsPluginCheck
-import com.continuousx.jenkins.features.metrics.influxdb.InfluxDB
-import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBBuilder
-import com.continuousx.jenkins.features.metrics.influxdb.Measurement
+import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
+import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
+
 import com.continuousx.jenkins.features.metrics.influxdb.operating.MeasurementOperatingFeature
 
 abstract class AbstractFeature implements Feature, Serializable{
@@ -14,7 +14,7 @@ abstract class AbstractFeature implements Feature, Serializable{
     List<String> neededPlugins = []
     boolean failOnError
     LogLevelType logLevel = LogLevelType.INFO
-    InfluxDB metrics
+    InfluxDBFeature metrics
     Measurement measurement
 
     @SuppressWarnings('GroovyUntypedAccess')
@@ -26,7 +26,7 @@ abstract class AbstractFeature implements Feature, Serializable{
         this.failOnError
         this.logLevel = logLevel
 
-        metrics = new InfluxDBBuilder(jenkinsContext).build()
+        metrics = new InfluxDBFeatureBuilder(jenkinsContext).build()
         measurement = new MeasurementOperatingFeature()
         measurement.setFailOnError(failOnError)
     }
