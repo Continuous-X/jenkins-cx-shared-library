@@ -4,9 +4,9 @@ import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildBuilder
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildImpl
 
-def call(PipelineMavenBuildConfig pipelineConfig) {
+def call(final PipelineMavenBuildConfig pipelineConfig) {
 
-    PipelineMavenBuildImpl pipelineMavenBuild = new PipelineMavenBuildBuilder(this)
+    final PipelineMavenBuildImpl pipelineMavenBuild = new PipelineMavenBuildBuilder(this)
             .withPipelineConfig(pipelineConfig)
             .build()
 
@@ -51,8 +51,8 @@ def call(PipelineMavenBuildConfig pipelineConfig) {
                         assert fileExists(file: MavenFeatureWrapperImpl.MVN_WRAPPER_FILENAME)
                         assert fileExists(file: MavenFeatureWrapperImpl.MVN_SETTINGS_XML)
 
-                        new MavenFeatureWrapperImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).run()
-                        new MavenFeatureImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).run()
+                        new MavenFeatureWrapperImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).runFeature()
+                        new MavenFeatureImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).runFeature()
                     }
                 }
             }

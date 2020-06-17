@@ -4,5 +4,6 @@ interface Stage {
 
     void runStage()
     StageConfig getConfig()
+    void publishMetricOperating()
 
 }

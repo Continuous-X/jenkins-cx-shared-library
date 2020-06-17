@@ -17,9 +17,9 @@ class StageMavenCompile extends AbstractStage {
     @Override
     void runStage() {
         if (checkNeededPlugins()) {
-            new MavenFeatureWrapperImpl(m_jenkinsContext, m_config.logLevelType()).run()
+            new MavenFeatureWrapperImpl(jenkinsContext, stageConfig.logLevelType()).runFeature()
         } else {
-            m_jenkinsContext.log.error("check needed plugins: ${m_neededPlugins}")
+            jenkinsContext.log.error("check needed plugins: ${m_neededPlugins}")
         }
     }
 }

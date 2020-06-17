@@ -26,13 +26,7 @@ class PipelineMavenBuildImpl extends AbstractPipeline {
 
     @Override
     @NonCPS
-    PipelineMavenBuildConfig getConfig() {
-        return config
-    }
-
-    @Override
-    @NonCPS
-    void runPipeline() {
+    void runPipelineImpl() {
 
     }
 

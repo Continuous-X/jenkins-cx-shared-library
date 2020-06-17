@@ -4,5 +4,6 @@ interface Pipeline {
 
     PipelineConfig getConfig()
     void runPipeline()
+    void publishMetricOperating()
 
 }

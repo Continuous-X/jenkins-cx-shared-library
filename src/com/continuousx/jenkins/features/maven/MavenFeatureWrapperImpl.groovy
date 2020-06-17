@@ -44,7 +44,7 @@ class MavenFeatureWrapperImpl extends AbstractFeature implements MavenFeature {
     }
 
     @Override
-    MavenFeatureWrapperImpl runImpl() {
+    MavenFeatureWrapperImpl runFeatureImpl() {
         if(checkNeededPlugins()) {
             setPermission()
             showVersion()

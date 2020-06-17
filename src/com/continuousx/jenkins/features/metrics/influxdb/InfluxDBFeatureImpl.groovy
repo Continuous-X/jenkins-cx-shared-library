@@ -1,22 +1,32 @@
 package com.continuousx.jenkins.features.metrics.influxdb
 
+import com.continuousx.jenkins.features.Feature
 import com.continuousx.jenkins.features.FeatureType
 import com.continuousx.jenkins.features.github.GitURLParser
+import com.continuousx.jenkins.features.jenkins.utils.JenkinsPluginCheck
+import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperating
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingFeature
+import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipeline
+import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipelineStage
+import com.continuousx.jenkins.features.metrics.influxdb.measurements.result.MeasurementResult
 
-class InfluxDBFeatureImpl implements InfluxDBFeature {
+class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
 
     def jenkinsContext
     List<String> neededPlugins = []
-    final static FeatureType type = FeatureType.FEATURE_METRIC_INFLUXDB
+    final static FeatureType TYPE = FeatureType.FEATURE_METRIC_INFLUXDB
     MeasurementOperatingFeature measurementOperating = new MeasurementOperatingFeature()
+
+    protected List<MeasurementOperatingFeature> mFeatureList = []
+    protected List<MeasurementOperatingPipelineStage> mStageList = []
+    protected List<MeasurementOperatingPipeline> mPipelineList = []
 
     @SuppressWarnings('GroovyUntypedAccess')
     protected InfluxDBFeatureImpl(final def jenkinsContext) {
         Objects.requireNonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
         this.neededPlugins = ['influxdb']
-        measurementOperating.featureType = type
+        measurementOperating.featureType = TYPE
         if (this.jenkinsContext.env.GIT_URL != null) {
             final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
             measurementOperating.setGHOrganization(gitUrlParser.getOrgaName())
@@ -24,24 +34,128 @@ class InfluxDBFeatureImpl implements InfluxDBFeature {
         }
     }
 
-    @Override
-    void publishMetricOperating(Measurement measurement) {
-/*
-        def dataMap = [:]
-        def dataMapTags = [:]
-        measurement.getDataMap().each { key, value ->
-            dataMap[key] = value
+    @SuppressWarnings('GroovyUntypedAccess')
+    void runFeature() {
+        if (checkNeededPlugins()) {
+            final long startTime = System.nanoTime()
+            publishMeasureListFeature()
+            publishMeasureListPipelineStage()
+            publishMeasureListPipeline()
+            publishJenkinsData()
+            final long duration = (long) ((System.nanoTime() - startTime) / 100000)
+            measurementOperating.duration = duration
+            publishMetricOperating()
+        } else {
+            jenkinsContext.log.warning("needed plugins not exist: ${neededPlugins}")
         }
-        measurement.getDataMapTags().each { key, value ->
-            dataMapTags[key] = value
-        }
-*/
-        jenkinsContext.influxDbPublisher(selectedTarget: INFLUXDB_TARGET_CX_OPERATING, measurementName: measurement.getType(), customDataMap: measurement.getDataMap(), customDataMapTags: measurement.getDataMapTags() )
     }
 
     @Override
-    void publishMetricCicdResult(Measurement measurement) {
-        jenkinsContext.influxDbPublisher(selectedTarget: INFLUXDB_TARGET_CX_CICD, measurementName: measurement.getType(), customDataMap: measurement.getDataMap(), customDataMapTags: measurement.getDataMapTags() )
+    void addPipelineMeasurement(final MeasurementOperatingPipeline measurePipeline) {
+        Objects.requireNonNull(mPipelineList)
+        mPipelineList.add(measurePipeline)
+    }
+
+    @Override
+    void addPipelineStageMeasurement(final MeasurementOperatingPipelineStage measureStage) {
+        Objects.requireNonNull(mStageList)
+        mStageList.add(measureStage)
+    }
+
+    @Override
+    void addFeatureMeasurement(final MeasurementOperatingFeature measureFeature) {
+        Objects.requireNonNull(measureFeature)
+        mFeatureList.add(measureFeature)
+    }
+
+    @Override
+    void publishMeasureListFeature() {
+        publishOperatingMeasurementList(mFeatureList)
+    }
+
+    @Override
+    void publishMeasureListPipeline() {
+        publishOperatingMeasurementList(mPipelineList)
+    }
+
+    @Override
+    void publishMeasureListPipelineStage() {
+        publishOperatingMeasurementList(mStageList)
+    }
+
+    @SuppressWarnings('GroovyUntypedAccess')
+    private boolean checkNeededPlugins() {
+        return new JenkinsPluginCheck(jenkinsContext)
+                .addInstalledPlugins()
+                .addNeededPluginList(neededPlugins)
+                .isPluginListInstalled()
+    }
+
+    @Override
+    @SuppressWarnings('GroovyUntypedAccess')
+    void publishJenkinsData() {
+        if (checkNeededPlugins()) {
+            jenkinsContext.influxDbPublisher(selectedTarget:INFLUX_TARGET_OPERATING)
+        } else {
+            jenkinsContext.log.warning("needed plugins not exist: ${neededPlugins}")
+        }
+    }
+
+    @SuppressWarnings('GroovyUntypedAccess')
+    @Override
+    void publishOperatingMeasurement(final MeasurementOperating measurement) {
+        Objects.requireNonNull(measurement)
+        if (checkNeededPlugins()) {
+            final Map entryDataMap = ["${measurement.getType()}": measurement.getDataMap()]
+            final Map entryDataMapTags = ["${measurement.getType()}": measurement.getDataMapTags()]
+            publish(INFLUX_TARGET_OPERATING, entryDataMap, entryDataMapTags)
+        } else {
+            jenkinsContext.log.warning("needed plugins not exist: ${neededPlugins}")
+        }
+    }
+
+    @SuppressWarnings('GroovyUntypedAccess')
+    void publishResultMeasurement(final MeasurementResult measurement) {
+        Objects.requireNonNull(measurement)
+        if (checkNeededPlugins()) {
+            final Map entryDataMap = ["${measurement.getType()}": measurement.getDataMap()]
+            final Map entryDataMapTags = ["${measurement.getType()}": measurement.getDataMapTags()]
+            publish(INFLUX_TARGET_CICD_RESULTS, entryDataMap, entryDataMapTags)
+        } else {
+            jenkinsContext.log.warning("needed plugins not exist: ${neededPlugins}")
+        }
+    }
+
+    private void publishOperatingMeasurementList(final List<MeasurementOperating> measurements) {
+        Objects.requireNonNull(measurements)
+        measurements.each { measurement ->
+            publishOperatingMeasurement(measurement)
+        }
+    }
+
+    @SuppressWarnings('GroovyUntypedAccess')
+    private void publish(final String target, final Map dataMap, final Map dataMapTags) {
+        jenkinsContext.influxDbPublisher(selectedTarget:target, customDataMap:dataMap, customDataMapTags:dataMapTags)
+    }
+
+    @Override
+    FeatureType getType() {
+        return type
+    }
+
+    @Override
+    void publishMetricOperating(final MeasurementOperating measurement) {
+        publishOperatingMeasurement(measurement)
+    }
+
+    @Override
+    void publishMetricCicdResult(final MeasurementResult measurement) {
+        publishResultMeasurement(measurement)
+    }
+
+    @Override
+    void publishMetricOperating() {
+        publishMetricOperating(measurementOperating)
     }
 
 }
