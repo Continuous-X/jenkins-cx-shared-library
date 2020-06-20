@@ -1,6 +1,5 @@
 package com.continuousx.jenkins.stages
 
-import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.features.github.GitURLParser
 import com.continuousx.jenkins.features.jenkins.utils.JenkinsPluginCheck
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature

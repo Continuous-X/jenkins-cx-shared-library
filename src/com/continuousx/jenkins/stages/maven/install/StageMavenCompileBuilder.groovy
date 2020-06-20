@@ -24,8 +24,8 @@ class StageMavenCompileBuilder {
 
     @NonCPS
     @SuppressWarnings(['GroovyUntypedAccess', 'GroovyAssignabilityCheck'])
-    StageJenkinsConvertPluginsTxtImpl build() {
-        new StageJenkinsConvertPluginsTxtImpl(jenkinsContext, stageConfig, m_stageConfig.logLevelType)
+    StageMavenCompileImpl build() {
+        new StageMavenCompileImpl(jenkinsContext, stageConfig, stageConfig.logLevelType)
     }
 
 }

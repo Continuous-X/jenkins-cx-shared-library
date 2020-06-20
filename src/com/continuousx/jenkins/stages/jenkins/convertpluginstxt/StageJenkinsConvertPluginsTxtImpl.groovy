@@ -1,6 +1,5 @@
 package com.continuousx.jenkins.stages.jenkins.convertpluginstxt
 
-import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.features.maven.MavenFeaturePomImpl
 import com.continuousx.jenkins.stages.AbstractStage
 
@@ -8,12 +7,7 @@ class StageJenkinsConvertPluginsTxtImpl extends AbstractStage {
 
     @SuppressWarnings('GroovyUntypedAccess')
     protected StageJenkinsConvertPluginsTxtImpl(final def jenkinsContext, final StageJenkinsConvertPluginsTxtConfig config) {
-        super(jenkinsContext,
-                config, [
-                    "workflow-basic-steps",
-                    "maven-plugin"
-                ],
-                stageConfig.getl)
+        super(jenkinsContext, ["workflow-basic-steps", "maven-plugin"], config)
     }
 
     @Override
@@ -23,7 +17,8 @@ class StageJenkinsConvertPluginsTxtImpl extends AbstractStage {
             new MavenFeaturePomImpl(jenkinsContext, stageConfig.logLevelType()).runFeature()
             jenkinsContext.log.info "stage ready"
         } else {
-            jenkinsContext.log.error("check needed plugins: ${m_neededPlugins}")
+            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
         }
     }
+
 }
