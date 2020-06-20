@@ -4,8 +4,9 @@ import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.features.maven.MavenFeatureWrapperImpl
 import com.continuousx.jenkins.stages.AbstractStage
 
-class StageMavenCompile extends AbstractStage {
-    StageMavenCompile(def jenkinsContext, StageConfigMavenCompile config, LogLevelType logLevel = LogLevelType.INFO) {
+class StageMavenCompileImpl extends AbstractStage {
+
+    StageMavenCompileImpl(def jenkinsContext, StageMavenCompileConfig config, LogLevelType logLevel = LogLevelType.INFO) {
         super(jenkinsContext,
                 config, [
                     "workflow-basic-steps",
@@ -15,7 +16,7 @@ class StageMavenCompile extends AbstractStage {
     }
 
     @Override
-    void runStage() {
+    void runStageImpl() {
         if (checkNeededPlugins()) {
             new MavenFeatureWrapperImpl(jenkinsContext, stageConfig.logLevelType()).runFeature()
         } else {

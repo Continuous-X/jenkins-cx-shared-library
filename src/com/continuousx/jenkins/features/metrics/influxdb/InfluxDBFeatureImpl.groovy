@@ -102,7 +102,6 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
-    @Override
     void publishOperatingMeasurement(final MeasurementOperating measurement) {
         Objects.requireNonNull(measurement)
         if (checkNeededPlugins()) {

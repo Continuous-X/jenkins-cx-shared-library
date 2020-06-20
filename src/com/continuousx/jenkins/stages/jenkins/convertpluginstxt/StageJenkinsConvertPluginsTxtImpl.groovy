@@ -7,13 +7,13 @@ import com.continuousx.jenkins.stages.AbstractStage
 class StageJenkinsConvertPluginsTxtImpl extends AbstractStage {
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected StageJenkinsConvertPluginsTxtImpl(final def jenkinsContext, final StageJenkinsConvertPluginsTxtConfig config, final LogLevelType logLevel = LogLevelType.INFO) {
+    protected StageJenkinsConvertPluginsTxtImpl(final def jenkinsContext, final StageJenkinsConvertPluginsTxtConfig config) {
         super(jenkinsContext,
                 config, [
                     "workflow-basic-steps",
                     "maven-plugin"
                 ],
-                logLevel)
+                stageConfig.getl)
     }
 
     @Override

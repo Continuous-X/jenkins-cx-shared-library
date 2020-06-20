@@ -2,37 +2,41 @@ package com.continuousx.jenkins.stages.maven.install
 
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.features.github.BranchType
 import com.continuousx.jenkins.stages.StageType
 import com.continuousx.jenkins.stages.StageConfig
 
-class StageConfigMavenCompile implements StageConfig, Serializable {
+class StageMavenCompileConfig implements StageConfig, Serializable {
 
-    private final static StageType stageType = StageType.STAGE_MAVEN_COMPILE
+    final static StageType type = StageType.STAGE_MAVEN_COMPILE
     boolean active = true
     boolean failOnError = true
-
+    BranchType allowedBranch = BranchType.ALL
     LogLevelType logLevelType
 
     @Override
     StageType getType() {
-        return stageType
+        type
     }
 
     @Override
-    @NonCPS
     boolean isActive() {
-        return active
+        active
     }
 
     @Override
-    @NonCPS
     boolean isFailOnError() {
-        return failOnError
+        failOnError
     }
 
     @Override
-    @NonCPS
     LogLevelType logLevelType() {
-        return logLevelType
+        logLevelType
     }
+
+    @Override
+    BranchType getAllowedBranch() {
+        allowedBranch
+    }
+
 }

@@ -2,38 +2,46 @@ package com.continuousx.jenkins.stages.jenkins.convertpluginstxt
 
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.features.github.BranchType
 import com.continuousx.jenkins.stages.StageType
 import com.continuousx.jenkins.stages.StageConfig
 
-class StageJenkinsConvertPluginsTxtConfig implements StageConfig {
+class StageJenkinsConvertPluginsTxtConfig implements StageConfig, Serializable {
 
     final static StageType type = StageType.STAGE_JENKINS_CONVERT_PLUGINS_TXT
     boolean active = true
     boolean failOnError = true
-
+    BranchType allowedBranch = BranchType.ALL
     LogLevelType logLevelType
 
     @Override
     @NonCPS
     StageType getType() {
-        return type
+        type
     }
 
     @Override
     @NonCPS
     @SuppressWarnings('ClashingGetters')
     boolean isActive() {
-        return active
+        active
     }
 
     @Override
     @SuppressWarnings('ClashingGetters')
     boolean isFailOnError() {
-        return failOnError
+        failOnError
     }
 
     @Override
     LogLevelType logLevelType() {
-        return logLevelType
+        logLevelType
     }
+
+    @Override
+    @SuppressWarnings('UnnecessaryReturnKeyword')
+    BranchType getAllowedBranch() {
+        allowedBranch
+    }
+
 }

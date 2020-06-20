@@ -5,7 +5,7 @@ import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
 import com.continuousx.jenkins.stages.jenkins.convertpluginstxt.StageJenkinsConvertPluginsTxtConfig
-import com.continuousx.jenkins.stages.maven.install.StageConfigMavenCompile
+import com.continuousx.jenkins.stages.maven.install.StageMavenCompileConfig
 import groovy.transform.TypeChecked
 
 @TypeChecked
@@ -19,7 +19,7 @@ class PipelineMavenBuildConfig implements PipelineConfig {
             failOnError: true
     )
 
-    StageConfigMavenCompile stageConfigMavenCompile = new StageConfigMavenCompile(
+    StageMavenCompileConfig stageConfigMavenCompile = new StageMavenCompileConfig(
             active: true,
             failOnError: true
     )
