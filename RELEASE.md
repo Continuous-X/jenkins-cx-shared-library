@@ -1,9 +1,10 @@
 # 🚀 New features and improvements
-- create MasterSeed Job with config for jenkins job dsl in remote repository
 
 # 📦 Dependency Updates
+- update parent, plugins and dependencies
 
 # 📝 Documentation updates
+- added developer notes
 
 # 👻 Maintenance
 
