@@ -1,15 +1,15 @@
 package com.continuousx.jenkins.features.maven
 
-
-import com.continuousx.jenkins.PipelineMock
+import com.continuousx.jenkins.features.maven.dependencies.FeatureMavenDepToJenkinsPluginsTxtImpl
+import resource.jenkins.PipelineMock
 import spock.lang.Specification
 
-class MavenFeaturePomImplTest extends Specification {
+class FeatureMavenDepToJenkinsPluginsTxtImplTest extends Specification {
 
-    resource.jenkins.PipelineMock pipelineMock
+    PipelineMock pipelineMock
 
     def setup() {
-        pipelineMock = Mock(resource.jenkins.PipelineMock)
+        pipelineMock = Mock(PipelineMock)
     }
 
     def "should be create plugins txt from mvn dependencyManagement"() {
@@ -20,7 +20,7 @@ class MavenFeaturePomImplTest extends Specification {
         String pomFileContent = pomFile.getText()
         File resultPluginsTxtFile = new File(resultPluginsTxtFilename)
         assert pomFile.exists()
-        MavenFeaturePomImpl mvnDep = new MavenFeaturePomImpl(pipelineMock)
+        FeatureMavenDepToJenkinsPluginsTxtImpl mvnDep = new FeatureMavenDepToJenkinsPluginsTxtImpl(pipelineMock)
 
         when:
         resultPluginsTxtFile.write(
@@ -38,7 +38,7 @@ class MavenFeaturePomImplTest extends Specification {
         String testPom = 'test-resources/pom-maven-feature-test.xml'
         File pomFile = new File(testPom)
         String pomFileContent = pomFile.getText()
-        MavenFeaturePomImpl mvnDep = new MavenFeaturePomImpl(pipelineMock)
+        FeatureMavenDepToJenkinsPluginsTxtImpl mvnDep = new FeatureMavenDepToJenkinsPluginsTxtImpl(pipelineMock)
 
         when:
         mvnDep.readPomXmlContent(pomFileContent)

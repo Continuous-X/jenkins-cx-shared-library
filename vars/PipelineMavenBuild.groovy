@@ -1,5 +1,5 @@
-import com.continuousx.jenkins.features.maven.MavenFeatureImpl
-import com.continuousx.jenkins.features.maven.MavenFeatureWrapperImpl
+import com.continuousx.jenkins.features.maven.build.FeatureMavenBuildImpl
+import com.continuousx.jenkins.features.maven.build.wrapper.FeatureMavenWrapperBuildImpl
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildBuilder
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildImpl
@@ -48,11 +48,11 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
                     milestone 50
                     script {
                         log.info "run maven feature"
-                        assert fileExists(file: MavenFeatureWrapperImpl.MVN_WRAPPER_FILENAME)
-                        assert fileExists(file: MavenFeatureWrapperImpl.MVN_SETTINGS_XML)
+                        assert fileExists(file: FeatureMavenWrapperBuildImpl.MVN_WRAPPER_FILENAME)
+                        assert fileExists(file: FeatureMavenWrapperBuildImpl.MVN_SETTINGS_XML)
 
-                        new MavenFeatureWrapperImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).runFeature()
-                        new MavenFeatureImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).runFeature()
+                        new FeatureMavenWrapperBuildImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).runFeature()
+                        new FeatureMavenBuildImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).runFeature()
                     }
                 }
             }

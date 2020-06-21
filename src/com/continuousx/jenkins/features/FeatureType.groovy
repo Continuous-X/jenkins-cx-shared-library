@@ -4,11 +4,11 @@ import com.cloudbees.groovy.cps.NonCPS
 
 enum FeatureType {
 
-    FEATURE_METRIC_INFLUXDB
+    FEATURE_METRIC_INFLUXDB,
+    FEATURE_MAVEN_POM_CONVERT_DEP_TO_JENKINS_PLUGINS_TXT
 
     @Override
     @NonCPS
-    @SuppressWarnings('UnnecessaryReturnKeyword')
     String toString() {
         name().toLowerCase()
     }

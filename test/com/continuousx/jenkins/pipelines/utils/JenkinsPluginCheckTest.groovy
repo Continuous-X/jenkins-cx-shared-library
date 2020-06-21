@@ -1,7 +1,6 @@
 package com.continuousx.jenkins.pipelines.utils
 
 
-import com.continuousx.jenkins.PipelineMock
 import com.continuousx.jenkins.features.jenkins.utils.JenkinsPluginCheck
 import org.codehaus.groovy.runtime.powerassert.PowerAssertionError
 import spock.lang.Specification

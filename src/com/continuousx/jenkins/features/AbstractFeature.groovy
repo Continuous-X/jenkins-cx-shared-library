@@ -56,22 +56,27 @@ abstract class AbstractFeature implements Feature, Serializable{
                 .isPluginListInstalled()
     }
 
-    abstract Feature runFeatureImpl()
+    abstract void runFeatureImpl()
 
     @Override
     void runFeature() {
-        try {
-            final long startTime = System.nanoTime()
-            runFeatureImpl()
-            final long duration = (long) ((System.nanoTime() - startTime) / 100000)
-            measurementOperating.setDuration(duration)
-        } catch (final Exception exception) {
-            if (failOnError) {
-                throw exception
-            } else {
-                jenkinsContext.log.warning("${type} failed: ${exception.message}")
+        if(checkNeededPlugins()) {
+            try {
+                final long startTime = System.nanoTime()
+                runFeatureImpl()
+                final long duration = (long) ((System.nanoTime() - startTime) / 100000)
+                measurementOperating.setDuration(duration)
+            } catch (final Exception exception) {
+                if (failOnError) {
+                    throw exception
+                } else {
+                    jenkinsContext.log.warning("${type} failed: ${exception.message}")
+                }
+            } finally {
+                publishMetricOperating()
             }
-        } finally {
+        } else {
+            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
             publishMetricOperating()
         }
     }

@@ -1,4 +1,4 @@
-package com.continuousx.jenkins
+package resource.jenkins
 
 import jdk.nashorn.internal.runtime.regexp.joni.ast.StringNode
 

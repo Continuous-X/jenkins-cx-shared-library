@@ -17,9 +17,9 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
     final static FeatureType TYPE = FeatureType.FEATURE_METRIC_INFLUXDB
     MeasurementOperatingFeature measurementOperating = new MeasurementOperatingFeature()
 
-    protected List<MeasurementOperatingFeature> mFeatureList = []
-    protected List<MeasurementOperatingPipelineStage> mStageList = []
-    protected List<MeasurementOperatingPipeline> mPipelineList = []
+    protected List<MeasurementOperatingFeature> featureList = []
+    protected List<MeasurementOperatingPipelineStage> stageList = []
+    protected List<MeasurementOperatingPipeline> pipelineList = []
 
     @SuppressWarnings('GroovyUntypedAccess')
     protected InfluxDBFeatureImpl(final def jenkinsContext) {
@@ -52,35 +52,35 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
 
     @Override
     void addPipelineMeasurement(final MeasurementOperatingPipeline measurePipeline) {
-        Objects.requireNonNull(mPipelineList)
-        mPipelineList.add(measurePipeline)
+        Objects.requireNonNull(pipelineList)
+        pipelineList.add(measurePipeline)
     }
 
     @Override
     void addPipelineStageMeasurement(final MeasurementOperatingPipelineStage measureStage) {
-        Objects.requireNonNull(mStageList)
-        mStageList.add(measureStage)
+        Objects.requireNonNull(stageList)
+        stageList.add(measureStage)
     }
 
     @Override
     void addFeatureMeasurement(final MeasurementOperatingFeature measureFeature) {
         Objects.requireNonNull(measureFeature)
-        mFeatureList.add(measureFeature)
+        featureList.add(measureFeature)
     }
 
     @Override
     void publishMeasureListFeature() {
-        publishOperatingMeasurementList(mFeatureList)
+        publishOperatingMeasurementList(featureList)
     }
 
     @Override
     void publishMeasureListPipeline() {
-        publishOperatingMeasurementList(mPipelineList)
+        publishOperatingMeasurementList(pipelineList)
     }
 
     @Override
     void publishMeasureListPipelineStage() {
-        publishOperatingMeasurementList(mStageList)
+        publishOperatingMeasurementList(stageList)
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
