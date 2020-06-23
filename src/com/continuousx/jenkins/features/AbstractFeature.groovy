@@ -26,17 +26,16 @@ abstract class AbstractFeature implements Feature, Serializable{
     protected AbstractFeature(
             final def jenkinsContext,
             final List<String> neededPlugins,
-            final boolean failOnError,
-            final FeatureType type,
-            LogLevelType logLevel = LogLevelType.WARNING) {
+            final FeatureConfig featureConfig) {
         Objects.requireNonNull(jenkinsContext)
         Objects.requireNonNull(neededPlugins)
-        Objects.requireNonNull(type)
+        Objects.requireNonNull(featureConfig)
+        Objects.requireNonNull(featureConfig.getLogLevel())
         this.jenkinsContext = jenkinsContext
         this.neededPlugins = neededPlugins
-        this.failOnError = failOnError
-        this.type = type
-        this.logLevel = logLevel
+        this.failOnError = featureConfig.isFailOnError()
+        this.type = featureConfig.getType()
+        this.logLevel = featureConfig.getLogLevel()
 
         measurementOperating.featureType = this.type
         if (this.jenkinsContext.env.GIT_URL != null) {

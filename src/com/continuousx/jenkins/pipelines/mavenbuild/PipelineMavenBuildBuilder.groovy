@@ -19,7 +19,7 @@ class PipelineMavenBuildBuilder {
 
     @SuppressWarnings(['GroovyUntypedAccess', 'GroovyAssignabilityCheck'])
     PipelineMavenBuildImpl build() {
-        new PipelineMavenBuildImpl(m_jenkinsContext, m_pipelineConfig, m_pipelineConfig.logLevelType)
+        new PipelineMavenBuildImpl(m_jenkinsContext, m_pipelineConfig)
     }
 
 }

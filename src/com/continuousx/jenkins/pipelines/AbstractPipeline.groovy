@@ -31,16 +31,15 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
     protected AbstractPipeline(
             def jenkinsContext,
             List<String> neededPlugins,
-            PipelineConfig config,
-            LogLevelType logLevel = LogLevelType.INFO) {
+            PipelineConfig config) {
         Objects.requireNonNull(jenkinsContext)
         Objects.requireNonNull(neededPlugins)
         Objects.requireNonNull(config)
-        Objects.requireNonNull(logLevel)
+        Objects.requireNonNull(config.getLogLevelType())
         this.jenkinsContext = jenkinsContext
         this.neededPlugins = neededPlugins
         this.pipelineConfig = config
-        this.logLevel = logLevel
+        this.logLevel = config.getLogLevelType()
         this.currentBuild = this.jenkinsContext.currentBuild
 
         this.jenkinsContext.echo("ENV: ${this.jenkinsContext.env.GIT_URL}")
@@ -72,7 +71,7 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
     @Override
     @NonCPS
     PipelineConfig getConfig() {
-        config
+        pipelineConfig
     }
 
 

@@ -23,7 +23,7 @@ class StageJenkinsConvertPluginsTxtBuilder {
     @NonCPS
     @SuppressWarnings(['GroovyUntypedAccess', 'GroovyAssignabilityCheck'])
     StageJenkinsConvertPluginsTxtImpl build() {
-        new StageJenkinsConvertPluginsTxtImpl(m_jenkinsContext, m_stageConfig, m_stageConfig.logLevelType)
+        new StageJenkinsConvertPluginsTxtImpl(m_jenkinsContext, m_stageConfig)
     }
 
 }

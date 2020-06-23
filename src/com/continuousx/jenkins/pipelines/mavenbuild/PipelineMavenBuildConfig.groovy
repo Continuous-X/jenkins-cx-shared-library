@@ -12,7 +12,7 @@ import groovy.transform.TypeChecked
 class PipelineMavenBuildConfig implements PipelineConfig {
 
     final static PipelineType type = PipelineType.PIPELINE_MAVEN_BUILD
-    LogLevelType logLevelType
+    LogLevelType logLevelType = LogLevelType.INFO
 
     StageJenkinsConvertPluginsTxtConfig stageJenkinsConvertPluginsTxtConfig = new StageJenkinsConvertPluginsTxtConfig(
             active: true,

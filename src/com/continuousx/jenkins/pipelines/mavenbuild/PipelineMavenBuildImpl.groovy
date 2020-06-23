@@ -13,12 +13,10 @@ class PipelineMavenBuildImpl extends AbstractPipeline {
     @SuppressWarnings(['GroovyUntypedAccess', 'GroovyVariableCanBeFinal'])
     protected PipelineMavenBuildImpl(
             def jenkinsContext,
-            PipelineMavenBuildConfig config,
-            LogLevelType logLevel = LogLevelType.INFO) {
+            PipelineMavenBuildConfig config) {
         super(jenkinsContext,
-                config,
                 ["workflow-basic-steps", "maven-plugin"],
-                logLevel)
+                config)
         stageJenkinsConvertPluginsTxt = new StageJenkinsConvertPluginsTxtBuilder(jenkinsContext)
                 .withStageConfig(config.getStageJenkinsConvertPluginsTxtConfig())
                 .build()

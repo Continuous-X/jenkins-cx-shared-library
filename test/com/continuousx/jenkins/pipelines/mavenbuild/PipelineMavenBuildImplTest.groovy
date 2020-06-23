@@ -1,26 +1,77 @@
 package com.continuousx.jenkins.pipelines.mavenbuild
 
+import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.pipelines.Pipeline
+import com.continuousx.jenkins.pipelines.PipelineConfig
+import com.continuousx.jenkins.pipelines.PipelineType
 import resource.jenkins.PipelineMock
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class PipelineMavenBuildImplTest extends Specification {
 
-    PipelineMock m_pipelineMock
+    PipelineMock pipelineMock
+    PipelineMavenBuildBuilder featureBuilder
 
     def setup() {
-        m_pipelineMock = Mock(PipelineMock)
+        pipelineMock = Mock(PipelineMock)
+        featureBuilder = new PipelineMavenBuildBuilder(pipelineMock)
     }
 
     def "should be create instance"() {
         given:
-        PipelineMavenBuildBuilder pipelineMavenBuildBuilder = new PipelineMavenBuildBuilder(m_pipelineMock)
-                .withPipelineConfig(new PipelineMavenBuildConfig())
+        Pipeline pipeline = featureBuilder.withPipelineConfig(new PipelineMavenBuildConfig()).build()
 
         when:
-        Pipeline pipeline = pipelineMavenBuildBuilder.build()
+        PipelineConfig config = pipeline.getConfig()
 
         then:
         assert pipeline != null
+        assert config.getType() == PipelineType.PIPELINE_MAVEN_BUILD
     }
+
+    @Unroll
+    def "should be config Pipeline Object"() {
+        expect:
+        Pipeline pipeline = featureBuilder
+                .withPipelineConfig(
+                        new PipelineMavenBuildConfig(
+                                logLevelType: loglevel
+                        )
+                )
+                .build()
+
+        assert pipeline != null
+
+        assert pipeline.logLevel == expectedLogLevel
+
+        where:
+        loglevel             || expectedLogLevel
+        LogLevelType.DEBUG   || LogLevelType.DEBUG
+        LogLevelType.INFO    || LogLevelType.INFO
+        LogLevelType.WARNING || LogLevelType.WARNING
+        LogLevelType.ERROR   || LogLevelType.ERROR
+    }
+
+    def 'should be config Feature Object failed'() {
+        when:
+        Pipeline pipeline = featureBuilder
+                .withPipelineConfig(
+                        new PipelineMavenBuildConfig(
+                                logLevelType: loglevel
+                        )
+                )
+                .build()
+
+        assert pipeline != null
+
+        then:
+        thrown(expectedException)
+
+        where:
+        loglevel || expectedException
+        null     || NullPointerException
+    }
+
+
 }

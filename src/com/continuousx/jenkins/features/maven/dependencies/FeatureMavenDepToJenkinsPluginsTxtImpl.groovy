@@ -15,38 +15,41 @@ class FeatureMavenDepToJenkinsPluginsTxtImpl extends AbstractFeature {
 
     private Model model
 
-    protected FeatureMavenDepToJenkinsPluginsTxtImpl(final def jenkinsContext, final boolean failOnError, LogLevelType logLevel = LogLevelType.INFO) {
+    @SuppressWarnings('GroovyUntypedAccess')
+    protected FeatureMavenDepToJenkinsPluginsTxtImpl(final def jenkinsContext, final FeatureMavenDepToJenkinsPluginsTxtConfig featureConfig) {
         super(jenkinsContext,
-                ["workflow-basic-steps", "maven-plugin"],
-                failOnError,
-                FeatureType.FEATURE_MAVEN_POM_CONVERT_DEP_TO_JENKINS_PLUGINS_TXT,
-                logLevel)
+                ['workflow-basic-steps'],
+                featureConfig)
     }
 
+    @SuppressWarnings('GroovyUntypedAccess')
     private String loadPomContent() {
         return jenkinsContext.readFile(file: POM_XML_FILENAME)
     }
 
+    @SuppressWarnings('GroovyUntypedAccess')
     FeatureMavenDepToJenkinsPluginsTxtImpl readPomXmlContent(String pomContent = loadPomContent()) throws FeatureException {
         Objects.nonNull(pomContent)
         if (logLevel == !LogLevelType.DEBUG) {
             jenkinsContext.log.debug("pomContent: \n ${pomContent}")
         }
-        MavenXpp3Reader xpp3Reader = new MavenXpp3Reader()
+        final MavenXpp3Reader xpp3Reader = new MavenXpp3Reader()
         try {
             this.model = xpp3Reader.read(new ByteArrayInputStream(pomContent.getBytes()))
-        } catch (Exception e) {
-            jenkinsContext.log.error("${e.getMessage()}")
-            throw new FeatureException(e.getMessage())
+        } catch (Exception exception) {
+            jenkinsContext.log.error("${exception.getMessage()}")
+            throw new FeatureException(exception.getMessage())
         }
         this
     }
 
+    @SuppressWarnings('GroovyUntypedAccess')
     void writePluginsTxt(String pluginsTxtContent = convertDependencies2PluginsTxt()) {
         Objects.requireNonNull(pluginsTxtContent)
         jenkinsContext.writeFile file: PLUGINS_TXT_FILENAME, text: pluginsTxtContent
     }
 
+    @SuppressWarnings('GroovyUntypedAccess')
     void checkPluginsTxt() {
         def checkPluginsTxt = jenkinsContext.fileExists(file: PLUGINS_TXT_FILENAME)
         jenkinsContext.log.info "check ${PLUGINS_TXT_FILENAME}: ${checkPluginsTxt}"
@@ -64,11 +67,11 @@ class FeatureMavenDepToJenkinsPluginsTxtImpl extends AbstractFeature {
                     .append('\n')
         }
 
-        return content.toString()
+        content.toString()
     }
 
     Parent getParent() {
-        return this.model.getParent()
+        this.model.getParent()
     }
 
     @Override
