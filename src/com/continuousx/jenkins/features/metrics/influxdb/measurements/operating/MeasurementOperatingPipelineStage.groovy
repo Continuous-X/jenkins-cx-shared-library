@@ -3,7 +3,7 @@ package com.continuousx.jenkins.features.metrics.influxdb.measurements.operating
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.stages.StageType
 
-class MeasurementOperatingPipelineStage implements MeasurementOperating {
+class MeasurementOperatingPipelineStage implements MeasurementOperating, Serializable {
 
     private final static MeasurementOperatingType TYPE = MeasurementOperatingType.CX_OPERATING_STAGES
 
