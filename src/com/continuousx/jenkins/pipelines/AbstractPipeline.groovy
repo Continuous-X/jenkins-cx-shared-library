@@ -7,6 +7,7 @@ import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipeline
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
+import com.continuousx.utils.github.GitURLParser
 
 abstract class AbstractPipeline implements Pipeline, Serializable {
 

@@ -5,6 +5,7 @@ import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.features.github.BranchType
 import com.continuousx.jenkins.stages.StageType
 import com.continuousx.jenkins.stages.StageConfig
+import com.continuousx.utils.github.BranchType
 
 class StageMavenCompileConfig implements StageConfig, Serializable {
 

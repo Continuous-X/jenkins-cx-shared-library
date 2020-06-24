@@ -2,8 +2,8 @@ package com.continuousx.jenkins.features.metrics.influxdb
 
 import com.continuousx.jenkins.features.Feature
 import com.continuousx.jenkins.features.FeatureType
-import com.continuousx.jenkins.features.github.GitURLParser
-import com.continuousx.jenkins.features.jenkins.utils.JenkinsPluginCheck
+import com.continuousx.utils.github.GitURLParser
+import com.continuousx.utils.jenkins.JenkinsPluginCheck
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperating
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingFeature
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipeline

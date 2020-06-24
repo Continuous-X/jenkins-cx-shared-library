@@ -1,4 +1,4 @@
-package com.continuousx.jenkins.features.github
+package com.continuousx.utils.github
 
 import com.cloudbees.groovy.cps.NonCPS
 

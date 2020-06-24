@@ -1,4 +1,4 @@
-package com.continuousx.jenkins.features.jenkins.utils
+package com.continuousx.utils.jenkins
 
 import com.cloudbees.groovy.cps.NonCPS
 import hudson.PluginWrapper
