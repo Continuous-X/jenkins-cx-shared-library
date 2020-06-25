@@ -1,14 +1,18 @@
+import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
-import com.continuousx.jenkins.pipelines.config.PipelineConfig
 
+@SuppressWarnings(['GroovyAssignabilityCheck', 'GroovyVariableCanBeFinal'])
 def call(PipelineConfig config) {
 
-    switch(config.getPipelineType()) {
+    switch(config.getType()) {
         case PipelineType.PIPELINE_MAVEN_BUILD:
             PipelineMavenBuild(config)
             break
         case PipelineType.PIPELINE_JENKINS_SHARED_LIB:
             PipelineSharedLib(config)
+            break
+        case PipelineType.PIPELINE_NEXT_LEVEL:
+            log.info "run Pipeline: ${config.getType()}"
             break
         default:
             log.warning 'non pipeline type found'

@@ -1,22 +1,27 @@
 package com.continuousx.jenkins.pipelines.utils
 
 
-import com.continuousx.jenkins.PipelineMock
+import com.continuousx.utils.jenkins.JenkinsPluginCheck
 import org.codehaus.groovy.runtime.powerassert.PowerAssertionError
 import spock.lang.Specification
 
 class JenkinsPluginCheckTest extends Specification {
+
+    resource.jenkins.PipelineMock pipelineMock
+
+    def setup() {
+        pipelineMock = Mock(resource.jenkins.PipelineMock)
+    }
+
     def "should be successful with needed plugin list"() {
         given:
         List<String> pluginListInstalled = ["test-plugin-1", "test-plugin-2", "test-plugin-3"]
         List<String> pluginListNeeded = ["test-plugin-1", "test-plugin-2", "test-plugin-3"]
-        JenkinsPluginCheck pluginCheck = new JenkinsPluginCheck(new PipelineMock())
+        JenkinsPluginCheck pluginCheck = new JenkinsPluginCheck(pipelineMock)
 
         when:
         boolean checkResult = pluginCheck.addInstalledPlugins(pluginListInstalled)
-                .and()
                 .addNeededPluginList(pluginListNeeded)
-                .and()
                 .isPluginListInstalled()
 
         then:
@@ -27,13 +32,11 @@ class JenkinsPluginCheckTest extends Specification {
         given:
         List<String> pluginListInstalled = ["test-plugin-1", "test-plugin-2", "test-plugin-3"]
         List<String> pluginListNeeded = ["test-plugin-1", "test-plugin-4"]
-        JenkinsPluginCheck pluginCheck = new JenkinsPluginCheck(new PipelineMock())
+        JenkinsPluginCheck pluginCheck = new JenkinsPluginCheck(pipelineMock)
 
         when:
         boolean checkResult = pluginCheck.addInstalledPlugins(pluginListInstalled)
-                .and()
                 .addNeededPluginList(pluginListNeeded)
-                .and()
                 .isPluginListInstalled()
 
         then:
@@ -44,13 +47,11 @@ class JenkinsPluginCheckTest extends Specification {
         given:
         List<String> pluginListInstalled = ["test-plugin-1", "test-plugin-2", "test-plugin-3"]
         List<String> pluginListNeeded = []
-        JenkinsPluginCheck pluginCheck = new JenkinsPluginCheck(new PipelineMock())
+        JenkinsPluginCheck pluginCheck = new JenkinsPluginCheck(pipelineMock)
 
         when:
         boolean checkResult = pluginCheck.addInstalledPlugins(pluginListInstalled)
-                .and()
                 .addNeededPluginList(pluginListNeeded)
-                .and()
                 .isPluginListInstalled()
 
         then:
@@ -60,13 +61,11 @@ class JenkinsPluginCheckTest extends Specification {
     def "should be failed when needed plugin list is null"() {
         given:
         List<String> pluginListInstalled = ["test-plugin-1", "test-plugin-2", "test-plugin-3"]
-        JenkinsPluginCheck pluginCheck = new JenkinsPluginCheck(new PipelineMock())
+        JenkinsPluginCheck pluginCheck = new JenkinsPluginCheck(pipelineMock)
 
         when:
         boolean checkResult = pluginCheck.addInstalledPlugins(pluginListInstalled)
-                .and()
                 .addNeededPluginList(null)
-                .and()
                 .isPluginListInstalled()
 
         then:
@@ -76,13 +75,11 @@ class JenkinsPluginCheckTest extends Specification {
     def "should be failed when installed plugin list is null"() {
         given:
         List<String> pluginListNeeded = []
-        JenkinsPluginCheck pluginCheck = new JenkinsPluginCheck(new PipelineMock())
+        JenkinsPluginCheck pluginCheck = new JenkinsPluginCheck(pipelineMock)
 
         when:
         boolean checkResult = pluginCheck.addInstalledPlugins(null)
-                .and()
                 .addNeededPluginList(pluginListNeeded)
-                .and()
                 .isPluginListInstalled()
 
         then:

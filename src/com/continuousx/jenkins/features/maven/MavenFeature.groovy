@@ -1,6 +1,8 @@
 package com.continuousx.jenkins.features.maven
 
 interface MavenFeature {
-    MavenFeature startGoal(String goal)
-    MavenFeature showVersion()
+
+    void startGoal(MavenGoal goal)
+    void showVersion()
+
 }

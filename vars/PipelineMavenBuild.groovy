@@ -1,16 +1,19 @@
-import com.continuousx.jenkins.features.maven.MavenFeature
-import com.continuousx.jenkins.features.maven.MavenFeatureImpl
-import com.continuousx.jenkins.features.maven.MavenFeatureWrapperImpl
-import com.continuousx.jenkins.pipelines.config.PipelineConfigMavenBuild
-import com.continuousx.jenkins.stages.StageJenkinsConvertPluginsTxt
+import com.continuousx.jenkins.features.maven.build.FeatureMavenBuildImpl
+import com.continuousx.jenkins.features.maven.build.wrapper.FeatureMavenWrapperBuildImpl
+import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildBuilder
+import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
+import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildImpl
 
-def call(PipelineConfigMavenBuild config) {
+def call(final PipelineMavenBuildConfig pipelineConfig) {
+
+    final PipelineMavenBuildImpl pipelineMavenBuild = new PipelineMavenBuildBuilder(this)
+            .withPipelineConfig(pipelineConfig)
+            .build()
 
     pipeline {
         agent any
         options {
             timeout time: 30, unit: 'MINUTES'
-            timestamps()
             buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
             disableConcurrentBuilds()
         }
@@ -27,29 +30,29 @@ def call(PipelineConfigMavenBuild config) {
 
             stage('Convert DepToFile') {
                 when {
-                    expression { return config.stageConfigJenkinsConvertPluginsTxt.isActive() }
+                    expression { return pipelineMavenBuild.stageJenkinsConvertPluginsTxt.config.active }
                 }
                 steps {
                     milestone 20
                     script {
-                        new StageJenkinsConvertPluginsTxt(this, config.getStageConfigJenkinsConvertPluginsTxt()).run()
+                        pipelineMavenBuild.stageJenkinsConvertPluginsTxt.runStage()
                     }
                 }
             }
 
             stage('Build') {
                 when {
-                    expression { return config.stageConfigMavenCompile.isActive() }
+                    expression { return pipelineConfig.getStageConfigMavenCompile().isActive() }
                 }
                 steps {
                     milestone 50
                     script {
                         log.info "run maven feature"
-                        assert fileExists(file: MavenFeatureWrapperImpl.MVN_WRAPPER_FILENAME)
-                        assert fileExists(file: MavenFeatureWrapperImpl.MVN_SETTINGS_XML)
+                        assert fileExists(file: FeatureMavenWrapperBuildImpl.MVN_WRAPPER_FILENAME)
+                        assert fileExists(file: FeatureMavenWrapperBuildImpl.MVN_SETTINGS_XML)
 
-                        new MavenFeatureWrapperImpl(this, config.stageConfigMavenCompile.getLogLevelType()).run()
-                        new MavenFeatureImpl(this, config.stageConfigMavenCompile.getLogLevelType()).run()
+                        new FeatureMavenWrapperBuildImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).runFeature()
+                        new FeatureMavenBuildImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).runFeature()
                     }
                 }
             }

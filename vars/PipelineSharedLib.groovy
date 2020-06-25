@@ -1,4 +1,4 @@
-import com.continuousx.jenkins.pipelines.config.PipelineConfigSharedLib
+import com.continuousx.jenkins.pipelines.sharedlib.PipelineConfigSharedLib
 
 def call(PipelineConfigSharedLib config) {
 

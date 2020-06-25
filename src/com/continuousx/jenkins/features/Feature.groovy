@@ -1,5 +1,9 @@
 package com.continuousx.jenkins.features
 
 interface Feature {
-    Feature run()
+
+    void runFeature()
+    FeatureType getType()
+    void publishMetricOperating()
+
 }
