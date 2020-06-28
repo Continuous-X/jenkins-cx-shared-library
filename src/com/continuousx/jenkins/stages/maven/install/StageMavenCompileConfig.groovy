@@ -1,6 +1,6 @@
 package com.continuousx.jenkins.stages.maven.install
 
-
+import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.stages.StageConfig
 import com.continuousx.jenkins.stages.StageType
@@ -21,22 +21,26 @@ class StageMavenCompileConfig implements StageConfig, Serializable {
 
     @SuppressWarnings('ClashingGetters')
     @Override
+    @NonCPS
     boolean isActive() {
         active
     }
 
     @SuppressWarnings('ClashingGetters')
     @Override
+    @NonCPS
     boolean isFailOnError() {
         failOnError
     }
 
     @Override
+    @NonCPS
     LogLevelType logLevelType() {
         logLevelType
     }
 
     @Override
+    @NonCPS
     BranchType getAllowedBranch() {
         allowedBranch
     }
