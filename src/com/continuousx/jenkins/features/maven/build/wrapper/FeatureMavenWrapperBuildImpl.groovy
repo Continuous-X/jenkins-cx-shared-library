@@ -2,12 +2,11 @@ package com.continuousx.jenkins.features.maven.build.wrapper
 
 import com.continuousx.jenkins.features.maven.AbstractMavenFeature
 import com.continuousx.jenkins.features.maven.MavenCommand
-import com.continuousx.jenkins.features.maven.build.FeatureMavenBuildConfig
 
 class FeatureMavenWrapperBuildImpl extends AbstractMavenFeature {
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected FeatureMavenWrapperBuildImpl(final def jenkinsContext, final FeatureMavenBuildConfig featureConfig) {
+    protected FeatureMavenWrapperBuildImpl(final def jenkinsContext, final FeatureMavenWrapperBuildConfig featureConfig) {
         super(jenkinsContext,
                 [],
                 featureConfig)

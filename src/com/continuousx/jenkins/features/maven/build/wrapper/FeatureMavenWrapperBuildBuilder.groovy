@@ -1,12 +1,9 @@
 package com.continuousx.jenkins.features.maven.build.wrapper
 
-
-import com.continuousx.jenkins.features.maven.build.FeatureMavenBuildConfig
-
 class FeatureMavenWrapperBuildBuilder {
 
     def jenkinsContext
-    FeatureMavenBuildConfig featureConfig = new FeatureMavenBuildConfig()
+    FeatureMavenWrapperBuildConfig featureConfig = new FeatureMavenWrapperBuildConfig()
 
     @SuppressWarnings('GroovyUntypedAccess')
     FeatureMavenWrapperBuildBuilder(final def jenkinsContext) {
@@ -14,7 +11,8 @@ class FeatureMavenWrapperBuildBuilder {
         this.jenkinsContext = jenkinsContext
     }
 
-    FeatureMavenWrapperBuildConfig withFeatureConfig(final FeatureMavenWrapperBuildConfig featureConfig) {
+    FeatureMavenWrapperBuildBuilder withFeatureConfig(final FeatureMavenWrapperBuildConfig featureConfig) {
+        Objects.requireNonNull(featureConfig)
         this.featureConfig = featureConfig
         this
     }
