@@ -3,6 +3,7 @@ import com.continuousx.jenkins.features.maven.build.wrapper.FeatureMavenWrapperB
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildBuilder
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildImpl
+import com.continuousx.utils.github.BranchExpressionChecker
 
 def call(final PipelineMavenBuildConfig pipelineConfig) {
 
@@ -28,31 +29,15 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
                 }
             }
 
-            stage('Convert DepToFile') {
-                when {
-                    expression { return pipelineMavenBuild.stageJenkinsConvertPluginsTxt.config.active }
-                }
-                steps {
-                    milestone 20
-                    script {
-                        pipelineMavenBuild.stageJenkinsConvertPluginsTxt.runStage()
-                    }
-                }
-            }
-
             stage('Build') {
                 when {
-                    expression { return pipelineConfig.getStageConfigMavenCompile().isActive() }
+                    expression { pipelineMavenBuild.stageMavenInstall.getStageConfig().isActive() }
+                    expression { BranchExpressionChecker.checkBranchExpression(pipelineMavenBuild.stageMavenInstall.getStageConfig().getAllowedBranch(), env.GIT_BRANCH) }
                 }
                 steps {
                     milestone 50
                     script {
-                        log.info "run maven feature"
-                        assert fileExists(file: FeatureMavenWrapperBuildImpl.MVN_WRAPPER_FILENAME)
-                        assert fileExists(file: FeatureMavenWrapperBuildImpl.MVN_SETTINGS_XML)
-
-                        new FeatureMavenWrapperBuildImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).runFeature()
-                        new FeatureMavenBuildImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).runFeature()
+                        pipelineMavenBuild.stageMavenInstall.runStage()
                     }
                 }
             }

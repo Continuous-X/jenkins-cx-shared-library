@@ -81,7 +81,7 @@ abstract class AbstractStage implements Stage, Serializable {
         }
     }
 
-    StageConfig getConfig() {
+    StageConfig getStageConfig() {
         stageConfig
     }
 
