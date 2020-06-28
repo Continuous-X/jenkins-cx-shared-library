@@ -1,5 +1,7 @@
 package com.continuousx.jenkins.stages
 
+import com.cloudbees.groovy.cps.NonCPS
+
 enum StageType {
 
     STAGE_MAVEN_COMPILE,
@@ -9,6 +11,7 @@ enum StageType {
     STAGE_JENKINS_CONVERT_PLUGINS_TXT
 
     @Override
+    @NonCPS
     String toString() {
         name().toLowerCase()
     }
