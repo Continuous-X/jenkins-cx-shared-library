@@ -8,8 +8,8 @@ import com.continuousx.jenkins.stages.AbstractStage
 class StageMavenCompileImpl extends AbstractStage {
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected StageMavenCompileImpl(final def jenkinsContext, final StageMavenCompileConfig config) {
-        super(jenkinsContext, ["workflow-basic-steps", "maven-plugin"], config)
+    protected StageMavenCompileImpl(final def jenkinsContext, final StageMavenCompileConfig stageConfig) {
+        super(jenkinsContext, ["workflow-basic-steps", "maven-plugin"], stageConfig)
     }
 
     @SuppressWarnings('GroovyUntypedAccess')

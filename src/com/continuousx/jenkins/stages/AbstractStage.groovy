@@ -1,5 +1,6 @@
 package com.continuousx.jenkins.stages
 
+import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.utils.github.GitURLParser
 import com.continuousx.utils.jenkins.JenkinsPluginCheck
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
@@ -27,18 +28,18 @@ abstract class AbstractStage implements Stage, Serializable {
     protected AbstractStage(
             final def jenkinsContext,
             final List<String> neededPlugins,
-            final StageConfig config) {
+            final StageConfig stageConfig) {
         Objects.requireNonNull(jenkinsContext)
         Objects.requireNonNull(neededPlugins)
-        Objects.requireNonNull(config)
+        Objects.requireNonNull(stageConfig)
         this.jenkinsContext = jenkinsContext
         this.neededPlugins = neededPlugins
-        this.stageConfig = config
+        this.stageConfig = stageConfig
         this.currentBuild = this.jenkinsContext.currentBuild
 
-        measurement.active = config.isActive()
-        measurement.failOnError = config.isFailOnError()
-        measurement.stageType = config.getType()
+        measurement.active = stageConfig.isActive()
+        measurement.failOnError = stageConfig.isFailOnError()
+        measurement.stageType = stageConfig.getType()
 
         this.jenkinsContext.echo("ENV: ${this.jenkinsContext.env}")
         if (this.jenkinsContext.env.GIT_URL != null) {
@@ -81,6 +82,7 @@ abstract class AbstractStage implements Stage, Serializable {
         }
     }
 
+    @NonCPS
     StageConfig getStageConfig() {
         stageConfig
     }
