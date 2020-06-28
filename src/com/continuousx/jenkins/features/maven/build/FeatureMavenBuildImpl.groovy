@@ -24,8 +24,8 @@ class FeatureMavenBuildImpl extends AbstractMavenFeature {
     }
 
     @Override
-    MavenCommand getCommand() {
-        MavenCommand.MVN
+    String getCommand() {
+        MavenCommand.MVN.toString()
     }
 
     @Override

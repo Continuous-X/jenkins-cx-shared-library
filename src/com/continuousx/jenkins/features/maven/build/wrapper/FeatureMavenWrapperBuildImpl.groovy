@@ -31,7 +31,7 @@ class FeatureMavenWrapperBuildImpl extends AbstractMavenFeature {
     }
 
     @Override
-    MavenCommand getCommand() {
+    String getCommand() {
         MavenCommand.MVNW
     }
 

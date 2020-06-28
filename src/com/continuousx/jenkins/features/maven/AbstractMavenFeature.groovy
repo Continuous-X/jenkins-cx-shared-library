@@ -21,7 +21,7 @@ abstract class AbstractMavenFeature extends AbstractFeature implements MavenFeat
 
     abstract void runFeatureImpl()
 
-    abstract MavenCommand getCommand()
+    abstract String getCommand()
 
     abstract String getSettingsXml()
 
@@ -29,7 +29,7 @@ abstract class AbstractMavenFeature extends AbstractFeature implements MavenFeat
     @NonCPS
     @Override
     void startGoal(final MavenGoal goal) {
-        jenkinsContext.sh script: "${getCommand().toString()} ${goal.toString()} ${getSettingsXml()}",
+        jenkinsContext.sh script: "${getCommand()} ${goal.toString()} ${getSettingsXml()}",
                 returnStdout: true
     }
 
