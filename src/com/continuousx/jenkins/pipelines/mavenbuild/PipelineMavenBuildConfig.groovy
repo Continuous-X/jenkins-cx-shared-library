@@ -1,6 +1,6 @@
 package com.continuousx.jenkins.pipelines.mavenbuild
 
-
+import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
@@ -25,11 +25,13 @@ class PipelineMavenBuildConfig implements PipelineConfig {
     }
 
     @Override
+    @NonCPS
     PipelineType getType() {
         TYPE
     }
 
     @Override
+    @NonCPS
     LogLevelType getLogLevelType() {
         logLevelType
     }
