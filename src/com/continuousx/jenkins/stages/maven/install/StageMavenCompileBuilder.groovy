@@ -1,8 +1,6 @@
 package com.continuousx.jenkins.stages.maven.install
 
 import com.cloudbees.groovy.cps.NonCPS
-import com.continuousx.jenkins.stages.jenkins.convertpluginstxt.StageJenkinsConvertPluginsTxtConfig
-import com.continuousx.jenkins.stages.jenkins.convertpluginstxt.StageJenkinsConvertPluginsTxtImpl
 
 class StageMavenCompileBuilder {
 
@@ -19,13 +17,13 @@ class StageMavenCompileBuilder {
     StageMavenCompileBuilder withStageConfig(final StageMavenCompileConfig stageConfig) {
         Objects.nonNull(stageConfig)
         this.stageConfig = stageConfig
-        return this
+        this
     }
 
     @NonCPS
     @SuppressWarnings(['GroovyUntypedAccess', 'GroovyAssignabilityCheck'])
     StageMavenCompileImpl build() {
-        new StageMavenCompileImpl(jenkinsContext, stageConfig, stageConfig.logLevelType)
+        new StageMavenCompileImpl(jenkinsContext, stageConfig)
     }
 
 }

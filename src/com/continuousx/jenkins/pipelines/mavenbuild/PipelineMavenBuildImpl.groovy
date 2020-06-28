@@ -1,10 +1,8 @@
 package com.continuousx.jenkins.pipelines.mavenbuild
 
 import com.cloudbees.groovy.cps.NonCPS
-import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.pipelines.AbstractPipeline
 import com.continuousx.jenkins.stages.Stage
-import com.continuousx.jenkins.stages.jenkins.convertpluginstxt.StageJenkinsConvertPluginsTxtBuilder
 import com.continuousx.jenkins.stages.maven.install.StageMavenCompileBuilder
 
 class PipelineMavenBuildImpl extends AbstractPipeline {
