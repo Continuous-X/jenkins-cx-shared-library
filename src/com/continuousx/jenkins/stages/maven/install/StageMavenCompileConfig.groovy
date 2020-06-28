@@ -15,6 +15,7 @@ class StageMavenCompileConfig implements StageConfig, Serializable {
     LogLevelType logLevelType
 
     @Override
+    @NonCPS
     StageType getType() {
         TYPE
     }
