@@ -14,7 +14,7 @@ class PipelineMavenBuildBuilder {
     PipelineMavenBuildBuilder withPipelineConfig(final PipelineMavenBuildConfig pipelineConfig) {
         Objects.nonNull(pipelineConfig)
         this.m_pipelineConfig = pipelineConfig
-        return this
+        this
     }
 
     @SuppressWarnings(['GroovyUntypedAccess', 'GroovyAssignabilityCheck'])

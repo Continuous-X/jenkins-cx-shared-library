@@ -2,7 +2,8 @@ package com.continuousx.jenkins.features.maven
 
 enum MavenCommand {
 
-    MVN
+    MVN,
+    MVNW
 
     String toString() {
         name().toLowerCase()

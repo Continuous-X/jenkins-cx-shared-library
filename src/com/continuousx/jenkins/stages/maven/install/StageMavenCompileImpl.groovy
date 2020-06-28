@@ -1,6 +1,8 @@
 package com.continuousx.jenkins.stages.maven.install
 
-import com.continuousx.jenkins.features.maven.build.wrapper.FeatureMavenWrapperBuildImpl
+import com.continuousx.jenkins.features.maven.build.FeatureMavenBuildBuilder
+import com.continuousx.jenkins.features.maven.build.FeatureMavenBuildConfig
+import com.continuousx.jenkins.features.maven.build.FeatureMavenBuildImpl
 import com.continuousx.jenkins.stages.AbstractStage
 
 class StageMavenCompileImpl extends AbstractStage {
@@ -14,7 +16,12 @@ class StageMavenCompileImpl extends AbstractStage {
     @Override
     void runStageImpl() {
         if (checkNeededPlugins()) {
-            new FeatureMavenWrapperBuildImpl(jenkinsContext, stageConfig.logLevelType()).runFeature()
+            final FeatureMavenBuildImpl mavenBuild = new FeatureMavenBuildBuilder(jenkinsContext)
+                    .withFeatureConfig(new FeatureMavenBuildConfig(
+                            failOnError:getStageConfig().isFailOnError(),
+                            logLevelType:getStageConfig().logLevelType()
+                    )).build()
+            mavenBuild.runFeature()
         } else {
             jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
         }

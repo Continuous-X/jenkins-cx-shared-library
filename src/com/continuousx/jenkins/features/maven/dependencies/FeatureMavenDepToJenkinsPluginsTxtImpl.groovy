@@ -4,6 +4,7 @@ import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.features.AbstractFeature
 import com.continuousx.jenkins.features.FeatureType
 import com.continuousx.jenkins.features.exceptions.FeatureException
+import com.continuousx.jenkins.features.maven.build.wrapper.FeatureMavenWrapperBuildConfig
 import org.apache.maven.model.Model
 import org.apache.maven.model.Parent
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader
@@ -16,7 +17,7 @@ class FeatureMavenDepToJenkinsPluginsTxtImpl extends AbstractFeature {
     private Model model
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected FeatureMavenDepToJenkinsPluginsTxtImpl(final def jenkinsContext, final FeatureMavenDepToJenkinsPluginsTxtConfig featureConfig) {
+    protected FeatureMavenDepToJenkinsPluginsTxtImpl(final def jenkinsContext, final FeatureMavenWrapperBuildConfig featureConfig) {
         super(jenkinsContext,
                 ['workflow-basic-steps'],
                 featureConfig)

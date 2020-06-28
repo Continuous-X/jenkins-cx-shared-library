@@ -2,11 +2,9 @@ package com.continuousx.jenkins.pipelines
 
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.LogLevelType
-import com.continuousx.jenkins.features.github.GitURLParser
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipeline
-import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
 import com.continuousx.utils.github.GitURLParser
 
 abstract class AbstractPipeline implements Pipeline, Serializable {
@@ -68,13 +66,6 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
             publishMetricOperating()
         }
     }
-
-    @Override
-    @NonCPS
-    PipelineConfig getConfig() {
-        pipelineConfig
-    }
-
 
     @Override
     void publishMetricOperating() {

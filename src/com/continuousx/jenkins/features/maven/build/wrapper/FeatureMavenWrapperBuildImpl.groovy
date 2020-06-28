@@ -1,47 +1,26 @@
 package com.continuousx.jenkins.features.maven.build.wrapper
 
-import com.cloudbees.groovy.cps.NonCPS
-import com.continuousx.jenkins.LogLevelType
-import com.continuousx.jenkins.features.AbstractFeature
-import com.continuousx.jenkins.features.FeatureType
-import com.continuousx.jenkins.features.maven.MavenFeature
-import com.continuousx.jenkins.features.maven.MavenGoal
+import com.continuousx.jenkins.features.maven.AbstractMavenFeature
+import com.continuousx.jenkins.features.maven.MavenCommand
+import com.continuousx.jenkins.features.maven.build.FeatureMavenBuildConfig
 
-class FeatureMavenWrapperBuildImpl extends AbstractFeature implements MavenFeature {
-    public final static MVN_WRAPPER_FILENAME = 'mvnw'
-    public final static MVN_SETTINGS_XML = '.mvn/settings.xml'
+class FeatureMavenWrapperBuildImpl extends AbstractMavenFeature {
 
-    private String mavenCmd = "./${MVN_WRAPPER_FILENAME}"
-
-
-    protected FeatureMavenWrapperBuildImpl(final def jenkinsContext, final boolean failOnError, LogLevelType logLevel = LogLevelType.INFO) {
+    @SuppressWarnings('GroovyUntypedAccess')
+    protected FeatureMavenWrapperBuildImpl(final def jenkinsContext, final FeatureMavenBuildConfig featureConfig) {
         super(jenkinsContext,
-                ["workflow-basic-steps", "maven-plugin"],
-                failOnError,
-                FeatureType.FEATURE_MAVEN_POM_CONVERT_DEP_TO_JENKINS_PLUGINS_TXT,
-                logLevel)
+                [],
+                featureConfig)
     }
 
+    @SuppressWarnings('GroovyUntypedAccess')
     private void setPermission() {
         jenkinsContext.sh(
-                script: "ls -la && pwd && chmod 555 ${mavenCmd}",
+                script: "ls -la && pwd && chmod 555 ${getCommand()}",
                 returnStdout: true)
     }
 
-    @NonCPS
-    @Override
-    void startGoal(MavenGoal goal) {
-        jenkinsContext.sh script: "${mavenCmd} ${goal} -s ${MVN_SETTINGS_XML}",
-                returnStdout: true
-    }
-
-
-    @Override
-    void showVersion() {
-        jenkinsContext.sh script: "${mavenCmd} --version",
-                returnStdout: true
-    }
-
+    @SuppressWarnings('GroovyUntypedAccess')
     @Override
     void runFeatureImpl() {
         if(checkNeededPlugins()) {
@@ -51,4 +30,15 @@ class FeatureMavenWrapperBuildImpl extends AbstractFeature implements MavenFeatu
             jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
         }
     }
+
+    @Override
+    MavenCommand getCommand() {
+        MavenCommand.MVNW
+    }
+
+    @Override
+    String getSettingsXml() {
+        '-s .mvn/settings.xml'
+    }
+
 }

@@ -1,6 +1,12 @@
 import com.continuousx.jenkins.pipelines.sharedlib.PipelineConfigSharedLib
+import com.continuousx.jenkins.stages.Stage
+import com.continuousx.jenkins.stages.maven.install.StageMavenCompileBuilder
+import com.continuousx.jenkins.stages.maven.install.StageMavenCompileConfig
 
 def call(PipelineConfigSharedLib config) {
+
+    Stage stageMaven
+    Stage stageMavenWrapper
 
     pipeline {
         agent any
@@ -17,6 +23,7 @@ def call(PipelineConfigSharedLib config) {
                     milestone 10
                     script {
                         log.info 'init this'
+                        stageMaven = new StageMavenCompileBuilder(delegate).build()
                     }
                 }
             }

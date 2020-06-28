@@ -2,9 +2,8 @@ package com.continuousx.jenkins.stages.jenkins.convertpluginstxt
 
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.LogLevelType
-import com.continuousx.jenkins.features.github.BranchType
-import com.continuousx.jenkins.stages.StageType
 import com.continuousx.jenkins.stages.StageConfig
+import com.continuousx.jenkins.stages.StageType
 import com.continuousx.utils.github.BranchType
 
 class StageJenkinsConvertPluginsTxtConfig implements StageConfig, Serializable {

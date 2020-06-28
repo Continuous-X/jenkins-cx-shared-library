@@ -5,10 +5,11 @@ import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.pipelines.AbstractPipeline
 import com.continuousx.jenkins.stages.Stage
 import com.continuousx.jenkins.stages.jenkins.convertpluginstxt.StageJenkinsConvertPluginsTxtBuilder
+import com.continuousx.jenkins.stages.maven.install.StageMavenCompileBuilder
 
 class PipelineMavenBuildImpl extends AbstractPipeline {
 
-    Stage stageJenkinsConvertPluginsTxt
+    Stage stageMavenInstall
 
     @SuppressWarnings(['GroovyUntypedAccess', 'GroovyVariableCanBeFinal'])
     protected PipelineMavenBuildImpl(
@@ -17,8 +18,8 @@ class PipelineMavenBuildImpl extends AbstractPipeline {
         super(jenkinsContext,
                 ["workflow-basic-steps", "maven-plugin"],
                 config)
-        stageJenkinsConvertPluginsTxt = new StageJenkinsConvertPluginsTxtBuilder(jenkinsContext)
-                .withStageConfig(config.getStageJenkinsConvertPluginsTxtConfig())
+        stageMavenInstall = new StageMavenCompileBuilder(jenkinsContext)
+                .withStageConfig(config.getStageConfigMavenCompile())
                 .build()
     }
 
