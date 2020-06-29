@@ -36,8 +36,7 @@ abstract class AbstractMavenFeature extends AbstractFeature implements MavenFeat
     @SuppressWarnings('GroovyUntypedAccess')
     @Override
     void showVersion() {
-        jenkinsContext.sh script: "${getCommand().toString()} --version ${getSettingsXml()}",
-                returnStdout: true
+        jenkinsContext.sh script: "${getCommand().toString()} --version ${getSettingsXml()}"
     }
 
 }
