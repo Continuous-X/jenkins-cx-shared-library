@@ -1,7 +1,5 @@
 package com.continuousx.jenkins.features.maven.dependencies
 
-import com.continuousx.jenkins.features.FeatureConfig
-
 class FeatureMavenDepToJenkinsPluginsTxtBuilder {
 
     private def jenkinsContext
@@ -22,4 +20,5 @@ class FeatureMavenDepToJenkinsPluginsTxtBuilder {
     FeatureMavenDepToJenkinsPluginsTxtImpl build() {
         new FeatureMavenDepToJenkinsPluginsTxtImpl(jenkinsContext, featureConfig)
     }
+
 }

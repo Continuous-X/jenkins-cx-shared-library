@@ -23,7 +23,7 @@ class PipelineMavenBuildImplTest extends Specification {
         Pipeline pipeline = featureBuilder.withPipelineConfig(new PipelineMavenBuildConfig()).build()
 
         when:
-        PipelineConfig config = pipeline.getConfig()
+        PipelineConfig config = pipeline.getPipelineConfig()
 
         then:
         assert pipeline != null

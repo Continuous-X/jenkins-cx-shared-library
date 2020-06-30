@@ -17,7 +17,7 @@ class FeatureMavenDepToJenkinsPluginsTxtImpl extends AbstractFeature {
     private Model model
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected FeatureMavenDepToJenkinsPluginsTxtImpl(final def jenkinsContext, final FeatureMavenWrapperBuildConfig featureConfig) {
+    protected FeatureMavenDepToJenkinsPluginsTxtImpl(final def jenkinsContext, final FeatureMavenDepToJenkinsPluginsTxtConfig featureConfig) {
         super(jenkinsContext,
                 ['workflow-basic-steps'],
                 featureConfig)
