@@ -7,4 +7,5 @@ import org.jenkinsci.plugins.workflow.libs.Library
 
 PipelineGlobal(new PipelineMavenBuildConfig(logLevelType: LogLevelType.DEBUG)
         .configStageMavenCompile(true,true)
+        .configStageGHProtectionCheck(true,true)
 )
