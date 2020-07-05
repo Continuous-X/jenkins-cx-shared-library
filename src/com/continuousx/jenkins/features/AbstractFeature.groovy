@@ -30,12 +30,12 @@ abstract class AbstractFeature implements Feature, Serializable{
         Objects.requireNonNull(jenkinsContext)
         Objects.requireNonNull(neededPlugins)
         Objects.requireNonNull(featureConfig)
-        Objects.requireNonNull(featureConfig.getLogLevel())
+        Objects.requireNonNull(featureConfig.logLevelType)
         this.jenkinsContext = jenkinsContext
         this.neededPlugins = neededPlugins
-        this.failOnError = featureConfig.isFailOnError()
-        this.type = featureConfig.getType()
-        this.logLevel = featureConfig.getLogLevel()
+        this.failOnError = featureConfig.failOnError
+        this.type = featureConfig.type
+        this.logLevel = featureConfig.logLevelType
 
         this.jenkinsContext.log.info("ENV in Feature: ${this.jenkinsContext.env.toString()}")
 

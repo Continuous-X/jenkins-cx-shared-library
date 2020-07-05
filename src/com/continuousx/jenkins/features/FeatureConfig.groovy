@@ -4,8 +4,8 @@ import com.continuousx.jenkins.LogLevelType
 
 interface FeatureConfig extends Serializable {
 
-    FeatureType getType()
-    boolean isFailOnError()
-    LogLevelType getLogLevel()
+    FeatureType type
+    boolean failOnError = true
+    LogLevelType logLevelType = LogLevelType.INFO
 
 }
