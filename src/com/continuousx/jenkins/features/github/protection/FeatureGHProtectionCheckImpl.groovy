@@ -21,7 +21,7 @@ class FeatureGHProtectionCheckImpl extends AbstractFeature {
             //noinspection GroovyAssignabilityCheck
             final GHBase github = new GHBase(jenkinsContext.env.GIT_URL, jenkinsContext.TOKEN)
             //noinspection GroovyAssignabilityCheck
-            GHBranchProtection protection = github.getBranchProtection(jenkinsContext.env.GIT_BRANCH)
+            final boolean protection = github.isBranchProtected(jenkinsContext.env.GIT_BRANCH)
             jenkinsContext.log.info "Protection on '${jenkinsContext.env.GIT_BRANCH}': ${protection}"
         }
     }

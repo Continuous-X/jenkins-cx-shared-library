@@ -41,6 +41,12 @@ class GHBase {
         getRepositoryBranch(branchName).getProtection()
     }
 
+    boolean isBranchProtected(final String branchName) {
+        Objects.requireNonNull(branchName)
+        assert branchName.length() > 0
+        getBranchProtection(branchName) != null ? true : false
+    }
+
     GHBranch getRepositoryBranch(final String branchName) {
         Objects.requireNonNull(branchName)
         assert branchName.length() > 0
