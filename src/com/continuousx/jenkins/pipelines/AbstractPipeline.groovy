@@ -41,7 +41,7 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
         this.logLevel = config.getLogLevelType()
         this.currentBuild = this.jenkinsContext.currentBuild
 
-        this.jenkinsContext.echo("ENV: ${this.jenkinsContext.env.GIT_URL}")
+        this.jenkinsContext.log.info("ENV in Pipeline: ${this.jenkinsContext.env.GIT_URL}")
         if (this.jenkinsContext.env.GIT_URL != null) {
             GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
             measurement.setGHOrganization(gitUrlParser.getOrgaName())

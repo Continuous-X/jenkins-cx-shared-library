@@ -52,10 +52,10 @@ class JenkinsPluginCheck {
         boolean checkInstalled = true
         pluginListNeeded.each { plugin ->
             if(!isPluginInstalled(plugin)){
-                jenkinsContext.echo "listet plugin not found ${plugin}"
+                jenkinsContext.log.info "listet plugin not found ${plugin}"
                 return checkInstalled = false
             }
-            jenkinsContext.echo "listet plugin found ${plugin}"
+            jenkinsContext.log.info "listet plugin found ${plugin}"
         }
         return checkInstalled
     }

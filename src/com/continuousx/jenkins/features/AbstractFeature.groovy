@@ -37,6 +37,8 @@ abstract class AbstractFeature implements Feature, Serializable{
         this.type = featureConfig.getType()
         this.logLevel = featureConfig.getLogLevel()
 
+        this.jenkinsContext.log.info("ENV in Feature: ${this.jenkinsContext.env.toString()}")
+
         measurementOperating.featureType = this.type
         if (this.jenkinsContext.env.GIT_URL != null) {
             final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)

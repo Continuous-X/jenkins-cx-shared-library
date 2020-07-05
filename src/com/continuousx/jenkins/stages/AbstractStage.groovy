@@ -37,11 +37,11 @@ abstract class AbstractStage implements Stage, Serializable {
         this.stageConfig = stageConfig
         this.currentBuild = this.jenkinsContext.currentBuild
 
-        measurement.active = stageConfig.isActive()
-        measurement.failOnError = stageConfig.isFailOnError()
-        measurement.stageType = stageConfig.getType()
+        this.jenkinsContext.log.info("ENV in Stage: ${this.jenkinsContext.env}")
 
-        this.jenkinsContext.echo("ENV: ${this.jenkinsContext.env}")
+        measurement.active = stageConfig.active
+        measurement.failOnError = stageConfig.failOnError
+        measurement.stageType = stageConfig.type
         if (this.jenkinsContext.env.GIT_URL != null) {
             final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
             measurement.setGHOrganization(gitUrlParser.getOrgaName())
@@ -49,12 +49,12 @@ abstract class AbstractStage implements Stage, Serializable {
         }
 
         metrics = new InfluxDBFeatureBuilder(jenkinsContext).build()
-        this.jenkinsContext.echo("Stage Constructor ready")
-        this.jenkinsContext.echo("currentBuild ${currentBuild}")
-        this.jenkinsContext.echo("displayName ${currentBuild.displayName}")
-        this.jenkinsContext.echo("projectname ${currentBuild.projectName}")
-        this.jenkinsContext.echo("properties ${currentBuild.properties}")
-        this.jenkinsContext.echo("build variables ${currentBuild.buildVariables}")
+        this.jenkinsContext.log.info("Stage Constructor ready")
+        this.jenkinsContext.log.info("currentBuild ${currentBuild}")
+        this.jenkinsContext.log.info("displayName ${currentBuild.displayName}")
+        this.jenkinsContext.log.info("projectname ${currentBuild.projectName}")
+        this.jenkinsContext.log.info("properties ${currentBuild.properties}")
+        this.jenkinsContext.log.info("build variables ${currentBuild.buildVariables}")
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
