@@ -73,5 +73,4 @@ class PipelineMavenBuildImplTest extends Specification {
         null     || NullPointerException
     }
 
-
 }

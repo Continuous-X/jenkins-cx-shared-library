@@ -138,11 +138,6 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
     }
 
     @Override
-    FeatureType getType() {
-        return type
-    }
-
-    @Override
     void publishMetricOperating(final MeasurementOperating measurement) {
         publishOperatingMeasurement(measurement)
     }

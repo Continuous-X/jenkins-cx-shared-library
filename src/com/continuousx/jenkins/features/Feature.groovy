@@ -2,8 +2,9 @@ package com.continuousx.jenkins.features
 
 interface Feature {
 
+    FeatureConfig config
+
     void runFeature()
-    FeatureType getType()
     void publishMetricOperating()
 
 }

@@ -16,11 +16,8 @@ abstract class AbstractFeature implements Feature, Serializable{
     def jenkinsContext
     List<String> neededPlugins = []
     MeasurementOperatingFeature measurementOperating = new MeasurementOperatingFeature()
-    FeatureType type
+    FeatureConfig config
     InfluxDBFeature metrics
-    boolean failOnError
-
-    LogLevelType logLevel = LogLevelType.INFO
 
     @SuppressWarnings('GroovyUntypedAccess')
     protected AbstractFeature(
@@ -30,16 +27,12 @@ abstract class AbstractFeature implements Feature, Serializable{
         Objects.requireNonNull(jenkinsContext)
         Objects.requireNonNull(neededPlugins)
         Objects.requireNonNull(featureConfig)
-        Objects.requireNonNull(featureConfig.logLevelType)
         this.jenkinsContext = jenkinsContext
         this.neededPlugins = neededPlugins
-        this.failOnError = featureConfig.failOnError
-        this.type = featureConfig.type
-        this.logLevel = featureConfig.logLevelType
+        this.config = featureConfig
 
         this.jenkinsContext.log.info("ENV in Feature: ${this.jenkinsContext.env.toString()}")
-
-        measurementOperating.featureType = this.type
+        measurementOperating.featureType = this.config.type
         if (this.jenkinsContext.env.GIT_URL != null) {
             final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
             measurementOperating.setGHOrganization(gitUrlParser.getOrgaName())
@@ -68,10 +61,10 @@ abstract class AbstractFeature implements Feature, Serializable{
                 final long duration = (long) ((System.nanoTime() - startTime) / 100000)
                 measurementOperating.setDuration(duration)
             } catch (final Exception exception) {
-                if (failOnError) {
+                if (this.config.failOnError) {
                     throw exception
                 } else {
-                    jenkinsContext.log.warning("${type} failed: ${exception.message}")
+                    jenkinsContext.log.warning("${this.config.type} failed: ${exception.message}")
                 }
             } finally {
                 publishMetricOperating()
