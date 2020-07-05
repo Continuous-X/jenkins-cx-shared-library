@@ -1,7 +1,10 @@
+import com.cloudbees.groovy.cps.NonCPS
+
 def debug(String message) {
     echo "DEBUG: ${message}"
 }
 
+@NonCPS
 def info(String message) {
     echo "INFO: ${message}"
 }
