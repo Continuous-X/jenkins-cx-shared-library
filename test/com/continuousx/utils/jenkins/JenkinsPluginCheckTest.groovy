@@ -1,4 +1,4 @@
-package com.continuousx.jenkins.pipelines.utils
+package com.continuousx.utils.jenkins
 
 
 import com.continuousx.utils.jenkins.JenkinsPluginCheck
