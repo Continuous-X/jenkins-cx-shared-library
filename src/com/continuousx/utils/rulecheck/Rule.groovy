@@ -1,12 +1,11 @@
 package com.continuousx.utils.rulecheck
 
-import org.kohsuke.github.GHBranchProtection
-
 interface Rule {
 
-    String name
-    boolean passed
+    String name = getClass().getName()
+    String condition
+    String successfulNote
 
-    boolean check(GHBranchProtection ghBranchProtection)
+    boolean check(Object checkedObject)
 
 }
