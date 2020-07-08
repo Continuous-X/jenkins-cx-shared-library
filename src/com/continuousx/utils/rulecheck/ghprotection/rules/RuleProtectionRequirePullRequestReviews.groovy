@@ -1,6 +1,7 @@
 package com.continuousx.utils.rulecheck.ghprotection.rules
 
 import com.continuousx.utils.rulecheck.Rule
+import org.kohsuke.github.GHBranch
 import org.kohsuke.github.GHBranchProtection
 
 class RuleProtectionRequirePullRequestReviews implements Rule {
@@ -9,10 +10,17 @@ class RuleProtectionRequirePullRequestReviews implements Rule {
     String successfulNote = 'Branch Protection - Require pull request reviews is activated'
 
     @Override
-    boolean check(Object checkedObject) {
+    boolean check(final Object checkedObject) {
         Objects.requireNonNull(checkedObject)
-        assert checkedObject instanceof GHBranchProtection
-        true
+        assert checkedObject instanceof GHBranch
+        final GHBranch branch = checkedObject as GHBranch
+        GHBranchProtection branchProtection
+        try {
+            branchProtection = branch.getProtection()
+        } catch (final IOException ignored) {
+            return false
+        }
+        branchProtection.requiredReviews != null
     }
 
 }
