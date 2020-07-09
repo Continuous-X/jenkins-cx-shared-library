@@ -5,26 +5,34 @@ import com.continuousx.utils.rulecheck.ghprotection.RuleSetProtectionSimple
 import org.kohsuke.github.GHBranch
 import org.kohsuke.github.GHBranchProtection
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class GHBranchProtectionCheckTest extends Specification {
 
+    GHBranchProtectionCheck check
+
+    def setup() {
+        check = new GHBranchProtectionCheck()
+    }
+
+    @Unroll
     def "should be checked is true"() {
         given:
-        GHBranch ghBranchMock = ghBranch
+        GHBranch ghBranchMock = Mock(GHBranch)
         ghBranchMock.getProtection() >> Mock(GHBranchProtection)
-        ghBranchMock.getProtection().requiredReviews >> requiredReviews
+        ghBranchMock.getProtection().getRequiredReviews() >> requireReviews
+        ghBranchMock.getProtection().requiredReviews >> requireReviews
+        ghBranchMock.getProtection().getRequiredStatusChecks() >> requireReviews
+        ghBranchMock.getProtection().requiredStatusChecks >> requireReviews
 
-        final GHBranchProtectionCheck check = new GHBranchProtectionCheck()
-
-        when:
-        final boolean result = check.checkRules(new RuleSetProtectionSimple(), ghBranchMock)
-
-        then:
-        assert result == expectedCheckResult
+        expect:
+        check.checkRules(ruleSet, ghBranchMock) == expectedCheckResult
 
         where:
-        ghBranch       || ghBranchPRotection       || requiredReviews                          || expectedCheckResult
-        Mock(GHBranch) || Mock(GHBranchProtection) || Mock(GHBranchProtection.RequiredReviews) || true
+        ruleSet                       || requireReviews                           || requireStatusChecks                           || expectedCheckResult
+        new RuleSetProtectionSimple() || Mock(GHBranchProtection.RequiredReviews) || Mock(GHBranchProtection.RequiredStatusChecks) || true
+        new RuleSetProtectionSimple() || null                                     || Mock(GHBranchProtection.RequiredStatusChecks) || false
+        new RuleSetProtectionSimple() || Mock(GHBranchProtection.RequiredReviews) || null                                          || false
     }
 
 

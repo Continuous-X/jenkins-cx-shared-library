@@ -4,10 +4,10 @@ import com.continuousx.utils.rulecheck.Rule
 import org.kohsuke.github.GHBranch
 import org.kohsuke.github.GHBranchProtection
 
-class RuleProtectionActive implements Rule {
+class RuleProtectionRequireStatusCheck implements Rule {
 
-    String condition = 'Branch Protection must be activate'
-    String successfulNote = 'Branch Protection is activated'
+    String condition = 'Branch Protection Option Require must be activate - [Require status checks to pass before merging]'
+    String successfulNote = 'Branch Protection - Require status checks is activated'
 
     @Override
     boolean check(final Object checkedObject) {
@@ -20,7 +20,7 @@ class RuleProtectionActive implements Rule {
         } catch (final Exception ignored) {
             return false
         }
-        branchProtection != null
+        branchProtection?.requiredStatusChecks != null
     }
 
 }

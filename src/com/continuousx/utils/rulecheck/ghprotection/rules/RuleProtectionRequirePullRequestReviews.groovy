@@ -17,10 +17,10 @@ class RuleProtectionRequirePullRequestReviews implements Rule {
         GHBranchProtection branchProtection
         try {
             branchProtection = branch.getProtection()
-        } catch (final IOException ignored) {
+        } catch (final Exception ignored) {
             return false
         }
-        branchProtection.requiredReviews != null
+        branchProtection?.requiredReviews != null
     }
 
 }
