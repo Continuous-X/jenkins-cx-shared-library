@@ -6,7 +6,7 @@ import org.kohsuke.github.GHBranchProtection
 
 class RuleProtectionRequireStatusCheck implements Rule {
 
-    String condition = 'Branch Protection Option Require must be activate - [Require status checks to pass before merging]'
+    String condition = 'Branch Protection Option must be activate - [Require status checks to pass before merging]'
     String successfulNote = 'Branch Protection - Require status checks is activated'
 
     @Override

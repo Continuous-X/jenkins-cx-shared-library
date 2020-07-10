@@ -4,10 +4,10 @@ import com.continuousx.utils.rulecheck.Rule
 import org.kohsuke.github.GHBranch
 import org.kohsuke.github.GHBranchProtection
 
-class RuleProtectionRequirePullRequestReviews implements Rule {
+class RuleProtectionEnforceAdmin implements Rule {
 
-    String condition = 'Branch Protection Option must be activate - [Require pull request reviews before merging]'
-    String successfulNote = 'Branch Protection - Require pull request reviews is activated'
+    String condition = 'Branch Protection Option must be deactivate - [Include administrators]'
+    String successfulNote = 'Branch Protection - Require enforce admin is deactivated'
 
     @Override
     boolean check(final Object checkedObject) {
@@ -20,7 +20,7 @@ class RuleProtectionRequirePullRequestReviews implements Rule {
         } catch (final Exception ignored) {
             return false
         }
-        branchProtection?.requiredReviews != null
+        branchProtection?.enforceAdmins == null
     }
 
 }

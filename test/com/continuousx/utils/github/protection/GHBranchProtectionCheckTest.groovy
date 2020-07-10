@@ -16,7 +16,7 @@ class GHBranchProtectionCheckTest extends Specification {
     }
 
     @Unroll
-    def "should be checked is true"() {
+    def "should be checked RuleSetProtectionSimple is true"() {
         given:
         GHBranch ghBranchMock = Mock(GHBranch)
         ghBranchMock.getProtection() >> Mock(GHBranchProtection)
