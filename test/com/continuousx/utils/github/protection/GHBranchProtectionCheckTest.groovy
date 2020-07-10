@@ -22,8 +22,8 @@ class GHBranchProtectionCheckTest extends Specification {
         ghBranchMock.getProtection() >> Mock(GHBranchProtection)
         ghBranchMock.getProtection().getRequiredReviews() >> requireReviews
         ghBranchMock.getProtection().requiredReviews >> requireReviews
-        ghBranchMock.getProtection().getRequiredStatusChecks() >> requireReviews
-        ghBranchMock.getProtection().requiredStatusChecks >> requireReviews
+        ghBranchMock.getProtection().getRequiredStatusChecks() >> requireStatusChecks
+        ghBranchMock.getProtection().requiredStatusChecks >> requireStatusChecks
 
         expect:
         check.checkRules(ruleSet, ghBranchMock) == expectedCheckResult
