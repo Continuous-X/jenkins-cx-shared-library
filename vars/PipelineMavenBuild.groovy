@@ -59,7 +59,7 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
         post {
             always {
                 script {
-                    log.info 'pipeline end'
+                    pipelineMavenBuild.publishMetricOperating()
                 }
             }
             success {
