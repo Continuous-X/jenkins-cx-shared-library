@@ -65,17 +65,17 @@ abstract class AbstractFeature implements Feature, Serializable{
         if(checkNeededPlugins()) {
             try {
                 final long startTime = System.nanoTime()
-                ghBase.getRepository().createCommitStatus(this.jenkinsContext.GIT_COMMIT, GHCommitState.PENDING, this.jenkinsContext.GIT_URL, 'my description - pending' )
+                ghBase.getRepository().createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, GHCommitState.PENDING, this.jenkinsContext.env.GIT_URL, 'my description - pending' )
                 runFeatureImpl()
-                ghBase.getRepository().createCommitStatus(this.jenkinsContext.GIT_COMMIT, GHCommitState.SUCCESS, this.jenkinsContext.GIT_URL, 'my description - success' )
+                ghBase.getRepository().createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, GHCommitState.SUCCESS, this.jenkinsContext.env.GIT_URL, 'my description - success' )
                 final long duration = (long) ((System.nanoTime() - startTime) / 100000)
                 measurementOperating.setDuration(duration)
             } catch (final Exception exception) {
                 if (this.config.failOnError) {
-                    ghBase.getRepository().createCommitStatus(this.jenkinsContext.GIT_COMMIT, GHCommitState.ERROR, this.jenkinsContext.GIT_URL, 'my description - error' )
+                    ghBase.getRepository().createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, GHCommitState.ERROR, this.jenkinsContext.env.GIT_URL, 'my description - error' )
                     throw exception
                 } else {
-                    ghBase.getRepository().createCommitStatus(this.jenkinsContext.GIT_COMMIT, GHCommitState.FAILURE, this.jenkinsContext.GIT_URL, 'my description - failure' )
+                    ghBase.getRepository().createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, GHCommitState.FAILURE, this.jenkinsContext.env.GIT_URL, 'my description - failure' )
                     jenkinsContext.log.warning("${this.config.type} failed: ${exception.message}")
                 }
             } finally {

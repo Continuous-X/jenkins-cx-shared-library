@@ -3,6 +3,8 @@ package com.continuousx.jenkins.features.github.protection
 import com.continuousx.jenkins.features.AbstractFeature
 import com.continuousx.utils.github.GHBase
 import com.continuousx.utils.jenkins.JenkinsConfig
+import com.continuousx.utils.rulecheck.ghprotection.GHBranchProtectionCheck
+import com.continuousx.utils.rulecheck.ghprotection.RuleSetProtectionSimple
 import org.kohsuke.github.GHBranchProtection
 
 class FeatureGHProtectionCheckImpl extends AbstractFeature {
@@ -20,9 +22,9 @@ class FeatureGHProtectionCheckImpl extends AbstractFeature {
         jenkinsContext.withCredentials([jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
             //noinspection GroovyAssignabilityCheck
             final GHBase github = new GHBase(jenkinsContext.env.GIT_URL, jenkinsContext.TOKEN)
-            //noinspection GroovyAssignabilityCheck
-            final boolean protection = github.isBranchProtected(jenkinsContext.env.GIT_BRANCH)
-            jenkinsContext.log.info "Protection on '${jenkinsContext.env.GIT_BRANCH}': ${protection}"
+            GHBranchProtectionCheck protectionCheck = new GHBranchProtectionCheck()
+            final boolean protectionResult = protectionCheck.checkRules(new RuleSetProtectionSimple(), this.jenkinsContext.env.GIT_BRANCH)
+            jenkinsContext.log.info "Protection on '${jenkinsContext.env.GIT_BRANCH}': ${protectionResult}"
         }
     }
 
