@@ -41,9 +41,7 @@ abstract class AbstractFeature implements Feature, Serializable{
             measurementOperating.setGHOrganization(gitUrlParser.getOrgaName())
             measurementOperating.setGHRepository(gitUrlParser.getRepoName())
         }
-        this.jenkinsContext.withCredentials([this.jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-            ghBase = new GHBase(this.jenkinsContext.env.GIT_URL, this.jenkinsContext.TOKEN)
-        }
+
         metrics = new InfluxDBFeatureBuilder(jenkinsContext).build()
     }
 
@@ -63,6 +61,9 @@ abstract class AbstractFeature implements Feature, Serializable{
     void runFeature() {
         if(checkNeededPlugins()) {
             try {
+                this.jenkinsContext.withCredentials([this.jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+                    ghBase = new GHBase(this.jenkinsContext.env.GIT_URL, this.jenkinsContext.TOKEN)
+                }
                 final long startTime = System.nanoTime()
                 ghBase.getRepository().createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, GHCommitState.PENDING, this.jenkinsContext.env.GIT_URL, 'my description - pending' )
                 runFeatureImpl()
