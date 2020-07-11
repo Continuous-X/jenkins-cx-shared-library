@@ -1,5 +1,6 @@
 package com.continuousx.jenkins.features.metrics.influxdb
 
+import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.features.Feature
 import com.continuousx.jenkins.features.FeatureType
 import com.continuousx.utils.github.GitURLParser
@@ -138,6 +139,7 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
     }
 
     @Override
+    @NonCPS
     void publishMetricOperating(final MeasurementOperating measurement) {
         publishOperatingMeasurement(measurement)
     }
@@ -148,6 +150,7 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
     }
 
     @Override
+    @NonCPS
     void publishMetricOperating() {
         publishMetricOperating(measurementOperating)
     }
