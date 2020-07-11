@@ -2,11 +2,15 @@ package com.continuousx.jenkins.features
 
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.LogLevelType
+import com.continuousx.utils.github.GHBase
 import com.continuousx.utils.github.GitURLParser
+import com.continuousx.utils.jenkins.JenkinsConfig
 import com.continuousx.utils.jenkins.JenkinsPluginCheck
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingFeature
+import org.kohsuke.github.GHCommitState
+import org.kohsuke.github.GHRepository
 
 abstract class AbstractFeature implements Feature, Serializable{
 
@@ -18,6 +22,7 @@ abstract class AbstractFeature implements Feature, Serializable{
     MeasurementOperatingFeature measurementOperating = new MeasurementOperatingFeature()
     FeatureConfig config
     InfluxDBFeature metrics
+    GHBase ghBase
 
     @SuppressWarnings('GroovyUntypedAccess')
     protected AbstractFeature(
@@ -38,6 +43,9 @@ abstract class AbstractFeature implements Feature, Serializable{
             measurementOperating.setGHOrganization(gitUrlParser.getOrgaName())
             measurementOperating.setGHRepository(gitUrlParser.getRepoName())
         }
+        this.jenkinsContext.withCredentials([this.jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+            ghBase = new GHBase(this.jenkinsContext.env.GIT_URL, this.jenkinsContext.TOKEN)
+        }
         metrics = new InfluxDBFeatureBuilder(jenkinsContext).build()
     }
 
@@ -57,13 +65,17 @@ abstract class AbstractFeature implements Feature, Serializable{
         if(checkNeededPlugins()) {
             try {
                 final long startTime = System.nanoTime()
+                ghBase.getRepository().createCommitStatus(this.jenkinsContext.GIT_COMMIT, GHCommitState.PENDING, this.jenkinsContext.GIT_URL, 'my description - pending' )
                 runFeatureImpl()
+                ghBase.getRepository().createCommitStatus(this.jenkinsContext.GIT_COMMIT, GHCommitState.SUCCESS, this.jenkinsContext.GIT_URL, 'my description - success' )
                 final long duration = (long) ((System.nanoTime() - startTime) / 100000)
                 measurementOperating.setDuration(duration)
             } catch (final Exception exception) {
                 if (this.config.failOnError) {
+                    ghBase.getRepository().createCommitStatus(this.jenkinsContext.GIT_COMMIT, GHCommitState.ERROR, this.jenkinsContext.GIT_URL, 'my description - error' )
                     throw exception
                 } else {
+                    ghBase.getRepository().createCommitStatus(this.jenkinsContext.GIT_COMMIT, GHCommitState.FAILURE, this.jenkinsContext.GIT_URL, 'my description - failure' )
                     jenkinsContext.log.warning("${this.config.type} failed: ${exception.message}")
                 }
             } finally {
