@@ -61,6 +61,7 @@ abstract class AbstractFeature implements Feature, Serializable{
     abstract void runFeatureImpl()
 
     @Override
+    @NonCPS
     void runFeature() {
         if(checkNeededPlugins()) {
             try {
