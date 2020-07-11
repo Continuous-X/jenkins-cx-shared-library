@@ -1,23 +1,21 @@
 package com.continuousx.jenkins.features
 
 import com.cloudbees.groovy.cps.NonCPS
-import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
+import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
+import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingFeature
 import com.continuousx.utils.github.GHBase
 import com.continuousx.utils.github.GitURLParser
 import com.continuousx.utils.jenkins.JenkinsConfig
 import com.continuousx.utils.jenkins.JenkinsPluginCheck
-import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
-import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
-import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingFeature
 import org.kohsuke.github.GHCommitState
-import org.kohsuke.github.GHRepository
 
 abstract class AbstractFeature implements Feature, Serializable{
 
     @SuppressWarnings(['SerialVersionUID', 'unused'])
     private static final long serialVersionUID = 1234567L
 
-    def jenkinsContext
+    protected def jenkinsContext
     List<String> neededPlugins = []
     MeasurementOperatingFeature measurementOperating = new MeasurementOperatingFeature()
     FeatureConfig config

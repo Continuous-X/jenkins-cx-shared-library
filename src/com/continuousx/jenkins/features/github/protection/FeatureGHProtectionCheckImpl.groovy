@@ -1,11 +1,9 @@
 package com.continuousx.jenkins.features.github.protection
 
 import com.continuousx.jenkins.features.AbstractFeature
-import com.continuousx.utils.github.GHBase
 import com.continuousx.utils.jenkins.JenkinsConfig
 import com.continuousx.utils.rulecheck.ghprotection.GHBranchProtectionCheck
 import com.continuousx.utils.rulecheck.ghprotection.RuleSetProtectionSimple
-import org.kohsuke.github.GHBranchProtection
 
 class FeatureGHProtectionCheckImpl extends AbstractFeature {
 
@@ -19,9 +17,10 @@ class FeatureGHProtectionCheckImpl extends AbstractFeature {
     @SuppressWarnings('GroovyUntypedAccess')
     @Override
     void runFeatureImpl() {
-        jenkinsContext.withCredentials([jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+        this.jenkinsContext.log.info "start Protection check on '${this.jenkinsContext.env.GIT_BRANCH}'"
+        this.jenkinsContext.withCredentials([this.jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
             final boolean protectionResult = new GHBranchProtectionCheck().checkRules(new RuleSetProtectionSimple(), this.jenkinsContext.env.GIT_BRANCH)
-            jenkinsContext.log.info "Protection on '${jenkinsContext.env.GIT_BRANCH}': ${protectionResult}"
+            this.jenkinsContext.log.info "Protection on '${this.jenkinsContext.env.GIT_BRANCH}': ${protectionResult}"
         }
     }
 
