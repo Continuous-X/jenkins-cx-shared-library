@@ -18,10 +18,10 @@ class FeatureGHProtectionCheckImpl extends AbstractFeature {
     @Override
     void runFeatureImpl() {
         this.jenkinsContext.log.info "start Protection check on '${this.jenkinsContext.env.GIT_BRANCH}'"
-        /*this.jenkinsContext.withCredentials([this.jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+        this.jenkinsContext.withCredentials([this.jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
             final boolean protectionResult = new GHBranchProtectionCheck().checkRules(new RuleSetProtectionSimple(), this.jenkinsContext.env.GIT_BRANCH)
             this.jenkinsContext.log.info "Protection on '${this.jenkinsContext.env.GIT_BRANCH}': ${protectionResult}"
-        }*/
+        }
     }
 
 }

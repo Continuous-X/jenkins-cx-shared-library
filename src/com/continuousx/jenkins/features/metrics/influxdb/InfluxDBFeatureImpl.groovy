@@ -139,7 +139,6 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
     }
 
     @Override
-    @NonCPS
     void publishMetricOperating(final MeasurementOperating measurement) {
         publishOperatingMeasurement(measurement)
     }
@@ -150,7 +149,6 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
     }
 
     @Override
-    @NonCPS
     void publishMetricOperating() {
         publishMetricOperating(measurementOperating)
     }

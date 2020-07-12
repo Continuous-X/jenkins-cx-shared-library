@@ -6,7 +6,9 @@ import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingFeature
 import com.continuousx.utils.github.GHBase
 import com.continuousx.utils.github.GitURLParser
+import com.continuousx.utils.jenkins.JenkinsConfig
 import com.continuousx.utils.jenkins.JenkinsPluginCheck
+import org.kohsuke.github.GHCommitState
 
 abstract class AbstractFeature implements Feature, Serializable{
 
@@ -32,7 +34,6 @@ abstract class AbstractFeature implements Feature, Serializable{
         this.neededPlugins = neededPlugins
         this.config = featureConfig
 
-        this.jenkinsContext.log.info("ENV in Feature: ${this.jenkinsContext.env.toString()}")
         measurementOperating.featureType = this.config.type
         if (this.jenkinsContext.env.GIT_URL != null) {
             final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
@@ -60,23 +61,17 @@ abstract class AbstractFeature implements Feature, Serializable{
         if(checkNeededPlugins()) {
             try {
                 final long startTime = System.nanoTime()
-/*
                 this.jenkinsContext.withCredentials([this.jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
                     ghBase = new GHBase(this.jenkinsContext.env.GIT_URL, this.jenkinsContext.TOKEN)
                 }
                 ghBase.getRepository().createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, GHCommitState.PENDING, this.jenkinsContext.env.GIT_URL, 'my description - pending' )
-*/
                 runFeatureImpl()
-/*
                 ghBase.getRepository().createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, GHCommitState.SUCCESS, this.jenkinsContext.env.GIT_URL, 'my description - success' )
-*/
                 final long duration = (long) ((System.nanoTime() - startTime) / 100000)
                 measurementOperating.setDuration(duration)
             } catch (final Exception exception) {
                 if (this.config.failOnError) {
-/*
                     ghBase.getRepository().createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, GHCommitState.ERROR, this.jenkinsContext.env.GIT_URL, 'my description - error' )
-*/
                     throw exception
                 } else {
 /*
