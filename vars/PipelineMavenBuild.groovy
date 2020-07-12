@@ -35,7 +35,7 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
                     expression { BranchExpressionChecker.checkBranchExpression(pipelineMavenBuild.stageGHProtectionCheck.getStageConfig().getAllowedBranch(), env.GIT_BRANCH) }
                 }
                 steps {
-                    milestone 50
+                    milestone 20
                     script {
                         pipelineMavenBuild.stageGHProtectionCheck.runStage()
                     }
