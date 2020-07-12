@@ -1,3 +1,4 @@
+import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.features.maven.build.FeatureMavenBuildImpl
 import com.continuousx.jenkins.features.maven.build.wrapper.FeatureMavenWrapperBuildImpl
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildBuilder
@@ -12,7 +13,7 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
             .build()
 
     pipeline {
-        agent any
+        agent { label 'master' }
         options {
             timeout time: 30, unit: 'MINUTES'
             buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
@@ -20,11 +21,10 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
         }
         stages {
             stage('Init') {
-                agent { label 'master' }
                 steps {
                     milestone 10
                     script {
-                        log.info 'init this'
+                        pipelineConfig.logLevelType == LogLevelType.DEBUG ? log.debug("start pipeline ${pipelineConfig.type}") :
                     }
                 }
             }

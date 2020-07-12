@@ -20,15 +20,21 @@ class PipelineMavenBuildConfig implements PipelineConfig {
     )
     StageGithubProtectionCheckConfig stageGithubProtectionCheckConfig = new StageGithubProtectionCheckConfig()
 
+    PipelineMavenBuildConfig(final LogLevelType logLevelType = LogLevelType.INFO) {
+        this.logLevelType = logLevelType
+    }
+
     PipelineMavenBuildConfig configStageMavenCompile(boolean active, boolean failOnError) {
         stageConfigMavenCompile.active = active
         stageConfigMavenCompile.failOnError = failOnError
+        stageConfigMavenCompile.logLevelType = this.logLevelType
         this
     }
 
     PipelineMavenBuildConfig configStageGHProtectionCheck(boolean active, boolean failOnError) {
         stageGithubProtectionCheckConfig.active = active
         stageGithubProtectionCheckConfig.failOnError = failOnError
+        stageGithubProtectionCheckConfig.logLevelType = this.logLevelType
         this
     }
 
