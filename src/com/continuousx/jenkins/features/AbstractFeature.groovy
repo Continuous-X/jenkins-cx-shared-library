@@ -15,26 +15,26 @@ abstract class AbstractFeature implements Feature, Serializable{
     @SuppressWarnings(['SerialVersionUID', 'unused'])
     private static final long serialVersionUID = 1234567L
 
-    protected def jenkinsContext
-    List<String> neededPlugins = []
+    def jenkinsContext
     MeasurementOperatingFeature measurementOperating = new MeasurementOperatingFeature()
-    FeatureConfig config
     InfluxDBFeature metrics
     GHBase ghBase
 
     @SuppressWarnings('GroovyUntypedAccess')
     protected AbstractFeature(
-            final def jenkinsContext,
-            final List<String> neededPlugins,
-            final FeatureConfig featureConfig) {
-        Objects.requireNonNull(jenkinsContext)
-        Objects.requireNonNull(neededPlugins)
-        Objects.requireNonNull(featureConfig)
-        this.jenkinsContext = jenkinsContext
-        this.neededPlugins = neededPlugins
-        this.config = featureConfig
+            final def paramJenkinsContext,
+            final List<String> paramNeededPlugins,
+            final FeatureConfig paramFeatureConfig) {
+        Objects.requireNonNull(paramJenkinsContext)
+        Objects.requireNonNull(paramNeededPlugins)
+        Objects.requireNonNull(paramFeatureConfig)
 
-        measurementOperating.featureType = this.config.type
+        neededPlugins = []
+        jenkinsContext = paramJenkinsContext
+        neededPlugins << paramNeededPlugins
+        featureConfig = paramFeatureConfig
+
+        measurementOperating.featureType = featureConfig.type
         if (this.jenkinsContext.env.GIT_URL != null) {
             final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
             measurementOperating.setGHOrganization(gitUrlParser.getOrgaName())
@@ -55,29 +55,28 @@ abstract class AbstractFeature implements Feature, Serializable{
 
     abstract void runFeatureImpl()
 
+    @SuppressWarnings('GroovyUntypedAccess')
     @Override
     @NonCPS
     void runFeature() {
         if(checkNeededPlugins()) {
             try {
                 final long startTime = System.nanoTime()
-                this.jenkinsContext.withCredentials([this.jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-                    ghBase = new GHBase(this.jenkinsContext.env.GIT_URL, this.jenkinsContext.TOKEN)
+                jenkinsContext.withCredentials([jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+                    ghBase = new GHBase(jenkinsContext.env.GIT_URL, jenkinsContext.TOKEN)
                 }
-                ghBase.getRepository().createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, GHCommitState.PENDING, this.jenkinsContext.env.GIT_URL, 'my description - pending' )
+                ghBase.getRepository().createCommitStatus(jenkinsContext.env.GIT_COMMIT, GHCommitState.PENDING, jenkinsContext.env.GIT_URL, 'my description - pending' )
                 runFeatureImpl()
-                ghBase.getRepository().createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, GHCommitState.SUCCESS, this.jenkinsContext.env.GIT_URL, 'my description - success' )
+                ghBase.getRepository().createCommitStatus(jenkinsContext.env.GIT_COMMIT, GHCommitState.SUCCESS, jenkinsContext.env.GIT_URL, 'my description - success' )
                 final long duration = (long) ((System.nanoTime() - startTime) / 100000)
                 measurementOperating.setDuration(duration)
             } catch (final Exception exception) {
-                if (this.config.failOnError) {
-                    ghBase.getRepository().createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, GHCommitState.ERROR, this.jenkinsContext.env.GIT_URL, 'my description - error' )
+                if (featureConfig.failOnError) {
+                    ghBase.getRepository().createCommitStatus(jenkinsContext.env.GIT_COMMIT, GHCommitState.ERROR, jenkinsContext.env.GIT_URL, 'my description - error' )
                     throw exception
                 } else {
-/*
-                    ghBase.getRepository().createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, GHCommitState.FAILURE, this.jenkinsContext.env.GIT_URL, 'my description - failure' )
-*/
-                    jenkinsContext.log.warning("${this.config.type} failed: ${exception.message}")
+                    ghBase.getRepository().createCommitStatus(jenkinsContext.env.GIT_COMMIT, GHCommitState.FAILURE, jenkinsContext.env.GIT_URL, 'my description - failure' )
+                    jenkinsContext.log.warning("${featureConfig.type} failed: ${exception.message}")
                 }
             } finally {
                 publishMetricOperating()

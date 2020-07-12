@@ -18,12 +18,13 @@ class StageMavenCompileImpl extends AbstractStage {
         if (checkNeededPlugins()) {
             final FeatureMavenWrapperBuildImpl mavenBuild = new FeatureMavenWrapperBuildBuilder(jenkinsContext)
                     .withFeatureConfig(new FeatureMavenWrapperBuildConfig(
-                            failOnError:getStageConfig().isFailOnError(),
-                            logLevelType:getStageConfig().logLevelType()
+                            failOnError:stageConfig.failOnError,
+                            logLevelType:stageConfig.logLevelType
                     )).build()
             mavenBuild.runFeature()
         } else {
             jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
         }
     }
+
 }

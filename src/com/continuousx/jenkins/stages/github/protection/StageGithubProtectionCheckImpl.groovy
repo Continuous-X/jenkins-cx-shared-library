@@ -16,11 +16,11 @@ class StageGithubProtectionCheckImpl extends AbstractStage {
     @Override
     void runStageImpl() {
         if (checkNeededPlugins()) {
-            StageGithubProtectionCheckConfig stageConfig = getStageConfig() as StageGithubProtectionCheckConfig
+            final StageGithubProtectionCheckConfig stageConfigProtectionCheck = stageConfig as StageGithubProtectionCheckConfig
             final FeatureGHProtectionCheckImpl ghProtectionCheck = new FeatureGHProtectionCheckBuilder(jenkinsContext)
                     .withFeatureConfig(new FeatureGHProtectionCheckConfig(
-                            failOnError:stageConfig.failOnError,
-                            logLevelType:stageConfig.logLevelType
+                            failOnError:stageConfigProtectionCheck.failOnError,
+                            logLevelType:stageConfigProtectionCheck.logLevelType
                     )).build()
             ghProtectionCheck.runFeature()
         } else {

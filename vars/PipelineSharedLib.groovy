@@ -1,9 +1,8 @@
-import com.continuousx.jenkins.pipelines.sharedlib.PipelineConfigSharedLib
+import com.continuousx.jenkins.pipelines.sharedlib.PipelineJenkinsSharedLibConfig
 import com.continuousx.jenkins.stages.Stage
 import com.continuousx.jenkins.stages.maven.install.StageMavenCompileBuilder
-import com.continuousx.jenkins.stages.maven.install.StageMavenCompileConfig
 
-def call(PipelineConfigSharedLib config) {
+def call(PipelineJenkinsSharedLibConfig config) {
 
     Stage stageMaven
     Stage stageMavenWrapper

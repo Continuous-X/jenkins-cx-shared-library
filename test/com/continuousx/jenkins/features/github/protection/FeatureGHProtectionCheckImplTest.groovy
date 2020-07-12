@@ -23,7 +23,7 @@ class FeatureGHProtectionCheckImplTest extends Specification {
         Feature feature = builder.withFeatureConfig(new FeatureGHProtectionCheckConfig()).build()
 
         when:
-        FeatureConfig config = feature.config
+        FeatureConfig config = feature.featureConfig
 
         then:
         assert feature != null
@@ -42,8 +42,8 @@ class FeatureGHProtectionCheckImplTest extends Specification {
 
 
         assert feature != null
-        assert feature.config.logLevelType == expectedLogLevel
-        assert feature.config.failOnError == expectedFailOnError
+        assert feature.featureConfig.logLevelType == expectedLogLevel
+        assert feature.featureConfig.failOnError == expectedFailOnError
 
         where:
         failOnError || loglevel             || expectedLogLevel     || expectedFailOnError

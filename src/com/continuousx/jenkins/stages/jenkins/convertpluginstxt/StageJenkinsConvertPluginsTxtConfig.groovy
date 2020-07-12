@@ -9,10 +9,6 @@ import com.continuousx.utils.github.BranchType
 class StageJenkinsConvertPluginsTxtConfig implements StageConfig, Serializable {
 
     final static StageType type = StageType.STAGE_JENKINS_CONVERT_PLUGINS_TXT
-    boolean active = true
-    boolean failOnError = true
-    BranchType allowedBranch = BranchType.ALL
-    LogLevelType logLevelType
 
     @Override
     @NonCPS
@@ -34,7 +30,7 @@ class StageJenkinsConvertPluginsTxtConfig implements StageConfig, Serializable {
     }
 
     @Override
-    LogLevelType logLevelType() {
+    LogLevelType getLogLevelType() {
         logLevelType
     }
 

@@ -1,11 +1,12 @@
 package com.continuousx.jenkins.stages
 
-import com.cloudbees.groovy.cps.NonCPS
-import com.continuousx.utils.github.GitURLParser
-import com.continuousx.utils.jenkins.JenkinsPluginCheck
+import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipelineStage
+import com.continuousx.utils.github.GitURLParser
+import com.continuousx.utils.jenkins.JenkinsPluginCheck
+import com.continuousx.utils.logger.Logger
 
 abstract class AbstractStage implements Stage, Serializable {
 
@@ -18,25 +19,28 @@ abstract class AbstractStage implements Stage, Serializable {
      * org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
      */
     def currentBuild
-    List<String> neededPlugins = []
-    StageConfig stageConfig
 
-    MeasurementOperatingPipelineStage measurement = new MeasurementOperatingPipelineStage()
-    InfluxDBFeature metrics
+    private MeasurementOperatingPipelineStage measurement = new MeasurementOperatingPipelineStage()
+    private InfluxDBFeature metrics
 
     @SuppressWarnings('GroovyUntypedAccess')
     protected AbstractStage(
-            final def jenkinsContext,
-            final List<String> neededPlugins,
-            final StageConfig stageConfig) {
-        Objects.requireNonNull(jenkinsContext)
-        Objects.requireNonNull(neededPlugins)
-        Objects.requireNonNull(stageConfig)
-        this.jenkinsContext = jenkinsContext
-        this.neededPlugins = neededPlugins
-        this.stageConfig = stageConfig
-        this.currentBuild = this.jenkinsContext.currentBuild
+            final def paramJenkinsContext,
+            final List<String> paramNeededPlugins,
+            final StageConfig paramStageConfig) {
+        Objects.requireNonNull(paramJenkinsContext)
+        Objects.requireNonNull(paramNeededPlugins)
+        Objects.requireNonNull(paramStageConfig)
 
+        neededPlugins = []
+        jenkinsContext = paramJenkinsContext
+        neededPlugins << paramNeededPlugins
+        stageConfig = paramStageConfig
+        currentBuild = this.jenkinsContext.currentBuild
+
+        logger = new Logger(jenkinsContext: jenkinsContext, logLevelType: stageConfig.logLevelType)
+
+        logger.logDebug("create stage ${stageConfig.type}")
         this.jenkinsContext.log.info("ENV in Stage: ${this.jenkinsContext.env}")
 
         measurement.active = stageConfig.active
@@ -48,7 +52,7 @@ abstract class AbstractStage implements Stage, Serializable {
             measurement.setGHRepository(gitUrlParser.getRepoName())
         }
 
-        metrics = new InfluxDBFeatureBuilder(jenkinsContext).build()
+        metrics = new InfluxDBFeatureBuilder(paramJenkinsContext).build()
         this.jenkinsContext.log.info("Stage Constructor ready")
         this.jenkinsContext.log.info("currentBuild ${currentBuild}")
         this.jenkinsContext.log.info("displayName ${currentBuild.displayName}")
@@ -67,14 +71,19 @@ abstract class AbstractStage implements Stage, Serializable {
 
     abstract void runStageImpl()
 
+    @SuppressWarnings('GroovyUntypedAccess')
     void runStage() {
         try {
+            logger.logDebug("run stage ${stageConfig.type}")
             runStageImpl()
         }catch (final Exception exception) {
-            if (getStageConfig().failOnError) {
+            logger.logDebug("stage ${stageConfig.type} throw Exception:\n${exception.getMessage()}")
+            if (stageConfig.failOnError) {
+                logger.logDebug("stage ${stageConfig.type} throw Exception and failOnError is ${stageConfig.failOnError}\n\t throw ${exception.getClass().getName()}")
                 throw exception
             } else {
-                jenkinsContext.log.warning("${getStageConfig().type} failed: ${exception.message}")
+                logger.logDebug("stage ${stageConfig.type} throw Exception and failOnError is ${stageConfig.failOnError}")
+                logger.logWarning("stage ${stageConfig.type} failed: ${exception.message}")
             }
         } finally {
             measurement.duration = currentBuild.timeInMillis
@@ -82,12 +91,8 @@ abstract class AbstractStage implements Stage, Serializable {
         }
     }
 
-    @NonCPS
-    StageConfig getStageConfig() {
-        stageConfig
-    }
-
     void publishMetricOperating() {
+        logger.logDebug("stage ${stageConfig.type} publishMetricOperating with ${measurement.toString()}")
         metrics.publishMetricOperating(measurement)
     }
 

@@ -7,9 +7,7 @@ class FeatureMavenWrapperBuildImpl extends AbstractMavenFeature {
 
     @SuppressWarnings('GroovyUntypedAccess')
     protected FeatureMavenWrapperBuildImpl(final def jenkinsContext, final FeatureMavenWrapperBuildConfig featureConfig) {
-        super(jenkinsContext,
-                [],
-                featureConfig)
+        super(jenkinsContext, [], featureConfig)
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
