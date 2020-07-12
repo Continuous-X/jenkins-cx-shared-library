@@ -28,4 +28,6 @@ class PipelineMavenBuildConfig implements PipelineConfig {
         this
     }
 
+    void setLogLevelType(final )
+
 }

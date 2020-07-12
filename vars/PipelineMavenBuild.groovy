@@ -1,6 +1,4 @@
 import com.continuousx.jenkins.LogLevelType
-import com.continuousx.jenkins.features.maven.build.FeatureMavenBuildImpl
-import com.continuousx.jenkins.features.maven.build.wrapper.FeatureMavenWrapperBuildImpl
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildBuilder
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildImpl
@@ -34,7 +32,6 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
                     expression { BranchExpressionChecker.checkBranchExpression(pipelineMavenBuild.stageGHProtectionCheck.getStageConfig().getAllowedBranch(), env.GIT_BRANCH) }
                 }
                 steps {
-                    milestone 20
                     script {
                         pipelineMavenBuild.stageGHProtectionCheck.runStage()
                     }
