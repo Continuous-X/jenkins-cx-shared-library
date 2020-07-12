@@ -24,7 +24,7 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
                 steps {
                     milestone 10
                     script {
-                        pipelineConfig.logLevelType == LogLevelType.DEBUG ? log.debug("start pipeline ${pipelineConfig.type}") :
+                        pipelineConfig.logLevelType == LogLevelType.DEBUG ? log.debug("start pipeline ${pipelineConfig.type}") : ''
                     }
                 }
             }
