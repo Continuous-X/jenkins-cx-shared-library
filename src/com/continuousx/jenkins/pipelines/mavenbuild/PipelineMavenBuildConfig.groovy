@@ -8,7 +8,7 @@ import com.continuousx.jenkins.stages.maven.install.StageMavenCompileConfig
 import groovy.transform.TupleConstructor
 
 @TupleConstructor
-class PipelineMavenBuildConfig implements PipelineConfig {
+class PipelineMavenBuildConfig extends PipelineConfig {
 
     public static PipelineType type = PipelineType.PIPELINE_MAVEN_BUILD
 
