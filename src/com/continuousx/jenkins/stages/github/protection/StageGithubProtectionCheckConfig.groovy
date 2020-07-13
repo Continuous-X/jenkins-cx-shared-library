@@ -3,8 +3,8 @@ package com.continuousx.jenkins.stages.github.protection
 import com.continuousx.jenkins.stages.StageConfig
 import com.continuousx.jenkins.stages.StageType
 
-class StageGithubProtectionCheckConfig implements StageConfig, Serializable {
+class StageGithubProtectionCheckConfig extends StageConfig {
 
-    static StageType type = StageType.STAGE_MAVEN_COMPILE
+    final static StageType type = StageType.STAGE_MAVEN_COMPILE
 
 }
