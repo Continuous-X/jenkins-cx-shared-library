@@ -1,5 +1,6 @@
 package com.continuousx.jenkins.pipelines.mavenbuild
 
+import com.continuousx.jenkins.LogLevelType
 import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
 import com.continuousx.jenkins.stages.github.protection.StageGithubProtectionCheckConfig
@@ -9,25 +10,27 @@ import groovy.transform.TypeChecked
 @TypeChecked
 class PipelineMavenBuildConfig implements PipelineConfig {
 
-    final static PipelineType TYPE = PipelineType.PIPELINE_MAVEN_BUILD
+    public static PipelineType type = PipelineType.PIPELINE_MAVEN_BUILD
 
     StageMavenCompileConfig stageConfigMavenCompile = new StageMavenCompileConfig()
     StageGithubProtectionCheckConfig stageGithubProtectionCheckConfig = new StageGithubProtectionCheckConfig()
 
-    PipelineMavenBuildConfig configStageMavenCompile(boolean active, boolean failOnError) {
-        stageConfigMavenCompile.active = active
-        stageConfigMavenCompile.failOnError = failOnError
-        stageConfigMavenCompile.logLevelType = logLevelType
+    PipelineMavenBuildConfig configStageMavenCompile(final boolean active, final boolean failOnError) {
+        this.stageConfigMavenCompile.active = active
+        this.stageConfigMavenCompile.failOnError = failOnError
+        this.stageConfigMavenCompile.logLevelType = this.logLevelType
         this
     }
 
-    PipelineMavenBuildConfig configStageGHProtectionCheck(boolean active, boolean failOnError) {
-        stageGithubProtectionCheckConfig.active = active
-        stageGithubProtectionCheckConfig.failOnError = failOnError
-        stageGithubProtectionCheckConfig.logLevelType = logLevelType
+    PipelineMavenBuildConfig configStageGHProtectionCheck(final boolean active, final boolean failOnError) {
+        this.stageGithubProtectionCheckConfig.active = active
+        this.stageGithubProtectionCheckConfig.failOnError = failOnError
+        this.stageGithubProtectionCheckConfig.logLevelType = this.logLevelType
         this
     }
 
-    void setLogLevelType(final )
+    void setLogLevelType(final LogLevelType logLevelType) {
+        this.logLevelType = logLevelType
+    }
 
 }
