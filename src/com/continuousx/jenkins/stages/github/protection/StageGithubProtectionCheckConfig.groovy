@@ -5,6 +5,6 @@ import com.continuousx.jenkins.stages.StageType
 
 class StageGithubProtectionCheckConfig implements StageConfig, Serializable {
 
-    public static StageType type = StageType.STAGE_MAVEN_COMPILE
+    static StageType type = StageType.STAGE_MAVEN_COMPILE
 
 }

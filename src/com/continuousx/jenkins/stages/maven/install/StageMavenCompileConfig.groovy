@@ -6,9 +6,9 @@ import com.continuousx.utils.github.BranchType
 
 class StageMavenCompileConfig implements StageConfig, Serializable {
 
-    public final static StageType type = StageType.STAGE_MAVEN_COMPILE
-    public static boolean active = true
-    public static boolean failOnError = true
-    public static BranchType allowedBranch = BranchType.ALL
+    static StageType type = StageType.STAGE_MAVEN_COMPILE
+    static boolean active = true
+    static boolean failOnError = true
+    static BranchType allowedBranch = BranchType.ALL
 
 }
