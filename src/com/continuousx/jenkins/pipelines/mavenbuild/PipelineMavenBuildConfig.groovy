@@ -1,13 +1,13 @@
 package com.continuousx.jenkins.pipelines.mavenbuild
 
-import com.continuousx.jenkins.LogLevelType
+
 import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
 import com.continuousx.jenkins.stages.github.protection.StageGithubProtectionCheckConfig
 import com.continuousx.jenkins.stages.maven.install.StageMavenCompileConfig
-import groovy.transform.TypeChecked
+import groovy.transform.TupleConstructor
 
-@TypeChecked
+@TupleConstructor
 class PipelineMavenBuildConfig implements PipelineConfig {
 
     public static PipelineType type = PipelineType.PIPELINE_MAVEN_BUILD
