@@ -1,8 +1,7 @@
 import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
 
-@SuppressWarnings(['GroovyAssignabilityCheck', 'GroovyVariableCanBeFinal'])
-def call(PipelineConfig config) {
+def call(final PipelineConfig config) {
 
     switch(config.type) {
         case PipelineType.PIPELINE_MAVEN_BUILD:
@@ -15,6 +14,7 @@ def call(PipelineConfig config) {
             log.info "run Pipeline: ${config.type}"
             break
         default:
-            log.warning 'non pipeline type found'
+            log.warning "non pipeline type found: ${config.type}"
     }
+
 }
