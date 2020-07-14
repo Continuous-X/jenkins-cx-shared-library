@@ -3,7 +3,7 @@ package com.continuousx.utils.logger
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.LogLevelType
 
-class Logger {
+class Logger implements Serializable {
 
     def jenkinsContext
     LogLevelType logLevelType
