@@ -35,6 +35,7 @@ class PipelineMavenBuildConfig implements PipelineConfig {
     }
 
     @Override
+    @NonCPS
     PipelineType getType() {
         return type
     }
