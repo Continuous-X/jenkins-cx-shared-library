@@ -2,8 +2,8 @@ package com.continuousx.jenkins.stages
 
 interface Stage {
 
-    StageConfig stageConfig
     List<String> neededPlugins
+    StageConfig stageConfig
 
     void runStage()
     void publishMetricOperating()

@@ -1,14 +1,14 @@
 package com.continuousx.jenkins.stages
 
-import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.utils.github.BranchType
 
-abstract class StageConfig implements Serializable {
+interface StageConfig extends Serializable {
 
-    StageType type //must be set in implemented StageConfiguration and set `final static`
-    LogLevelType logLevelType = LogLevelType.INFO
-    boolean active = true
-    boolean failOnError = true
-    BranchType allowedBranch = BranchType.ALL
+    StageType getType()
+    LogLevelType getLogLevelType()
+    BranchType getAllowedBranch()
+    boolean isActive()
+    boolean isFailOnError()
 
 }

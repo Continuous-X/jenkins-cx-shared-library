@@ -1,7 +1,7 @@
 package com.continuousx.jenkins.pipelines.mavenbuild
 
 import com.cloudbees.groovy.cps.NonCPS
-import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
 import com.continuousx.jenkins.stages.github.protection.StageGithubProtectionCheckConfig

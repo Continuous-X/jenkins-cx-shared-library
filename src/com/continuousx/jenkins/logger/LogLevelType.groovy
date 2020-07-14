@@ -1,4 +1,4 @@
-package com.continuousx.jenkins
+package com.continuousx.jenkins.logger
 
 enum LogLevelType {
     DEBUG,

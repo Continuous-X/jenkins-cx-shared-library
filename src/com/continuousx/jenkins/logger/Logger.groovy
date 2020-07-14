@@ -1,7 +1,6 @@
-package com.continuousx.utils.logger
+package com.continuousx.jenkins.logger
 
 import com.cloudbees.groovy.cps.NonCPS
-import com.continuousx.jenkins.LogLevelType
 
 class Logger implements Serializable {
 

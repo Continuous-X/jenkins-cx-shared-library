@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
 import org.jenkinsci.plugins.workflow.libs.Library
 

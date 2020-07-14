@@ -1,6 +1,6 @@
 package com.continuousx.jenkins.features.maven
 
-import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.features.FeatureConfig
 import com.continuousx.jenkins.features.FeatureType
 

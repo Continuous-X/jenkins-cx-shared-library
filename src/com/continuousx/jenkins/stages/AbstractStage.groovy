@@ -4,9 +4,9 @@ package com.continuousx.jenkins.stages
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipelineStage
+import com.continuousx.jenkins.logger.Logger
 import com.continuousx.utils.github.GitURLParser
 import com.continuousx.utils.jenkins.JenkinsPluginCheck
-import com.continuousx.utils.logger.Logger
 
 abstract class AbstractStage implements Stage, Serializable {
 
@@ -19,9 +19,12 @@ abstract class AbstractStage implements Stage, Serializable {
      * org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
      */
     def currentBuild
+    List<String> neededPlugins
+    StageConfig stageConfig
 
     private MeasurementOperatingPipelineStage measurement = new MeasurementOperatingPipelineStage()
     private InfluxDBFeature metrics
+    private Logger logger
 
     @SuppressWarnings('GroovyUntypedAccess')
     protected AbstractStage(

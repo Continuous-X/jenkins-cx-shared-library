@@ -1,6 +1,6 @@
 package com.continuousx.jenkins.pipelines.mavenbuild
 
-import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.pipelines.Pipeline
 import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType

@@ -1,10 +1,8 @@
 package com.continuousx.jenkins.features.maven.dependencies
 
-import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.features.AbstractFeature
-import com.continuousx.jenkins.features.FeatureType
 import com.continuousx.jenkins.features.exceptions.FeatureException
-import com.continuousx.jenkins.features.maven.build.wrapper.FeatureMavenWrapperBuildConfig
 import org.apache.maven.model.Model
 import org.apache.maven.model.Parent
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader

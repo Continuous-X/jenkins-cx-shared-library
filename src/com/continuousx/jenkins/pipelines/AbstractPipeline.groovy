@@ -4,8 +4,8 @@ package com.continuousx.jenkins.pipelines
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipeline
+import com.continuousx.jenkins.logger.Logger
 import com.continuousx.utils.github.GitURLParser
-import com.continuousx.utils.logger.Logger
 
 abstract class AbstractPipeline implements Pipeline, Serializable {
 

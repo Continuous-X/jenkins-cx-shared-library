@@ -1,6 +1,6 @@
 package com.continuousx.jenkins.features.github.protection
 
-import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.features.FeatureConfig
 import com.continuousx.jenkins.features.FeatureType
 
