@@ -83,7 +83,7 @@ abstract class AbstractFeature implements Feature, Serializable{
                     throw exception
                 } else {
                     ghBase.getRepository().createCommitStatus(jenkinsContext.env.GIT_COMMIT, GHCommitState.FAILURE, jenkinsContext.env.GIT_URL, 'my description - failure' )
-                    jenkinsContext.log.warning("${featureConfig.type} failed: ${exception.message}")
+                    logger.logWarning("${featureConfig.type} failed: ${exception.message}")
                 }
             } finally {
                 publishMetricOperating()
