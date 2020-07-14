@@ -42,6 +42,6 @@ class PipelineMavenBuildConfig implements PipelineConfig {
     @Override
     @NonCPS
     LogLevelType getLogLevelType() {
-        return null
+        return logLevelType
     }
 }
