@@ -14,6 +14,11 @@ class StageGithubProtectionCheckConfig implements StageConfig {
     boolean failOnError = true
 
     @Override
+    StageType getType() {
+        return type
+    }
+
+    @Override
     LogLevelType getLogLevelType() {
         return logLevelType
     }
