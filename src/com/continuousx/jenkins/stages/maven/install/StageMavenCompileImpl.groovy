@@ -15,16 +15,12 @@ class StageMavenCompileImpl extends AbstractStage {
     @SuppressWarnings('GroovyUntypedAccess')
     @Override
     void runStageImpl() {
-        if (checkNeededPlugins()) {
-            final FeatureMavenWrapperBuildImpl mavenBuild = new FeatureMavenWrapperBuildBuilder(jenkinsContext)
-                    .withFeatureConfig(new FeatureMavenWrapperBuildConfig(
-                            failOnError:stageConfig.failOnError,
-                            logLevelType:stageConfig.logLevelType
-                    )).build()
-            mavenBuild.runFeature()
-        } else {
-            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
-        }
+        final FeatureMavenWrapperBuildImpl mavenBuild = new FeatureMavenWrapperBuildBuilder(jenkinsContext)
+                .withFeatureConfig(new FeatureMavenWrapperBuildConfig(
+                        failOnError: stageConfig.failOnError,
+                        logLevelType: stageConfig.logLevelType
+                )).build()
+        mavenBuild.runFeature()
     }
 
 }

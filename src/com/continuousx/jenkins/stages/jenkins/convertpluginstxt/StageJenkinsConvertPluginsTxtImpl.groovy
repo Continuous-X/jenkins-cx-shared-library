@@ -13,12 +13,8 @@ class StageJenkinsConvertPluginsTxtImpl extends AbstractStage {
     @Override
     @SuppressWarnings(['GroovyUntypedAccess', 'GroovyAssignabilityCheck'])
     void runStageImpl() {
-        if (checkNeededPlugins()) {
-            new FeatureMavenDepToJenkinsPluginsTxtImpl(jenkinsContext, stageConfig.logLevelType).runFeature()
-            jenkinsContext.log.info "stage ready"
-        } else {
-            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
-        }
+        new FeatureMavenDepToJenkinsPluginsTxtImpl(jenkinsContext, stageConfig.logLevelType)
+                .runFeature()
     }
 
 }

@@ -15,16 +15,12 @@ class StageGithubProtectionCheckImpl extends AbstractStage {
     @SuppressWarnings('GroovyUntypedAccess')
     @Override
     void runStageImpl() {
-        if (checkNeededPlugins()) {
-            final StageGithubProtectionCheckConfig stageConfigProtectionCheck = stageConfig as StageGithubProtectionCheckConfig
-            final FeatureGHProtectionCheckImpl ghProtectionCheck = new FeatureGHProtectionCheckBuilder(jenkinsContext)
-                    .withFeatureConfig(new FeatureGHProtectionCheckConfig(
-                            failOnError:stageConfigProtectionCheck.failOnError,
-                            logLevelType:stageConfigProtectionCheck.logLevelType
-                    )).build()
-            ghProtectionCheck.runFeature()
-        } else {
-            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
-        }
+        final StageGithubProtectionCheckConfig stageConfigProtectionCheck = stageConfig as StageGithubProtectionCheckConfig
+        final FeatureGHProtectionCheckImpl ghProtectionCheck = new FeatureGHProtectionCheckBuilder(jenkinsContext)
+                .withFeatureConfig(new FeatureGHProtectionCheckConfig(
+                        failOnError: stageConfigProtectionCheck.failOnError,
+                        logLevelType: stageConfigProtectionCheck.logLevelType
+                )).build()
+        ghProtectionCheck.runFeature()
     }
 }

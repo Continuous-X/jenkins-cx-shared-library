@@ -76,21 +76,25 @@ abstract class AbstractStage implements Stage, Serializable {
 
     @SuppressWarnings('GroovyUntypedAccess')
     void runStage() {
-        try {
-            logger.logDebug("run stage ${stageConfig.type}")
-            runStageImpl()
-        }catch (final Exception exception) {
-            logger.logDebug("stage ${stageConfig.type} throw Exception:\n${exception.getMessage()}")
-            if (stageConfig.failOnError) {
-                logger.logDebug("stage ${stageConfig.type} throw Exception and failOnError is ${stageConfig.failOnError}\n\t throw ${exception.getClass().getName()}")
-                throw exception
-            } else {
-                logger.logDebug("stage ${stageConfig.type} throw Exception and failOnError is ${stageConfig.failOnError}")
-                logger.logWarning("stage ${stageConfig.type} failed: ${exception.message}")
+        if (checkNeededPlugins()) {
+            try {
+                logger.logDebug("run stage ${stageConfig.type}")
+                runStageImpl()
+            } catch (final Exception exception) {
+                logger.logDebug("stage ${stageConfig.type} throw Exception:\n${exception.getMessage()}")
+                if (stageConfig.failOnError) {
+                    logger.logDebug("stage ${stageConfig.type} throw Exception and failOnError is ${stageConfig.failOnError}\n\t throw ${exception.getClass().getName()}")
+                    throw exception
+                } else {
+                    logger.logDebug("stage ${stageConfig.type} throw Exception and failOnError is ${stageConfig.failOnError}")
+                    logger.logWarning("stage ${stageConfig.type} failed: ${exception.message}")
+                }
+            } finally {
+                measurement.duration = currentBuild.timeInMillis
+                publishMetricOperating()
             }
-        } finally {
-            measurement.duration = currentBuild.timeInMillis
-            publishMetricOperating()
+        } else {
+            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
         }
     }
 
