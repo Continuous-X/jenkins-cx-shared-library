@@ -6,16 +6,17 @@ import com.continuousx.jenkins.pipelines.PipelineType
 import com.continuousx.jenkins.stages.github.protection.StageGithubProtectionCheckConfig
 import com.continuousx.jenkins.stages.maven.install.StageMavenCompileConfig
 
-class PipelineMavenBuildConfig extends PipelineConfig {
+class PipelineMavenBuildConfig implements PipelineConfig {
 
-    public final static PipelineType type = PipelineType.PIPELINE_MAVEN_BUILD
+    final static PipelineType type = PipelineType.PIPELINE_MAVEN_BUILD
+    LogLevelType logLevelType = LogLevelType.WARNING
 
     StageMavenCompileConfig stageConfigMavenCompile = new StageMavenCompileConfig()
     StageGithubProtectionCheckConfig stageGithubProtectionCheckConfig = new StageGithubProtectionCheckConfig()
 
-    PipelineMavenBuildConfig(final LogLevelType logLevelType) {
+    /*PipelineMavenBuildConfig(final LogLevelType logLevelType) {
         this.logLevelType = logLevelType
-    }
+    }*/
 
     PipelineMavenBuildConfig configStageMavenCompile(final boolean active, final boolean failOnError) {
         this.stageConfigMavenCompile.active = active
@@ -31,4 +32,13 @@ class PipelineMavenBuildConfig extends PipelineConfig {
         this
     }
 
+    @Override
+    PipelineType getType() {
+        return type
+    }
+
+    @Override
+    LogLevelType getLogLevelType() {
+        return null
+    }
 }
