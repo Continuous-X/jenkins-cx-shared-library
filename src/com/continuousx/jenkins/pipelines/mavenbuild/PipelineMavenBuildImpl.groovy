@@ -15,9 +15,7 @@ class PipelineMavenBuildImpl extends AbstractPipeline {
     protected PipelineMavenBuildImpl(
             def jenkinsContext,
             PipelineMavenBuildConfig config) {
-        super(jenkinsContext,
-                ["workflow-basic-steps", "maven-plugin"],
-                config)
+        super(jenkinsContext, ["workflow-basic-steps", "maven-plugin"], config)
         stageMavenInstall = new StageMavenCompileBuilder(jenkinsContext)
                 .withStageConfig(config.getStageConfigMavenCompile())
                 .build()
