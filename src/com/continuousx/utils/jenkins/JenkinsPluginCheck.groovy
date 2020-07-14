@@ -1,6 +1,8 @@
 package com.continuousx.utils.jenkins
 
 import com.cloudbees.groovy.cps.NonCPS
+import com.continuousx.jenkins.logger.LogLevelType
+import com.continuousx.jenkins.logger.Logger
 import hudson.PluginWrapper
 import jenkins.model.Jenkins
 
@@ -10,10 +12,12 @@ class JenkinsPluginCheck {
     private List<String> pluginListInstalled = []
 
     private def jenkinsContext
+    private Logger logger
 
     JenkinsPluginCheck(def jenkinsContext) {
         Objects.nonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
+        logger = new Logger(jenkinsContext, LogLevelType.INFO)
     }
 
     @NonCPS
