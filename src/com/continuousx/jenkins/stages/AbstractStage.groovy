@@ -22,9 +22,9 @@ abstract class AbstractStage implements Stage, Serializable {
     List<String> neededPlugins
     StageConfig stageConfig
 
-    private MeasurementOperatingPipelineStage measurement = new MeasurementOperatingPipelineStage()
-    private InfluxDBFeature metrics
-    private Logger logger
+    protected MeasurementOperatingPipelineStage measurement = new MeasurementOperatingPipelineStage()
+    protected InfluxDBFeature metrics
+    protected Logger logger
 
     @SuppressWarnings('GroovyUntypedAccess')
     protected AbstractStage(
