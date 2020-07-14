@@ -5,7 +5,7 @@ def call(final PipelineConfig config) {
 
     switch(config.type) {
         case PipelineType.PIPELINE_MAVEN_BUILD:
-            println "logLevelType: ${config.logLevelType}"
+            println "logLevelType: ${config.getLogLevelType()}"
             PipelineMavenBuild(config)
             break
         case PipelineType.PIPELINE_JENKINS_SHARED_LIB:
