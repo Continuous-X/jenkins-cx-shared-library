@@ -23,7 +23,7 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
     PipelineConfig pipelineConfig
     MeasurementOperatingPipeline measurement = new MeasurementOperatingPipeline()
     InfluxDBFeature metrics
-    private Logger logger
+    protected Logger logger
 
     @SuppressWarnings(['NoDef', 'MethodParameterTypeRequired', 'GroovyUntypedAccess', 'GroovyAssignabilityCheck'])
     protected AbstractPipeline(
