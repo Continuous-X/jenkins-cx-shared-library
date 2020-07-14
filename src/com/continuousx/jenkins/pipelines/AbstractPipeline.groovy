@@ -6,6 +6,7 @@ import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipeline
 import com.continuousx.utils.github.GitURLParser
+import com.continuousx.utils.logger.Logger
 
 abstract class AbstractPipeline implements Pipeline, Serializable {
 
@@ -21,10 +22,9 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
     def currentBuild
     List<String> neededPlugins = []
     PipelineConfig pipelineConfig
-    LogLevelType logLevel
     MeasurementOperatingPipeline measurement = new MeasurementOperatingPipeline()
-
     InfluxDBFeature metrics
+    private Logger logger
 
     @SuppressWarnings(['NoDef', 'MethodParameterTypeRequired', 'GroovyUntypedAccess', 'GroovyAssignabilityCheck'])
     protected AbstractPipeline(
@@ -35,13 +35,14 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
         Objects.requireNonNull(neededPlugins)
         Objects.requireNonNull(config)
         Objects.requireNonNull(config.getLogLevelType())
+
         this.jenkinsContext = jenkinsContext
         this.neededPlugins = neededPlugins
         this.pipelineConfig = config
-        this.logLevel = config.getLogLevelType()
         this.currentBuild = this.jenkinsContext.currentBuild
+        logger = new Logger(jenkinsContext: this.jenkinsContext, logLevelType: this.pipelineConfig.logLevelType)
 
-        this.jenkinsContext.log.info("ENV in Pipeline: ${this.jenkinsContext.env.GIT_URL}")
+        logger.logDebug("ENV in Pipeline: ${this.jenkinsContext.env}")
         if (this.jenkinsContext.env.GIT_URL != null) {
             GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
             measurement.setGHOrganization(gitUrlParser.getOrgaName())
@@ -49,7 +50,6 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
         }
 
         measurement.pipelineType = pipelineConfig.type
-
         metrics = new InfluxDBFeatureBuilder(jenkinsContext).build()
     }
 
@@ -57,18 +57,20 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
 
     void runPipeline() {
         try {
+            logger.logDebug("start pipeline '${pipelineConfig.type}'")
             runPipelineImpl()
         }catch (final Exception exception) {
             jenkinsContext.log.warning("${getPipelineConfig().type} failed: ${exception.message}")
             throw exception
         } finally {
-            measurement.duration = currentBuild.timeInMillis
+            logger.logDebug("ended pipeline '${pipelineConfig.type}' - duration '${currentBuild.timeInMillis}'")
             publishMetricOperating()
         }
     }
 
     @Override
     void publishMetricOperating() {
+        logger.logDebug("publish operating mertric for '${pipelineConfig.type}' - duration '${currentBuild.timeInMillis}'")
         measurement.duration = currentBuild.timeInMillis
         metrics.publishMetricOperating(measurement)
     }
