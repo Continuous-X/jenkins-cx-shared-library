@@ -4,6 +4,8 @@ import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingFeature
+import com.continuousx.jenkins.logger.Logger
+import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.utils.github.GHBase
 import com.continuousx.utils.github.GitURLParser
 import com.continuousx.utils.jenkins.JenkinsConfig
@@ -16,8 +18,11 @@ abstract class AbstractFeature implements Feature, Serializable{
     private static final long serialVersionUID = 1234567L
 
     def jenkinsContext
+    List<String> neededPlugins = []
+    FeatureConfig featureConfig
     MeasurementOperatingFeature measurementOperating = new MeasurementOperatingFeature()
     InfluxDBFeature metrics
+    Logger logger
     GHBase ghBase
 
     @SuppressWarnings('GroovyUntypedAccess')
@@ -31,8 +36,10 @@ abstract class AbstractFeature implements Feature, Serializable{
 
         neededPlugins = []
         jenkinsContext = paramJenkinsContext
-        neededPlugins << paramNeededPlugins
+        neededPlugins = paramNeededPlugins
         featureConfig = paramFeatureConfig
+
+        logger = new Logger(jenkinsContext: jenkinsContext, logLevelType: featureConfig.logLevelType)
 
         measurementOperating.featureType = featureConfig.type
         if (this.jenkinsContext.env.GIT_URL != null) {
@@ -82,7 +89,7 @@ abstract class AbstractFeature implements Feature, Serializable{
                 publishMetricOperating()
             }
         } else {
-            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
+            logger.logError("check needed plugins: ${neededPlugins}")
             publishMetricOperating()
         }
     }
