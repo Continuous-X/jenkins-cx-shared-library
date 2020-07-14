@@ -10,7 +10,7 @@ class Logger implements Serializable {
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
-    void debug(final String logText) {
+    void logDebug(final String logText) {
         Objects.requireNonNull(logText)
         Objects.requireNonNull(logLevelType)
         Objects.requireNonNull(jenkinsContext)
@@ -19,7 +19,7 @@ class Logger implements Serializable {
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
-    void info(final String logText) {
+    void logInfo(final String logText) {
         Objects.requireNonNull(logText)
         Objects.requireNonNull(logLevelType)
         Objects.requireNonNull(jenkinsContext)
@@ -28,7 +28,7 @@ class Logger implements Serializable {
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
-    void warning(final String logText) {
+    void logWarning(final String logText) {
         Objects.requireNonNull(logText)
         Objects.requireNonNull(logLevelType)
         Objects.requireNonNull(jenkinsContext)
@@ -37,7 +37,7 @@ class Logger implements Serializable {
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
-    void error(final String logText) {
+    void logError(final String logText) {
         Objects.requireNonNull(logText)
         Objects.requireNonNull(logLevelType)
         Objects.requireNonNull(jenkinsContext)
