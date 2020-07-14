@@ -20,26 +20,28 @@ class StageJenkinsConvertPluginsTxtConfig implements StageConfig {
         type
     }
 
+    @SuppressWarnings('ClashingGetters')
     @Override
     @NonCPS
-    @SuppressWarnings('ClashingGetters')
     boolean isActive() {
         active
     }
 
-    @Override
     @SuppressWarnings('ClashingGetters')
+    @Override
+    @NonCPS
     boolean isFailOnError() {
         failOnError
     }
 
     @Override
+    @NonCPS
     LogLevelType getLogLevelType() {
         logLevelType
     }
 
     @Override
-    @SuppressWarnings('UnnecessaryReturnKeyword')
+    @NonCPS
     BranchType getAllowedBranch() {
         allowedBranch
     }
