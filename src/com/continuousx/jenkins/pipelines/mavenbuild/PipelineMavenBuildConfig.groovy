@@ -21,8 +21,6 @@ class PipelineMavenBuildConfig implements PipelineConfig {
     }
 
     PipelineMavenBuildConfig configStageMavenCompile(final boolean active, final boolean failOnError) {
-        this.stageConfigMavenCompile.active = active
-        this.stageConfigMavenCompile.failOnError = failOnError
         this.stageConfigMavenCompile.logLevelType = this.logLevelType
         this
     }
