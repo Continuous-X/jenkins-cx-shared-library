@@ -37,7 +37,7 @@ abstract class AbstractStage implements Stage, Serializable {
 
         neededPlugins = []
         jenkinsContext = paramJenkinsContext
-        neededPlugins << paramNeededPlugins
+        neededPlugins = paramNeededPlugins
         stageConfig = paramStageConfig
         currentBuild = this.jenkinsContext.currentBuild
 
