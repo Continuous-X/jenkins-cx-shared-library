@@ -27,10 +27,7 @@ abstract class AbstractStage implements Stage, Serializable {
     protected Logger logger
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected AbstractStage(
-            final def paramJenkinsContext,
-            final List<String> paramNeededPlugins,
-            final StageConfig paramStageConfig) {
+    protected AbstractStage(final def paramJenkinsContext, final List<String> paramNeededPlugins, final StageConfig paramStageConfig) {
         Objects.requireNonNull(paramJenkinsContext)
         Objects.requireNonNull(paramNeededPlugins)
         Objects.requireNonNull(paramStageConfig)
