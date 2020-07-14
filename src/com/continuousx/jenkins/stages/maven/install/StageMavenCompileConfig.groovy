@@ -13,4 +13,25 @@ class StageMavenCompileConfig implements StageConfig {
     final static boolean active = true
     final static boolean failOnError = true
 
+    @Override
+    LogLevelType getLogLevelType() {
+        return logLevelType
+    }
+
+    @Override
+    BranchType getAllowedBranch() {
+        return allowedBranch
+    }
+
+    @Override
+    boolean isActive() {
+        return active
+    }
+
+    @Override
+    boolean isFailOnError() {
+        return failOnError
+    }
+
+
 }

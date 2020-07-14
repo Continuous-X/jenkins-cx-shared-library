@@ -13,4 +13,24 @@ class StageGithubProtectionCheckConfig implements StageConfig {
     boolean active = true
     boolean failOnError = true
 
+    @Override
+    LogLevelType getLogLevelType() {
+        return logLevelType
+    }
+
+    @Override
+    BranchType getAllowedBranch() {
+        return allowedBranch
+    }
+
+    @Override
+    boolean isActive() {
+        return active
+    }
+
+    @Override
+    boolean isFailOnError() {
+        return failOnError
+    }
+
 }
