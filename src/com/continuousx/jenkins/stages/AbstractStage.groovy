@@ -1,6 +1,6 @@
 package com.continuousx.jenkins.stages
 
-import com.continuousx.jenkins.LogLevelType
+
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipelineStage
@@ -40,7 +40,7 @@ abstract class AbstractStage implements Stage, Serializable {
 
         logger = new Logger(jenkinsContext: jenkinsContext, logLevelType: stageConfig.logLevelType)
 
-        logger.logDebug("create stage ${stageConfig.type}")
+        logger.debug("create stage ${stageConfig.type}")
         this.jenkinsContext.log.info("ENV in Stage: ${this.jenkinsContext.env}")
 
         measurement.active = stageConfig.active
@@ -74,16 +74,16 @@ abstract class AbstractStage implements Stage, Serializable {
     @SuppressWarnings('GroovyUntypedAccess')
     void runStage() {
         try {
-            logger.logDebug("run stage ${stageConfig.type}")
+            logger.debug("run stage ${stageConfig.type}")
             runStageImpl()
         }catch (final Exception exception) {
-            logger.logDebug("stage ${stageConfig.type} throw Exception:\n${exception.getMessage()}")
+            logger.debug("stage ${stageConfig.type} throw Exception:\n${exception.getMessage()}")
             if (stageConfig.failOnError) {
-                logger.logDebug("stage ${stageConfig.type} throw Exception and failOnError is ${stageConfig.failOnError}\n\t throw ${exception.getClass().getName()}")
+                logger.debug("stage ${stageConfig.type} throw Exception and failOnError is ${stageConfig.failOnError}\n\t throw ${exception.getClass().getName()}")
                 throw exception
             } else {
-                logger.logDebug("stage ${stageConfig.type} throw Exception and failOnError is ${stageConfig.failOnError}")
-                logger.logWarning("stage ${stageConfig.type} failed: ${exception.message}")
+                logger.debug("stage ${stageConfig.type} throw Exception and failOnError is ${stageConfig.failOnError}")
+                logger.warning("stage ${stageConfig.type} failed: ${exception.message}")
             }
         } finally {
             measurement.duration = currentBuild.timeInMillis
@@ -92,7 +92,7 @@ abstract class AbstractStage implements Stage, Serializable {
     }
 
     void publishMetricOperating() {
-        logger.logDebug("stage ${stageConfig.type} publishMetricOperating with ${measurement.toString()}")
+        logger.debug("stage ${stageConfig.type} publishMetricOperating with ${measurement.toString()}")
         metrics.publishMetricOperating(measurement)
     }
 

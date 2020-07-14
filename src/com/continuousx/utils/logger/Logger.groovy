@@ -1,5 +1,6 @@
 package com.continuousx.utils.logger
 
+import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.LogLevelType
 
 class Logger {
@@ -8,7 +9,8 @@ class Logger {
     LogLevelType logLevelType
 
     @SuppressWarnings('GroovyUntypedAccess')
-    void logDebug(final String logText) {
+    @NonCPS
+    void debug(final String logText) {
         Objects.requireNonNull(logText)
         Objects.requireNonNull(logLevelType)
         Objects.requireNonNull(jenkinsContext)
@@ -16,7 +18,8 @@ class Logger {
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
-    void logInfo(final String logText) {
+    @NonCPS
+    void info(final String logText) {
         Objects.requireNonNull(logText)
         Objects.requireNonNull(logLevelType)
         Objects.requireNonNull(jenkinsContext)
@@ -24,7 +27,8 @@ class Logger {
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
-    void logWarning(final String logText) {
+    @NonCPS
+    void warning(final String logText) {
         Objects.requireNonNull(logText)
         Objects.requireNonNull(logLevelType)
         Objects.requireNonNull(jenkinsContext)
@@ -32,7 +36,8 @@ class Logger {
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
-    void logError(final String logText) {
+    @NonCPS
+    void error(final String logText) {
         Objects.requireNonNull(logText)
         Objects.requireNonNull(logLevelType)
         Objects.requireNonNull(jenkinsContext)

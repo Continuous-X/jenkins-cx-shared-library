@@ -40,7 +40,7 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
         this.currentBuild = this.jenkinsContext.currentBuild
         logger = new Logger(jenkinsContext: this.jenkinsContext, logLevelType: this.pipelineConfig.logLevelType)
 
-        logger.logDebug("ENV in Pipeline: ${this.jenkinsContext.env}")
+        logger.debug("ENV in Pipeline: ${this.jenkinsContext.env}")
         if (this.jenkinsContext.env.GIT_URL != null) {
             GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
             measurement.setGHOrganization(gitUrlParser.getOrgaName())
@@ -55,20 +55,20 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
 
     void runPipeline() {
         try {
-            logger.logDebug("start pipeline '${pipelineConfig.type}'")
+            logger.debug("start pipeline '${pipelineConfig.type}'")
             runPipelineImpl()
         }catch (final Exception exception) {
             jenkinsContext.log.warning("${getPipelineConfig().type} failed: ${exception.message}")
             throw exception
         } finally {
-            logger.logDebug("ended pipeline '${pipelineConfig.type}' - duration '${currentBuild.timeInMillis}'")
+            logger.debug("ended pipeline '${pipelineConfig.type}' - duration '${currentBuild.timeInMillis}'")
             publishMetricOperating()
         }
     }
 
     @Override
     void publishMetricOperating() {
-        logger.logDebug("publish operating mertric for '${pipelineConfig.type}' - duration '${currentBuild.timeInMillis}'")
+        logger.debug("publish operating mertric for '${pipelineConfig.type}' - duration '${currentBuild.timeInMillis}'")
         measurement.duration = currentBuild.timeInMillis
         metrics.publishMetricOperating(measurement)
     }
