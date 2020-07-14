@@ -47,7 +47,7 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
             measurementOperating.duration = duration
             publishMetricOperating()
         } else {
-            jenkinsContext.log.warning("needed plugins not exist: ${neededPlugins}")
+            logger.logWarning("needed plugins not exist: ${neededPlugins}")
         }
     }
 
@@ -98,7 +98,7 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
         if (checkNeededPlugins()) {
             jenkinsContext.influxDbPublisher(selectedTarget:INFLUX_TARGET_OPERATING)
         } else {
-            jenkinsContext.log.warning("needed plugins not exist: ${neededPlugins}")
+            logger.logWarning("needed plugins not exist: ${neededPlugins}")
         }
     }
 
@@ -110,7 +110,7 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
             final Map entryDataMapTags = ["${measurement.getType()}": measurement.getDataMapTags()]
             publish(INFLUX_TARGET_OPERATING, entryDataMap, entryDataMapTags)
         } else {
-            jenkinsContext.log.warning("needed plugins not exist: ${neededPlugins}")
+            logger.logWarning("needed plugins not exist: ${neededPlugins}")
         }
     }
 
@@ -122,7 +122,7 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
             final Map entryDataMapTags = ["${measurement.getType()}": measurement.getDataMapTags()]
             publish(INFLUX_TARGET_CICD_RESULTS, entryDataMap, entryDataMapTags)
         } else {
-            jenkinsContext.log.warning("needed plugins not exist: ${neededPlugins}")
+            logger.logWarning("needed plugins not exist: ${neededPlugins}")
         }
     }
 

@@ -36,7 +36,7 @@ class FeatureMavenDepToJenkinsPluginsTxtImpl extends AbstractFeature {
         try {
             this.model = xpp3Reader.read(new ByteArrayInputStream(pomContent.getBytes()))
         } catch (Exception exception) {
-            jenkinsContext.log.error("${exception.getMessage()}")
+            logger.logError("${exception.getMessage()}")
             throw new FeatureException(exception.getMessage())
         }
         this
@@ -51,8 +51,8 @@ class FeatureMavenDepToJenkinsPluginsTxtImpl extends AbstractFeature {
     @SuppressWarnings('GroovyUntypedAccess')
     void checkPluginsTxt() {
         def checkPluginsTxt = jenkinsContext.fileExists(file: PLUGINS_TXT_FILENAME)
-        jenkinsContext.log.info "check ${PLUGINS_TXT_FILENAME}: ${checkPluginsTxt}"
-        jenkinsContext.log.info checkPluginsTxt ? jenkinsContext.readFile(file: PLUGINS_TXT_FILENAME) : "not exist"
+        logger.logInfo "check ${PLUGINS_TXT_FILENAME}: ${checkPluginsTxt}"
+        logger.logInfo checkPluginsTxt ? jenkinsContext.readFile(file: PLUGINS_TXT_FILENAME) : "not exist"
     }
 
     String convertDependencies2PluginsTxt() {

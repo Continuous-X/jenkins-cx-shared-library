@@ -19,7 +19,7 @@ class FeatureMavenBuildImpl extends AbstractMavenFeature {
         if(checkNeededPlugins()) {
             showVersion()
         } else {
-            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
+            logger.logError("check needed plugins: ${neededPlugins}")
         }
     }
 

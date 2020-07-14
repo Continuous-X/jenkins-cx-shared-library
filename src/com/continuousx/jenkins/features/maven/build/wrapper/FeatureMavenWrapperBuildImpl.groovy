@@ -24,7 +24,7 @@ class FeatureMavenWrapperBuildImpl extends AbstractMavenFeature {
             setPermission()
             showVersion()
         } else {
-            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
+            logger.logError("check needed plugins: ${neededPlugins}")
         }
     }
 

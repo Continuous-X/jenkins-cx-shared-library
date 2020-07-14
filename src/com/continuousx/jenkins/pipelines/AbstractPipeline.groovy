@@ -58,7 +58,7 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
             logger.logDebug("start pipeline '${pipelineConfig.type}'")
             runPipelineImpl()
         }catch (final Exception exception) {
-            jenkinsContext.log.warning("${getPipelineConfig().type} failed: ${exception.message}")
+            logger.logWarning("${getPipelineConfig().type} failed: ${exception.message}")
             throw exception
         } finally {
             logger.logDebug("ended pipeline '${pipelineConfig.type}' - duration '${currentBuild.timeInMillis}'")

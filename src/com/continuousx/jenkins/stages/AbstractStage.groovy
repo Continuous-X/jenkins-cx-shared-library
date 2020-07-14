@@ -41,7 +41,7 @@ abstract class AbstractStage implements Stage, Serializable {
         logger = new Logger(jenkinsContext: jenkinsContext, logLevelType: stageConfig.logLevelType)
 
         logger.logDebug("create stage ${stageConfig.type}")
-        this.jenkinsContext.log.info("ENV in Stage: ${this.jenkinsContext.env}")
+        logger.logInfo("ENV in Stage: ${this.jenkinsContext.env}")
 
         measurement.active = stageConfig.active
         measurement.failOnError = stageConfig.failOnError
@@ -53,12 +53,12 @@ abstract class AbstractStage implements Stage, Serializable {
         }
 
         metrics = new InfluxDBFeatureBuilder(paramJenkinsContext).build()
-        this.jenkinsContext.log.info("Stage Constructor ready")
-        this.jenkinsContext.log.info("currentBuild ${currentBuild}")
-        this.jenkinsContext.log.info("displayName ${currentBuild.displayName}")
-        this.jenkinsContext.log.info("projectname ${currentBuild.projectName}")
-        this.jenkinsContext.log.info("properties ${currentBuild.properties}")
-        this.jenkinsContext.log.info("build variables ${currentBuild.buildVariables}")
+        logger.logInfo("Stage Constructor ready")
+        logger.logInfo("currentBuild ${currentBuild}")
+        logger.logInfo("displayName ${currentBuild.displayName}")
+        logger.logInfo("projectname ${currentBuild.projectName}")
+        logger.logInfo("properties ${currentBuild.properties}")
+        logger.logInfo("build variables ${currentBuild.buildVariables}")
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
@@ -91,7 +91,7 @@ abstract class AbstractStage implements Stage, Serializable {
                 publishMetricOperating()
             }
         } else {
-            jenkinsContext.log.error("check needed plugins: ${neededPlugins}")
+            logger.logError("check needed plugins: ${neededPlugins}")
         }
     }
 
