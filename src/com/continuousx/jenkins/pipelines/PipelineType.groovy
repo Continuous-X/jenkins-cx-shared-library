@@ -13,4 +13,5 @@ enum PipelineType {
     String toString() {
         name().toUpperCase()
     }
+
 }

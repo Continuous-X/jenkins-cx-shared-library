@@ -4,7 +4,7 @@ package com.continuousx.jenkins.pipelines
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipeline
-import com.continuousx.jenkins.logger.Logger
+import com.continuousx.jenkins.logger.PipelineLogger
 import com.continuousx.utils.github.GitURLParser
 
 abstract class AbstractPipeline implements Pipeline, Serializable {
@@ -23,7 +23,7 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
     PipelineConfig pipelineConfig
     MeasurementOperatingPipeline measurement = new MeasurementOperatingPipeline()
     InfluxDBFeature metrics
-    protected Logger logger
+    protected PipelineLogger logger
 
     @SuppressWarnings(['NoDef', 'MethodParameterTypeRequired', 'GroovyUntypedAccess', 'GroovyAssignabilityCheck'])
     protected AbstractPipeline(
@@ -38,7 +38,7 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
         this.neededPlugins = neededPlugins
         this.pipelineConfig = config
         this.currentBuild = this.jenkinsContext.currentBuild
-        logger = new Logger(jenkinsContext: this.jenkinsContext, logLevelType: this.pipelineConfig.logLevelType)
+        logger = new PipelineLogger(jenkinsContext: this.jenkinsContext, logLevelType: this.pipelineConfig.logLevelType)
 
         logger.logDebug("ENV in Pipeline: ${this.jenkinsContext.env}")
         if (this.jenkinsContext.env.GIT_URL != null) {

@@ -43,7 +43,7 @@ class PipelineMavenBuildImplTest extends Specification {
 
         assert pipeline != null
 
-        assert pipeline.logLevel == expectedLogLevel
+        assert pipeline.pipelineConfig.logLevelType == expectedLogLevel
 
         where:
         loglevel             || expectedLogLevel

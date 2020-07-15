@@ -4,8 +4,7 @@ import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingFeature
-import com.continuousx.jenkins.logger.Logger
-import com.continuousx.jenkins.pipelines.PipelineConfig
+import com.continuousx.jenkins.logger.PipelineLogger
 import com.continuousx.utils.github.GHBase
 import com.continuousx.utils.github.GitURLParser
 import com.continuousx.utils.jenkins.JenkinsConfig
@@ -22,7 +21,7 @@ abstract class AbstractFeature implements Feature, Serializable{
     FeatureConfig featureConfig
     MeasurementOperatingFeature measurementOperating = new MeasurementOperatingFeature()
     InfluxDBFeature metrics
-    Logger logger
+    PipelineLogger logger
     GHBase ghBase
 
     @SuppressWarnings('GroovyUntypedAccess')
@@ -39,7 +38,7 @@ abstract class AbstractFeature implements Feature, Serializable{
         neededPlugins = paramNeededPlugins
         featureConfig = paramFeatureConfig
 
-        logger = new Logger(jenkinsContext: jenkinsContext, logLevelType: featureConfig.logLevelType)
+        logger = new PipelineLogger(jenkinsContext: jenkinsContext, logLevelType: featureConfig.logLevelType)
 
         measurementOperating.featureType = featureConfig.type
         if (this.jenkinsContext.env.GIT_URL != null) {

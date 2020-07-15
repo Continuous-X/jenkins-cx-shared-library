@@ -4,7 +4,7 @@ package com.continuousx.jenkins.stages
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipelineStage
-import com.continuousx.jenkins.logger.Logger
+import com.continuousx.jenkins.logger.PipelineLogger
 import com.continuousx.utils.github.GitURLParser
 import com.continuousx.utils.jenkins.JenkinsPluginCheck
 
@@ -24,7 +24,7 @@ abstract class AbstractStage implements Stage, Serializable {
 
     protected MeasurementOperatingPipelineStage measurement = new MeasurementOperatingPipelineStage()
     protected InfluxDBFeature metrics
-    protected Logger logger
+    protected PipelineLogger logger
 
     @SuppressWarnings('GroovyUntypedAccess')
     protected AbstractStage(final def paramJenkinsContext, final List<String> paramNeededPlugins, final StageConfig paramStageConfig) {
@@ -38,7 +38,7 @@ abstract class AbstractStage implements Stage, Serializable {
         stageConfig = paramStageConfig
         currentBuild = this.jenkinsContext.currentBuild
 
-        logger = new Logger(jenkinsContext: jenkinsContext, logLevelType: stageConfig.logLevelType)
+        logger = new PipelineLogger(jenkinsContext: jenkinsContext, logLevelType: stageConfig.logLevelType)
 
         logger.logDebug("create stage ${stageConfig.type}")
         logger.logInfo("ENV in Stage: ${this.jenkinsContext.env}")

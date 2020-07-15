@@ -19,3 +19,8 @@ def warning(String message) {
 def error(String message) {
     echo "ERROR: ${message}"
 }
+
+@NonCPS
+def fatal(String message) {
+    echo "FATAL: ${message}"
+}
