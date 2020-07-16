@@ -94,6 +94,7 @@ abstract class AbstractFeature implements Feature, Serializable{
     }
 
     @Override
+    @NonCPS
     void publishMetricOperating() {
         metrics.publishMetricOperating(measurementOperating)
     }
