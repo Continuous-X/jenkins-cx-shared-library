@@ -52,6 +52,7 @@ class PipelineLogger implements Serializable {
         checkPrint(LogLevelType.FATAL) ? this.jenkinsContext.log.fatal(logText) : ''
     }
 
+    @NonCPS
     boolean checkPrint(LogLevelType logLevelType) {
         Objects.requireNonNull(logLevelType)
         if (logLevelType == this.logLevelType)
