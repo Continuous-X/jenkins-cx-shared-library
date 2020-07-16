@@ -98,4 +98,9 @@ abstract class AbstractFeature implements Feature, Serializable{
         metrics.publishMetricOperating(measurementOperating)
     }
 
+    void publishGHCommitStatus(final GHCommitState commitState, final String description) {
+        this.jenkinsContext.withCredentials([this.jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+            GHBase.getRepository(this.jenkinsContext.env.GIT_URL, GHBase.getConnetctionOAuth(this.jenkinsContext.TOKEN)).createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, commitState, this.jenkinsContext.env.GIT_URL, description, "${GHBase.GH_COMMIT_STATE_CONTEXT_SHARED_LIB/${featureConfig.type}}" )
+        }
+    }
 }

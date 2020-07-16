@@ -8,49 +8,31 @@ import org.kohsuke.github.GitHub
 
 class GHBase {
 
-    private String ghOrganizationName
-    private String ghRepositoryName
-    private String ghUserToken
+    final static String GH_COMMIT_STATE_CONTEXT_SHARED_LIB = 'jenkins-cx-shared-lib'
 
-    GHBase(final String ghUrl, final String userToken) {
+    static GitHub getConnetctionOAuth(final String ghToken) {
+        Objects.requireNonNull(ghToken)
+        GitHub.connectUsingOAuth(ghToken)
+    }
+
+    static GHOrganization getOrganization(final String ghUrl, final GitHub connection) {
         Objects.requireNonNull(ghUrl)
-        assert ghUrl.length() > 0
-        Objects.requireNonNull(userToken)
-        assert userToken.length() > 0
-        GitURLParser gitURLParser = new GitURLParser(ghUrl)
-        this.ghOrganizationName = gitURLParser.getOrgaName()
-        this.ghRepositoryName = gitURLParser.getRepoName()
-        this.ghUserToken = userToken
+        Objects.requireNonNull(connection)
+        connection.getOrganization(new GitURLParser(ghUrl).getOrgaName())
     }
 
-    GitHub getConnection() {
-        GitHub.connectUsingOAuth(this.ghUserToken)
+    static GHRepository getRepository(final String ghUrl, final GitHub connection) {
+        Objects.requireNonNull(ghUrl)
+        Objects.requireNonNull(connection)
+        getOrganization(ghUrl, connection).getRepository(new GitURLParser(ghUrl).getRepoName())
     }
 
-    GHOrganization getOrganization() {
-        getConnection().getOrganization(ghOrganizationName)
-    }
-
-    GHRepository getRepository() {
-        getOrganization().getRepository(ghRepositoryName)
-    }
-
-    GHBranchProtection getBranchProtection(final String branchName) {
+    static GHBranch getRepositoryBranch(final String branchName, final String ghUrl, final GitHub connection) {
+        Objects.requireNonNull(ghUrl)
+        Objects.requireNonNull(connection)
         Objects.requireNonNull(branchName)
         assert branchName.length() > 0
-        getRepositoryBranch(branchName).getProtection()
-    }
-
-    boolean isBranchProtected(final String branchName) {
-        Objects.requireNonNull(branchName)
-        assert branchName.length() > 0
-        getBranchProtection(branchName) != null ? true : false
-    }
-
-    GHBranch getRepositoryBranch(final String branchName) {
-        Objects.requireNonNull(branchName)
-        assert branchName.length() > 0
-        getRepository().getBranch(branchName)
+        getRepository(ghUrl, connection).getBranch(branchName)
     }
 
 }
