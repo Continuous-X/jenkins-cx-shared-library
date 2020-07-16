@@ -11,7 +11,7 @@ import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipelineStage
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.result.MeasurementResult
 
-class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
+class InfluxDBFeatureImpl implements InfluxDBFeature, Feature {
 
     def jenkinsContext
     List<String> neededPlugins = []
@@ -139,7 +139,6 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
     }
 
     @Override
-    @NonCPS
     void publishMetricOperating(final MeasurementOperating measurement) {
         publishOperatingMeasurement(measurement)
     }
@@ -150,7 +149,6 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
     }
 
     @Override
-    @NonCPS
     void publishMetricOperating() {
         publishMetricOperating(measurementOperating)
     }
