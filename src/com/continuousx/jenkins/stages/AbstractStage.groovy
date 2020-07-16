@@ -95,6 +95,7 @@ abstract class AbstractStage implements Stage, Serializable {
         }
     }
 
+    @Override
     void publishMetricOperating() {
         logger.logDebug("stage ${stageConfig.type} publishMetricOperating with ${measurement.toString()}")
         metrics.publishMetricOperating(measurement)
