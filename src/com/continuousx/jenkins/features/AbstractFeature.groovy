@@ -106,7 +106,7 @@ abstract class AbstractFeature implements Feature, Serializable{
                     commitState,
                     this.jenkinsContext.env.GIT_URL as String,
                     description,
-                    "${GHBase.GH_COMMIT_STATE_CONTEXT_SHARED_LIB/${featureConfig.type}}"
+                    "${GHBase.GH_COMMIT_STATE_CONTEXT_SHARED_LIB}/${featureConfig.type}}"
             )
         }
     }
