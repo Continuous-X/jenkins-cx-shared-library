@@ -51,7 +51,6 @@ abstract class AbstractFeature implements Feature, Serializable{
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
-    @NonCPS
     boolean checkNeededPlugins() {
         return new JenkinsPluginCheck(jenkinsContext)
                 .addInstalledPlugins()
@@ -63,7 +62,6 @@ abstract class AbstractFeature implements Feature, Serializable{
 
     @SuppressWarnings('GroovyUntypedAccess')
     @Override
-    @NonCPS
     void runFeature() {
         if(checkNeededPlugins()) {
             try {
