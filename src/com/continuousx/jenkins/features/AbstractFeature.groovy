@@ -66,26 +66,25 @@ abstract class AbstractFeature implements Feature, Serializable{
         if(checkNeededPlugins()) {
             try {
                 final long startTime = System.nanoTime()
-                jenkinsContext.withCredentials([jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-                    ghBase = new GHBase(jenkinsContext.env.GIT_URL, jenkinsContext.TOKEN)
-                }
-                ghBase.getRepository().createCommitStatus(jenkinsContext.env.GIT_COMMIT, GHCommitState.PENDING, jenkinsContext.env.GIT_URL, 'my description - pending' )
+                publishGHCommitStatus(GHCommitState.PENDING,'start feature')
                 runFeatureImpl()
-                ghBase.getRepository().createCommitStatus(jenkinsContext.env.GIT_COMMIT, GHCommitState.SUCCESS, jenkinsContext.env.GIT_URL, 'my description - success' )
+                publishGHCommitStatus(GHCommitState.SUCCESS,'feature success')
                 final long duration = (long) ((System.nanoTime() - startTime) / 100000)
                 measurementOperating.setDuration(duration)
             } catch (final Exception exception) {
                 if (featureConfig.failOnError) {
-                    ghBase.getRepository().createCommitStatus(jenkinsContext.env.GIT_COMMIT, GHCommitState.ERROR, jenkinsContext.env.GIT_URL, 'my description - error' )
+                    publishGHCommitStatus(GHCommitState.ERROR,"feature failed with error: ${exception.message}")
+                    logger.logError("${featureConfig.type} failed: ${exception.message}")
                     throw exception
                 } else {
-                    ghBase.getRepository().createCommitStatus(jenkinsContext.env.GIT_COMMIT, GHCommitState.FAILURE, jenkinsContext.env.GIT_URL, 'my description - failure' )
+                    publishGHCommitStatus(GHCommitState.FAILURE,"feature failed with failOnError (${featureConfig.failOnError}) and with error: ${exception.message}")
                     logger.logWarning("${featureConfig.type} failed: ${exception.message}")
                 }
             } finally {
                 publishMetricOperating()
             }
         } else {
+            publishGHCommitStatus(GHCommitState.ERROR,"jenkins plugins are missing: ${neededPlugins}")
             logger.logError("check needed plugins: ${neededPlugins}")
             publishMetricOperating()
         }
@@ -96,6 +95,7 @@ abstract class AbstractFeature implements Feature, Serializable{
         metrics.publishMetricOperating(measurementOperating)
     }
 
+    @SuppressWarnings('GroovyUntypedAccess')
     void publishGHCommitStatus(final GHCommitState commitState, final String description) {
         this.jenkinsContext.withCredentials([this.jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
             GHBase.getRepository(this.jenkinsContext.env.GIT_URL, GHBase.getConnetctionOAuth(this.jenkinsContext.TOKEN)).createCommitStatus(this.jenkinsContext.env.GIT_COMMIT, commitState, this.jenkinsContext.env.GIT_URL, description, "${GHBase.GH_COMMIT_STATE_CONTEXT_SHARED_LIB/${featureConfig.type}}" )
