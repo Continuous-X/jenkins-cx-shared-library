@@ -19,7 +19,7 @@ class FeatureGHProtectionCheckImpl extends AbstractFeature {
     void runFeatureImpl() {
         logger.logInfo "start Protection check on '${this.jenkinsContext.env.GIT_BRANCH}'"
         this.jenkinsContext.withCredentials([this.jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-            final boolean protectionResult = new GHBranchProtectionCheck().checkRules(new RuleSetProtectionSimple(), this.jenkinsContext.env.GIT_BRANCH)
+            final boolean protectionResult = new GHBranchProtectionCheck().checkRules(new RuleSetProtectionSimple(), this.jenkinsContext.env.GIT_BRANCH, logger)
             logger.logInfo "Protection on '${this.jenkinsContext.env.GIT_BRANCH}': ${protectionResult}"
         }
     }
