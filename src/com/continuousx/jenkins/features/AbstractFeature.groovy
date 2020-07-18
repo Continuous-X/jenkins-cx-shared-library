@@ -73,7 +73,7 @@ abstract class AbstractFeature implements Feature, Serializable{
                 measurementOperating.setDuration(duration)
             } catch (final Exception exception) {
                 if (featureConfig.failOnError) {
-                    publishGHCommitStatus(GHCommitState.ERROR,"feature failed with error: ${exception.message}")
+                    publishGHCommitStatus(GHCommitState.ERROR,"feature failed with failOnError (${featureConfig.failOnError}) and with error: ${exception.getClass().getName()}")
                     logger.logError("${featureConfig.type} failed: ${exception.message}")
                     throw exception
                 } else {
@@ -97,6 +97,9 @@ abstract class AbstractFeature implements Feature, Serializable{
 
     @SuppressWarnings('GroovyUntypedAccess')
     void publishGHCommitStatus(final GHCommitState commitState, final String description) {
+        Objects.requireNonNull(commitState)
+        Objects.requireNonNull(description)
+        assert description.length() <= 140: 'description is too long (maximum is 140 characters) / see https://developer.github.com/v3/repos/statuses/#create-a-status'
         this.jenkinsContext.withCredentials([this.jenkinsContext.usernamePassword(credentialsId: JenkinsConfig.JENKINS_CONFIG_CREDENTIAL_ID_GITHUB_API, usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
             GHBase.getRepository(
                     this.jenkinsContext.env.GIT_URL as String,
