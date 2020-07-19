@@ -6,7 +6,6 @@ import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipeline
 import com.continuousx.jenkins.logger.PipelineLogger
 import com.continuousx.utils.github.GitURLParser
-import org.jenkinsci.plugins.workflow.cps.EnvActionImpl
 
 abstract class AbstractPipeline implements Pipeline, Serializable {
 
@@ -41,9 +40,6 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
         this.currentBuild = this.jenkinsContext.currentBuild
         logger = new PipelineLogger(jenkinsContext: this.jenkinsContext, logLevelType: this.pipelineConfig.logLevelType)
 
-        EnvActionImpl envAction = this.jenkinsContext.env
-        envAction.setProperty('TEST_PIPELINE_ENV',true)
-        logger.logDebug("ENV in Pipeline: ${this.jenkinsContext.env.TEST_PIPELINE_ENV}")
         if (this.jenkinsContext.env.GIT_URL != null) {
             GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
             measurement.setGHOrganization(gitUrlParser.getOrgaName())

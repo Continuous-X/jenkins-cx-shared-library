@@ -41,7 +41,6 @@ abstract class AbstractStage implements Stage, Serializable {
         logger = new PipelineLogger(jenkinsContext: jenkinsContext, logLevelType: stageConfig.logLevelType)
 
         logger.logDebug("create stage ${stageConfig.type}")
-        logger.logDebug("ENV in Pipeline: ${this.jenkinsContext.env.TEST_PIPELINE_ENV}")
 
         measurement.active = stageConfig.active
         measurement.failOnError = stageConfig.failOnError

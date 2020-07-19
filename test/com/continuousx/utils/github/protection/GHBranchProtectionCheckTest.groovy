@@ -1,5 +1,6 @@
 package com.continuousx.utils.github.protection
 
+import com.continuousx.jenkins.logger.PipelineLogger
 import com.continuousx.utils.rulecheck.ghprotection.GHBranchProtectionCheck
 import com.continuousx.utils.rulecheck.ghprotection.RuleSetProtectionSimple
 import org.kohsuke.github.GHBranch
@@ -26,7 +27,7 @@ class GHBranchProtectionCheckTest extends Specification {
         ghBranchMock.getProtection().requiredStatusChecks >> requireStatusChecks
 
         expect:
-        check.checkRules(ruleSet, ghBranchMock) == expectedCheckResult
+        check.checkRules(ruleSet, ghBranchMock, Mock(PipelineLogger)) == expectedCheckResult
 
         where:
         ruleSet                       || requireReviews                           || requireStatusChecks                           || expectedCheckResult

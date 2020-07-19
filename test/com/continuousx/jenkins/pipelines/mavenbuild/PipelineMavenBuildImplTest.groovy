@@ -57,9 +57,7 @@ class PipelineMavenBuildImplTest extends Specification {
         when:
         Pipeline pipeline = featureBuilder
                 .withPipelineConfig(
-                        new PipelineMavenBuildConfig(
-                                logLevelType: loglevel
-                        )
+                        pipelineConfig
                 )
                 .build()
 
@@ -69,8 +67,8 @@ class PipelineMavenBuildImplTest extends Specification {
         thrown(expectedException)
 
         where:
-        loglevel || expectedException
-        null     || NullPointerException
+        pipelineConfig || expectedException
+        null           || NullPointerException
     }
 
 }
