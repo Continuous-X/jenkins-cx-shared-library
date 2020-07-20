@@ -51,7 +51,7 @@ abstract class AbstractStage implements Stage, Serializable {
             measurement.setGHRepository(gitUrlParser.getRepoName())
         }
 
-        metrics = new InfluxDBFeatureBuilder(paramJenkinsContext).build()
+        metrics = new InfluxDBFeatureBuilder(paramJenkinsContext, this.stageConfig.logLevelType).build()
         logger.logInfo("Stage Constructor ready")
         logger.logInfo("currentBuild ${currentBuild}")
         logger.logInfo("displayName ${currentBuild.displayName}")

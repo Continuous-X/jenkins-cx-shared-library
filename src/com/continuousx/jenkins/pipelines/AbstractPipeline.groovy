@@ -47,7 +47,7 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
         }
 
         measurement.pipelineType = pipelineConfig.type
-        metrics = new InfluxDBFeatureBuilder(jenkinsContext).build()
+        metrics = new InfluxDBFeatureBuilder(jenkinsContext, this.pipelineConfig.logLevelType).build()
     }
 
     abstract void runPipelineImpl()

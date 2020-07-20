@@ -46,7 +46,7 @@ abstract class AbstractFeature implements Feature, Serializable{
             measurementOperating.setGHRepository(gitUrlParser.getRepoName())
         }
 
-        metrics = new InfluxDBFeatureBuilder(jenkinsContext).build()
+        metrics = new InfluxDBFeatureBuilder(jenkinsContext, this.featureConfig.logLevelType).build()
     }
 
     @SuppressWarnings('GroovyUntypedAccess')

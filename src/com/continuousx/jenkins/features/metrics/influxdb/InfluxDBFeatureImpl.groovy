@@ -7,6 +7,8 @@ import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipeline
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipelineStage
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.result.MeasurementResult
+import com.continuousx.jenkins.logger.LogLevelType
+import com.continuousx.jenkins.logger.PipelineLogger
 import com.continuousx.utils.github.GitURLParser
 import com.continuousx.utils.jenkins.JenkinsPluginCheck
 
@@ -16,17 +18,19 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature {
     List<String> neededPlugins = []
     final static FeatureType TYPE = FeatureType.FEATURE_METRIC_INFLUXDB
     MeasurementOperatingFeature measurementOperating = new MeasurementOperatingFeature()
+    PipelineLogger logger
 
     protected List<MeasurementOperatingFeature> featureList = []
     protected List<MeasurementOperatingPipelineStage> stageList = []
     protected List<MeasurementOperatingPipeline> pipelineList = []
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected InfluxDBFeatureImpl(final def jenkinsContext) {
+    protected InfluxDBFeatureImpl(final def jenkinsContext, LogLevelType logLevelType = LogLevelType.WARNING) {
         Objects.requireNonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
         this.neededPlugins = ['influxdb']
         measurementOperating.featureType = TYPE
+        logger = new PipelineLogger(jenkinsContext: this.jenkinsContext, logLevelType: logLevelType)
         if (this.jenkinsContext.env.GIT_URL != null) {
             final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
             measurementOperating.setGHOrganization(gitUrlParser.getOrgaName())
@@ -85,7 +89,7 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature {
 
     @SuppressWarnings('GroovyUntypedAccess')
     private boolean checkNeededPlugins() {
-        return new JenkinsPluginCheck(jenkinsContext)
+        return new JenkinsPluginCheck(this.jenkinsContext)
                 .addInstalledPlugins()
                 .addNeededPluginList(neededPlugins)
                 .isPluginListInstalled()
@@ -95,7 +99,11 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature {
     @SuppressWarnings('GroovyUntypedAccess')
     void publishJenkinsData() {
         if (checkNeededPlugins()) {
-            jenkinsContext.influxDbPublisher(selectedTarget:INFLUX_TARGET_OPERATING)
+            try {
+                this.jenkinsContext.influxDbPublisher(selectedTarget: INFLUX_TARGET_OPERATING)
+            } catch (Exception exception) {
+                logger.logError("InfluxDB Plublish Error: ${exception.message}")
+            }
         } else {
             logger.logWarning("needed plugins not exist: ${neededPlugins}")
         }
@@ -134,7 +142,11 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature {
 
     @SuppressWarnings('GroovyUntypedAccess')
     private void publish(final String target, final Map dataMap, final Map dataMapTags) {
-        jenkinsContext.influxDbPublisher(selectedTarget:target, customDataMap:dataMap, customDataMapTags:dataMapTags)
+        try {
+            this.jenkinsContext.influxDbPublisher(selectedTarget: target, customDataMap: dataMap, customDataMapTags: dataMapTags)
+        } catch (Exception exception) {
+            logger.logError("InfluxDB Plublish Error: ${exception.message}")
+        }
     }
 
     @Override
