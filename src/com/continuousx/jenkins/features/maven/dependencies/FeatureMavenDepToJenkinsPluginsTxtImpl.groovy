@@ -1,9 +1,9 @@
 package com.continuousx.jenkins.features.maven.dependencies
 
-import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.features.AbstractFeature
-import com.continuousx.jenkins.features.FeatureType
 import com.continuousx.jenkins.features.exceptions.FeatureException
+import com.continuousx.utils.maven.MavenPom
 import org.apache.maven.model.Model
 import org.apache.maven.model.Parent
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader
@@ -30,16 +30,7 @@ class FeatureMavenDepToJenkinsPluginsTxtImpl extends AbstractFeature {
     @SuppressWarnings('GroovyUntypedAccess')
     FeatureMavenDepToJenkinsPluginsTxtImpl readPomXmlContent(String pomContent = loadPomContent()) throws FeatureException {
         Objects.nonNull(pomContent)
-        if (logLevel == !LogLevelType.DEBUG) {
-            jenkinsContext.log.debug("pomContent: \n ${pomContent}")
-        }
-        final MavenXpp3Reader xpp3Reader = new MavenXpp3Reader()
-        try {
-            this.model = xpp3Reader.read(new ByteArrayInputStream(pomContent.getBytes()))
-        } catch (Exception exception) {
-            jenkinsContext.log.error("${exception.getMessage()}")
-            throw new FeatureException(exception.getMessage())
-        }
+        this.model = new MavenPom(logger: logger).getMavenModel(pomContent)
         this
     }
 
@@ -52,8 +43,8 @@ class FeatureMavenDepToJenkinsPluginsTxtImpl extends AbstractFeature {
     @SuppressWarnings('GroovyUntypedAccess')
     void checkPluginsTxt() {
         def checkPluginsTxt = jenkinsContext.fileExists(file: PLUGINS_TXT_FILENAME)
-        jenkinsContext.log.info "check ${PLUGINS_TXT_FILENAME}: ${checkPluginsTxt}"
-        jenkinsContext.log.info checkPluginsTxt ? jenkinsContext.readFile(file: PLUGINS_TXT_FILENAME) : "not exist"
+        logger.logInfo "check ${PLUGINS_TXT_FILENAME}: ${checkPluginsTxt}"
+        logger.logInfo checkPluginsTxt ? jenkinsContext.readFile(file: PLUGINS_TXT_FILENAME) : "not exist"
     }
 
     String convertDependencies2PluginsTxt() {

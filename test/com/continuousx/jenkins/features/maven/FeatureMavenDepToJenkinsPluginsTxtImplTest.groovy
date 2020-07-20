@@ -1,6 +1,6 @@
 package com.continuousx.jenkins.features.maven
 
-import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.features.maven.dependencies.FeatureMavenDepToJenkinsPluginsTxtBuilder
 import com.continuousx.jenkins.features.maven.dependencies.FeatureMavenDepToJenkinsPluginsTxtConfig
 import com.continuousx.jenkins.features.maven.dependencies.FeatureMavenDepToJenkinsPluginsTxtImpl
@@ -67,8 +67,8 @@ class FeatureMavenDepToJenkinsPluginsTxtImplTest extends Specification {
 
         assert feature != null
 
-        assert feature.failOnError == expectedFailOnError
-        assert feature.logLevel == expectedLogLevel
+        assert feature.featureConfig.failOnError == expectedFailOnError
+        assert feature.featureConfig.logLevelType == expectedLogLevel
 
         where:
         failOnError || loglevel             || expectedFailOnError || expectedLogLevel
@@ -83,10 +83,7 @@ class FeatureMavenDepToJenkinsPluginsTxtImplTest extends Specification {
         when:
         FeatureMavenDepToJenkinsPluginsTxtImpl feature = featureBuilder
                 .withFeatureConfig(
-                        new FeatureMavenDepToJenkinsPluginsTxtConfig(
-                                failOnError: failOnError,
-                                logLevelType: loglevel
-                        )
+                        featureConfig
                 ).build()
 
         assert feature != null
@@ -95,8 +92,8 @@ class FeatureMavenDepToJenkinsPluginsTxtImplTest extends Specification {
         thrown(expectedException)
 
         where:
-        loglevel || failOnError || expectedException
-        null     || true        || NullPointerException
+        featureConfig || expectedException
+        null          || NullPointerException
     }
 
 }

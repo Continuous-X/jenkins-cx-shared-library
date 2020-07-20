@@ -1,8 +1,8 @@
-import com.continuousx.jenkins.features.maven.build.FeatureMavenBuildImpl
-import com.continuousx.jenkins.features.maven.build.wrapper.FeatureMavenWrapperBuildImpl
+import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildBuilder
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildImpl
+import com.continuousx.utils.github.BranchExpressionChecker
 
 def call(final PipelineMavenBuildConfig pipelineConfig) {
 
@@ -11,7 +11,7 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
             .build()
 
     pipeline {
-        agent any
+        agent { label 'master' }
         options {
             timeout time: 30, unit: 'MINUTES'
             buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
@@ -19,40 +19,34 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
         }
         stages {
             stage('Init') {
-                agent { label 'master' }
                 steps {
-                    milestone 10
                     script {
-                        log.info 'init this'
+                        pipelineConfig.logLevelType == LogLevelType.DEBUG ? log.debug("start pipeline ${pipelineConfig.type}") : ''
                     }
                 }
             }
 
-            stage('Convert DepToFile') {
+            stage('protection check') {
                 when {
-                    expression { return pipelineMavenBuild.stageJenkinsConvertPluginsTxt.config.active }
+                    expression { pipelineMavenBuild.stageGHProtectionCheck.getStageConfig().isActive() }
+                    expression { BranchExpressionChecker.checkBranchExpression(pipelineMavenBuild.stageGHProtectionCheck.getStageConfig().getAllowedBranch(), env.GIT_BRANCH) }
                 }
                 steps {
-                    milestone 20
                     script {
-                        pipelineMavenBuild.stageJenkinsConvertPluginsTxt.runStage()
+                        pipelineMavenBuild.stageGHProtectionCheck.runStage()
                     }
                 }
             }
 
             stage('Build') {
                 when {
-                    expression { return pipelineConfig.getStageConfigMavenCompile().isActive() }
+                    expression { pipelineMavenBuild.stageMavenInstall.getStageConfig().isActive() }
+                    expression { BranchExpressionChecker.checkBranchExpression(pipelineMavenBuild.stageMavenInstall.getStageConfig().getAllowedBranch(), env.GIT_BRANCH) }
                 }
                 steps {
                     milestone 50
                     script {
-                        log.info "run maven feature"
-                        assert fileExists(file: FeatureMavenWrapperBuildImpl.MVN_WRAPPER_FILENAME)
-                        assert fileExists(file: FeatureMavenWrapperBuildImpl.MVN_SETTINGS_XML)
-
-                        new FeatureMavenWrapperBuildImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).runFeature()
-                        new FeatureMavenBuildImpl(this, pipelineConfig.getStageConfigMavenCompile().getLogLevelType()).runFeature()
+                        pipelineMavenBuild.stageMavenInstall.runStage()
                     }
                 }
             }
@@ -61,7 +55,7 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
         post {
             always {
                 script {
-                    log.info 'pipeline end'
+                    pipelineMavenBuild.publishMetricOperating()
                 }
             }
             success {

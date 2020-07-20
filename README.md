@@ -13,6 +13,17 @@ shared library of jenkins-cx
 
 ## metrics
 use influxdb
-``docker run -p 8086:8086 -v %HOMEPATH%\.influxdb:/var/lib/influxdb influxdb``
+ - local windows
+``docker run -p 8086:8086 -v %HOME%\.influxdb:/var/lib/influxdb influxdb``
+``docker run --rm \
+        -e INFLUXDB_DB=cx_sharedlib_metrics \
+        -e INFLUXDB_ADMIN_USER=admin -e INFLUXDB_ADMIN_PASSWORD=supersecretpassword \
+        -e INFLUXDB_USER=telegraf -e INFLUXDB_USER_PASSWORD=secretpassword \
+        -v $PWD:/var/lib/influxdb \
+        influxdb /init-influxdb.sh``
+``docker run -p 8086:8086 --rm \
+        -e INFLUXDB_DB=cx_sharedlib_metrics \
+        -v $PWD:/var/lib/influxdb \
+        influxdb /init-influxdb.sh``
 use grafana
 ``docker run -d -p 3000:3000 grafana/grafana``

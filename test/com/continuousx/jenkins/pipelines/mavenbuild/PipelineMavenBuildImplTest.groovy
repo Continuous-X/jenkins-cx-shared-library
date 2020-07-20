@@ -1,6 +1,6 @@
 package com.continuousx.jenkins.pipelines.mavenbuild
 
-import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.pipelines.Pipeline
 import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
@@ -23,7 +23,7 @@ class PipelineMavenBuildImplTest extends Specification {
         Pipeline pipeline = featureBuilder.withPipelineConfig(new PipelineMavenBuildConfig()).build()
 
         when:
-        PipelineConfig config = pipeline.getConfig()
+        PipelineConfig config = pipeline.getPipelineConfig()
 
         then:
         assert pipeline != null
@@ -43,7 +43,7 @@ class PipelineMavenBuildImplTest extends Specification {
 
         assert pipeline != null
 
-        assert pipeline.logLevel == expectedLogLevel
+        assert pipeline.pipelineConfig.logLevelType == expectedLogLevel
 
         where:
         loglevel             || expectedLogLevel
@@ -57,9 +57,7 @@ class PipelineMavenBuildImplTest extends Specification {
         when:
         Pipeline pipeline = featureBuilder
                 .withPipelineConfig(
-                        new PipelineMavenBuildConfig(
-                                logLevelType: loglevel
-                        )
+                        pipelineConfig
                 )
                 .build()
 
@@ -69,9 +67,8 @@ class PipelineMavenBuildImplTest extends Specification {
         thrown(expectedException)
 
         where:
-        loglevel || expectedException
-        null     || NullPointerException
+        pipelineConfig || expectedException
+        null           || NullPointerException
     }
-
 
 }

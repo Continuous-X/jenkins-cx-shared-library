@@ -1,14 +1,9 @@
 package com.continuousx.jenkins.features.maven.build.wrapper
 
-import com.continuousx.jenkins.LogLevelType
-import com.continuousx.jenkins.features.maven.dependencies.FeatureMavenDepToJenkinsPluginsTxtImpl
-import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureImpl
-
 class FeatureMavenWrapperBuildBuilder {
 
     def jenkinsContext
-    boolean failOnError = true
-    LogLevelType logLevel = LogLevelType.INFO
+    FeatureMavenWrapperBuildConfig featureConfig = new FeatureMavenWrapperBuildConfig()
 
     @SuppressWarnings('GroovyUntypedAccess')
     FeatureMavenWrapperBuildBuilder(final def jenkinsContext) {
@@ -16,17 +11,14 @@ class FeatureMavenWrapperBuildBuilder {
         this.jenkinsContext = jenkinsContext
     }
 
-    void withFailOnError(boolean failOnError) {
-        this.failOnError = failOnError
-    }
-
-    void withLogLevel(LogLevelType logLevel) {
-        Objects.requireNonNull(logLevel)
-        this.logLevel = logLevel
+    FeatureMavenWrapperBuildBuilder withFeatureConfig(final FeatureMavenWrapperBuildConfig featureConfig) {
+        Objects.requireNonNull(featureConfig)
+        this.featureConfig = featureConfig
+        this
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
-    FeatureMavenDepToJenkinsPluginsTxtImpl build() {
-        new FeatureMavenDepToJenkinsPluginsTxtImpl(jenkinsContext, failOnError, logLevel)
+    FeatureMavenWrapperBuildImpl build() {
+        new FeatureMavenWrapperBuildImpl(jenkinsContext, featureConfig)
     }
 }

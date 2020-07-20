@@ -6,6 +6,7 @@ interface PipelineMock {
 
     PipelineCurrentBuildMock currentBuild = new PipelineCurrentBuildMock()
     PipelineEnvMock env = new PipelineEnvMock()
+    PipelineLogMock log = new PipelineLogMock()
 
     PipelineEnvMock env()
     RunWrapper currentBuild()

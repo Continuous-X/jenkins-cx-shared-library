@@ -2,15 +2,15 @@ package com.continuousx.jenkins.features.metrics.influxdb
 
 import com.continuousx.jenkins.features.Feature
 import com.continuousx.jenkins.features.FeatureType
-import com.continuousx.utils.github.GitURLParser
-import com.continuousx.utils.jenkins.JenkinsPluginCheck
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperating
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingFeature
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipeline
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipelineStage
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.result.MeasurementResult
+import com.continuousx.utils.github.GitURLParser
+import com.continuousx.utils.jenkins.JenkinsPluginCheck
 
-class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
+class InfluxDBFeatureImpl implements InfluxDBFeature, Feature {
 
     def jenkinsContext
     List<String> neededPlugins = []
@@ -46,7 +46,7 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
             measurementOperating.duration = duration
             publishMetricOperating()
         } else {
-            jenkinsContext.log.warning("needed plugins not exist: ${neededPlugins}")
+            logger.logWarning("needed plugins not exist: ${neededPlugins}")
         }
     }
 
@@ -97,7 +97,7 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
         if (checkNeededPlugins()) {
             jenkinsContext.influxDbPublisher(selectedTarget:INFLUX_TARGET_OPERATING)
         } else {
-            jenkinsContext.log.warning("needed plugins not exist: ${neededPlugins}")
+            logger.logWarning("needed plugins not exist: ${neededPlugins}")
         }
     }
 
@@ -109,7 +109,7 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
             final Map entryDataMapTags = ["${measurement.getType()}": measurement.getDataMapTags()]
             publish(INFLUX_TARGET_OPERATING, entryDataMap, entryDataMapTags)
         } else {
-            jenkinsContext.log.warning("needed plugins not exist: ${neededPlugins}")
+            logger.logWarning("needed plugins not exist: ${neededPlugins}")
         }
     }
 
@@ -121,7 +121,7 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
             final Map entryDataMapTags = ["${measurement.getType()}": measurement.getDataMapTags()]
             publish(INFLUX_TARGET_CICD_RESULTS, entryDataMap, entryDataMapTags)
         } else {
-            jenkinsContext.log.warning("needed plugins not exist: ${neededPlugins}")
+            logger.logWarning("needed plugins not exist: ${neededPlugins}")
         }
     }
 
@@ -135,11 +135,6 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature, Serializable {
     @SuppressWarnings('GroovyUntypedAccess')
     private void publish(final String target, final Map dataMap, final Map dataMapTags) {
         jenkinsContext.influxDbPublisher(selectedTarget:target, customDataMap:dataMap, customDataMapTags:dataMapTags)
-    }
-
-    @Override
-    FeatureType getType() {
-        return type
     }
 
     @Override

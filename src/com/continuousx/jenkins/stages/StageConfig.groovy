@@ -1,6 +1,6 @@
 package com.continuousx.jenkins.stages
 
-import com.continuousx.jenkins.LogLevelType
+import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.utils.github.BranchType
 
 interface StageConfig extends Serializable {
@@ -10,5 +10,6 @@ interface StageConfig extends Serializable {
     boolean isFailOnError()
 
     BranchType getAllowedBranch()
-    LogLevelType logLevelType()
+    LogLevelType getLogLevelType()
+
 }

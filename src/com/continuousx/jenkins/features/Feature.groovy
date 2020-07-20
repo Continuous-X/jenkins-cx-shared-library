@@ -1,9 +1,8 @@
 package com.continuousx.jenkins.features
 
-interface Feature {
+interface Feature extends Serializable {
 
     void runFeature()
-    FeatureType getType()
     void publishMetricOperating()
 
 }

@@ -1,12 +1,9 @@
 package com.continuousx.jenkins.features.maven.build
 
-import com.continuousx.jenkins.LogLevelType
-
 class FeatureMavenBuildBuilder {
 
-    def jenkinsContext
-    boolean failOnError = true
-    LogLevelType logLevel = LogLevelType.INFO
+    private def jenkinsContext
+    private FeatureMavenBuildConfig featureConfig = new FeatureMavenBuildConfig()
 
     @SuppressWarnings('GroovyUntypedAccess')
     FeatureMavenBuildBuilder(final def jenkinsContext) {
@@ -14,17 +11,16 @@ class FeatureMavenBuildBuilder {
         this.jenkinsContext = jenkinsContext
     }
 
-    void withFailOnError(boolean failOnError) {
-        this.failOnError = failOnError
+    FeatureMavenBuildConfig withFeatureConfig(final FeatureMavenBuildConfig featureConfig) {
+        Objects.requireNonNull(featureConfig)
+        this.featureConfig = featureConfig
+        return this
     }
 
-    void withLogLevel(LogLevelType logLevel) {
-        Objects.requireNonNull(logLevel)
-        this.logLevel = logLevel
-    }
 
     @SuppressWarnings('GroovyUntypedAccess')
     FeatureMavenBuildImpl build() {
-        new FeatureMavenBuildImpl(jenkinsContext, failOnError, logLevel)
+        new FeatureMavenBuildImpl(jenkinsContext, featureConfig)
     }
+
 }

@@ -1,10 +1,12 @@
 package com.continuousx.jenkins.stages
 
-import com.continuousx.utils.github.GitURLParser
-import com.continuousx.utils.jenkins.JenkinsPluginCheck
+
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipelineStage
+import com.continuousx.jenkins.logger.PipelineLogger
+import com.continuousx.utils.github.GitURLParser
+import com.continuousx.utils.jenkins.JenkinsPluginCheck
 
 abstract class AbstractStage implements Stage, Serializable {
 
@@ -17,43 +19,45 @@ abstract class AbstractStage implements Stage, Serializable {
      * org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
      */
     def currentBuild
-    List<String> neededPlugins = []
+    List<String> neededPlugins
     StageConfig stageConfig
 
-    MeasurementOperatingPipelineStage measurement = new MeasurementOperatingPipelineStage()
-    InfluxDBFeature metrics
+    protected MeasurementOperatingPipelineStage measurement = new MeasurementOperatingPipelineStage()
+    protected InfluxDBFeature metrics
+    protected PipelineLogger logger
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected AbstractStage(
-            final def jenkinsContext,
-            final List<String> neededPlugins,
-            final StageConfig config) {
-        Objects.requireNonNull(jenkinsContext)
-        Objects.requireNonNull(neededPlugins)
-        Objects.requireNonNull(config)
-        this.jenkinsContext = jenkinsContext
-        this.neededPlugins = neededPlugins
-        this.stageConfig = config
-        this.currentBuild = this.jenkinsContext.currentBuild
+    protected AbstractStage(final def paramJenkinsContext, final List<String> paramNeededPlugins, final StageConfig paramStageConfig) {
+        Objects.requireNonNull(paramJenkinsContext)
+        Objects.requireNonNull(paramNeededPlugins)
+        Objects.requireNonNull(paramStageConfig)
 
-        measurement.active = config.isActive()
-        measurement.failOnError = config.isFailOnError()
-        measurement.stageType = config.getType()
+        neededPlugins = []
+        jenkinsContext = paramJenkinsContext
+        neededPlugins = paramNeededPlugins
+        stageConfig = paramStageConfig
+        currentBuild = this.jenkinsContext.currentBuild
 
-        this.jenkinsContext.echo("ENV: ${this.jenkinsContext.env}")
+        logger = new PipelineLogger(jenkinsContext: jenkinsContext, logLevelType: stageConfig.logLevelType)
+
+        logger.logDebug("create stage ${stageConfig.type}")
+
+        measurement.active = stageConfig.active
+        measurement.failOnError = stageConfig.failOnError
+        measurement.stageType = stageConfig.type
         if (this.jenkinsContext.env.GIT_URL != null) {
             final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
             measurement.setGHOrganization(gitUrlParser.getOrgaName())
             measurement.setGHRepository(gitUrlParser.getRepoName())
         }
 
-        metrics = new InfluxDBFeatureBuilder(jenkinsContext).build()
-        this.jenkinsContext.echo("Stage Constructor ready")
-        this.jenkinsContext.echo("currentBuild ${currentBuild}")
-        this.jenkinsContext.echo("displayName ${currentBuild.displayName}")
-        this.jenkinsContext.echo("projectname ${currentBuild.projectName}")
-        this.jenkinsContext.echo("properties ${currentBuild.properties}")
-        this.jenkinsContext.echo("build variables ${currentBuild.buildVariables}")
+        metrics = new InfluxDBFeatureBuilder(paramJenkinsContext).build()
+        logger.logInfo("Stage Constructor ready")
+        logger.logInfo("currentBuild ${currentBuild}")
+        logger.logInfo("displayName ${currentBuild.displayName}")
+        logger.logInfo("projectname ${currentBuild.projectName}")
+        logger.logInfo("properties ${currentBuild.properties}")
+        logger.logInfo("build variables ${currentBuild.buildVariables}")
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
@@ -66,26 +70,33 @@ abstract class AbstractStage implements Stage, Serializable {
 
     abstract void runStageImpl()
 
+    @SuppressWarnings('GroovyUntypedAccess')
     void runStage() {
-        try {
-            runStageImpl()
-        }catch (final Exception exception) {
-            if (getStageConfig().failOnError) {
-                throw exception
-            } else {
-                jenkinsContext.log.warning("${getStageConfig().type} failed: ${exception.message}")
+        if (checkNeededPlugins()) {
+            try {
+                logger.logDebug("run stage ${stageConfig.type}")
+                runStageImpl()
+            } catch (final Exception exception) {
+                logger.logDebug("stage ${stageConfig.type} throw Exception:\n${exception.getMessage()}")
+                if (stageConfig.failOnError) {
+                    logger.logDebug("stage ${stageConfig.type} throw Exception and failOnError is ${stageConfig.failOnError}\n\t throw ${exception.getClass().getName()}")
+                    throw exception
+                } else {
+                    logger.logDebug("stage ${stageConfig.type} throw Exception and failOnError is ${stageConfig.failOnError}")
+                    logger.logWarning("stage ${stageConfig.type} failed: ${exception.message}")
+                }
+            } finally {
+                measurement.duration = currentBuild.timeInMillis
+                publishMetricOperating()
             }
-        } finally {
-            measurement.duration = currentBuild.timeInMillis
-            publishMetricOperating()
+        } else {
+            logger.logError("check needed plugins: ${neededPlugins}")
         }
     }
 
-    StageConfig getConfig() {
-        stageConfig
-    }
-
+    @Override
     void publishMetricOperating() {
+        logger.logDebug("stage ${stageConfig.type} publishMetricOperating with ${measurement.toString()}")
         metrics.publishMetricOperating(measurement)
     }
 

@@ -1,6 +1,8 @@
 package com.continuousx.utils.jenkins
 
 import com.cloudbees.groovy.cps.NonCPS
+import com.continuousx.jenkins.logger.LogLevelType
+import com.continuousx.jenkins.logger.PipelineLogger
 import hudson.PluginWrapper
 import jenkins.model.Jenkins
 
@@ -10,10 +12,12 @@ class JenkinsPluginCheck {
     private List<String> pluginListInstalled = []
 
     private def jenkinsContext
+    private PipelineLogger logger
 
     JenkinsPluginCheck(def jenkinsContext) {
         Objects.nonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
+        logger = new PipelineLogger(jenkinsContext: jenkinsContext, logLevelType: LogLevelType.INFO)
     }
 
     @NonCPS
@@ -52,10 +56,10 @@ class JenkinsPluginCheck {
         boolean checkInstalled = true
         pluginListNeeded.each { plugin ->
             if(!isPluginInstalled(plugin)){
-                jenkinsContext.echo "listet plugin not found ${plugin}"
+                logger.logInfo "listet plugin not found ${plugin}"
                 return checkInstalled = false
             }
-            jenkinsContext.echo "listet plugin found ${plugin}"
+            logger.logInfo "listet plugin found ${plugin}"
         }
         return checkInstalled
     }
