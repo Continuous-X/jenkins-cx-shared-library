@@ -21,7 +21,7 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
             stage('Init') {
                 steps {
                     script {
-                        pipelineConfig.logLevelType == LogLevelType.DEBUG ? log.debug("start pipeline ${pipelineConfig.type}") : ''
+                        log.info "ENV: ${env}"
                     }
                 }
             }
