@@ -1,6 +1,5 @@
 package com.continuousx.jenkins.features
 
-import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingFeature

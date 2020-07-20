@@ -6,9 +6,10 @@ import com.continuousx.utils.github.BranchType
 interface StageConfig extends Serializable {
 
     StageType getType()
-    LogLevelType getLogLevelType()
-    BranchType getAllowedBranch()
     boolean isActive()
     boolean isFailOnError()
+
+    BranchType getAllowedBranch()
+    LogLevelType getLogLevelType()
 
 }
