@@ -1,3 +1,6 @@
+import com.continuousx.jenkins.features.jenkins.globallib.FeatureJenkinsGlobalLibVersionBuilder
+import com.continuousx.jenkins.features.jenkins.globallib.FeatureJenkinsGlobalLibVersionConfig
+import com.continuousx.jenkins.features.jenkins.globallib.FeatureJenkinsGlobalLibVersionImpl
 import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildBuilder
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
@@ -23,6 +26,10 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
                     script {
                         sh "env"
                         log.info "ENV: ${env}"
+                        FeatureJenkinsGlobalLibVersionImpl featureJenkinsGlobalLibVersion = new FeatureJenkinsGlobalLibVersionBuilder(delegate)
+                                .withFeatureConfig(new FeatureJenkinsGlobalLibVersionConfig())
+                                .build()
+                        featureJenkinsGlobalLibVersion.runFeature()
                     }
                 }
             }
