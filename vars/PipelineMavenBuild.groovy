@@ -21,7 +21,7 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
             stage('Init') {
                 steps {
                     script {
-                        sh "echo env"
+                        sh "env"
                         log.info "ENV: ${env}"
                     }
                 }
