@@ -26,7 +26,6 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
                     script {
                         sh "env"
                         log.info "ENV: ${env}"
-                        log.info "test: ${library.jenkins-cx-shared-library.version}"
                         FeatureJenkinsGlobalLibVersionImpl featureJenkinsGlobalLibVersion = new FeatureJenkinsGlobalLibVersionBuilder(delegate)
                                 .withFeatureConfig(new FeatureJenkinsGlobalLibVersionConfig())
                                 .build()
