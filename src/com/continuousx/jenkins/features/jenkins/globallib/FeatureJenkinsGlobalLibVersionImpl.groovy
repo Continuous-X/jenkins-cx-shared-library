@@ -26,6 +26,8 @@ class FeatureJenkinsGlobalLibVersionImpl extends AbstractFeature {
         List<LibraryConfiguration> libraryConfigurationList = globalLibraries.getLibraries()
 
         LibraryConfiguration libraryConfiguration = libraryConfigurationList.find {it.name == JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}
+        logger.logInfo "libConfig: ${libraryConfiguration} "
+        logger.logInfo "${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}:  "
         logger.logInfo "${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}:  ${this.jenkinsContext.env.library.${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}.version}"
     }
 
