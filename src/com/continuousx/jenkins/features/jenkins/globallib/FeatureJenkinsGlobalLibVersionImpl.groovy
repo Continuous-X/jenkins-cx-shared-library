@@ -26,10 +26,10 @@ class FeatureJenkinsGlobalLibVersionImpl extends AbstractFeature {
     void runFeatureImpl() {
         EnvActionImpl pipelineEnv = this.jenkinsContext.env
         logger.logInfo "properties: ${pipelineEnv.getProperties().toString()}"
-        logger.logInfo "env: ${pipelineEnv.getEnvironment()toString()}"
+        logger.logInfo "env: ${pipelineEnv.getEnvironment().toString()}"
         logger.logInfo "env overwritten: ${pipelineEnv.getOverriddenEnvironment().toString()}"
         String sharedLibProperty = "library.${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}.version"
-        logger.logInfo "${sharedLibProperty}: ${pipelineEnv.getProperty(sharedLibProperty)}"
+        logger.logInfo "${sharedLibProperty}: ${pipelineEnv.getEnvironment().get(sharedLibProperty)}"
 
     }
 
