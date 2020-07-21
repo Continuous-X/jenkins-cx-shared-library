@@ -2,6 +2,7 @@ package com.continuousx.jenkins.features.jenkins.globallib
 
 import com.continuousx.jenkins.features.AbstractFeature
 import com.continuousx.utils.jenkins.JenkinsConfig
+import com.continuousx.utils.jenkins.JenkinsEnv
 import org.apache.maven.model.Model
 import org.jenkinsci.plugins.workflow.cps.EnvActionImpl
 import org.jenkinsci.plugins.workflow.libs.GlobalLibraries
@@ -25,12 +26,10 @@ class FeatureJenkinsGlobalLibVersionImpl extends AbstractFeature {
     @Override
     void runFeatureImpl() {
         EnvActionImpl pipelineEnv = this.jenkinsContext.env
-        logger.logInfo "properties: ${pipelineEnv.getProperties().toString()}"
-        logger.logInfo "env: ${pipelineEnv.getEnvironment().toString()}"
-        logger.logInfo "env overwritten: ${pipelineEnv.getOverriddenEnvironment().toString()}"
         String sharedLibProperty = "library.${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}.version"
         logger.logInfo "${sharedLibProperty}: ${pipelineEnv.getEnvironment().get(sharedLibProperty)}"
-
+        pipelineEnv.setProperty(JenkinsEnv.CX_SHARED_LIB_BRANCH, pipelineEnv.getEnvironment().get(sharedLibProperty))
+        logger.logInfo "${JenkinsEnv.CX_SHARED_LIB_BRANCH}: ${pipelineEnv.getEnvironment().get(JenkinsEnv.CX_SHARED_LIB_BRANCH)}"
     }
 
 }
