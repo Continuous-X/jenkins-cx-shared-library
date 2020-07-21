@@ -3,6 +3,7 @@ package com.continuousx.jenkins.features.jenkins.globallib
 import com.continuousx.jenkins.features.AbstractFeature
 import com.continuousx.utils.jenkins.JenkinsConfig
 import org.apache.maven.model.Model
+import org.jenkinsci.plugins.workflow.cps.EnvActionImpl
 import org.jenkinsci.plugins.workflow.libs.GlobalLibraries
 import org.jenkinsci.plugins.workflow.libs.LibraryConfiguration
 import org.jenkinsci.plugins.workflow.libs.SCMSourceRetriever
@@ -23,6 +24,11 @@ class FeatureJenkinsGlobalLibVersionImpl extends AbstractFeature {
 
     @Override
     void runFeatureImpl() {
+        EnvActionImpl pipelineEnv = this.jenkinsContext.env
+        logger.logInfo "displayName: ${pipelineEnv.getDisplayName()}"
+        logger.logInfo "properties: ${pipelineEnv.getProperties().toString()}"
+
+
         GlobalLibraries globalLibraries = GlobalLibraries.get()
         List<LibraryConfiguration> libraryConfigurationList = globalLibraries.getLibraries()
 
