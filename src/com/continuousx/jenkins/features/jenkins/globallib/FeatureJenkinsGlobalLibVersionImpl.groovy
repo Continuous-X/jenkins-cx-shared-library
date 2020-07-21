@@ -27,6 +27,7 @@ class FeatureJenkinsGlobalLibVersionImpl extends AbstractFeature {
         EnvActionImpl pipelineEnv = this.jenkinsContext.env
         logger.logInfo "displayName: ${pipelineEnv.getDisplayName()}"
         logger.logInfo "properties: ${pipelineEnv.getProperties().toString()}"
+        logger.logInfo "properties: ${pipelineEnv.getProperty('library.jenkins-cx-shared-library.version')}"
 
 
         GlobalLibraries globalLibraries = GlobalLibraries.get()
@@ -36,8 +37,9 @@ class FeatureJenkinsGlobalLibVersionImpl extends AbstractFeature {
         logger.logInfo "test output 1:  ${((SCMSourceRetriever)libraryConfiguration.getRetriever()).getScm()}"
         logger.logInfo "test output 2: ${libraryConfiguration.getRetriever().getDescriptor()} "
         String sharedLibProperty = "library.${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}.version"
-        logger.logInfo "test output 3:  ${System.getProperty(sharedLibProperty)}"
-        logger.logInfo "test output 4:  ${this.jenkinsContext.env.library.${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}.version}"
+        logger.logInfo "test output 3:  ${sharedLibProperty}"
+        logger.logInfo "test output 4:  ${System.getProperty(sharedLibProperty)}"
+        logger.logInfo "test output 5:  ${this.jenkinsContext.env.library.${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}.version}"
     }
 
 }
