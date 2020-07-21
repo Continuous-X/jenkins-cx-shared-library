@@ -5,6 +5,7 @@ import com.continuousx.utils.jenkins.JenkinsConfig
 import org.apache.maven.model.Model
 import org.jenkinsci.plugins.workflow.libs.GlobalLibraries
 import org.jenkinsci.plugins.workflow.libs.LibraryConfiguration
+import org.jenkinsci.plugins.workflow.libs.SCMSourceRetriever
 
 class FeatureJenkinsGlobalLibVersionImpl extends AbstractFeature {
 
@@ -26,7 +27,7 @@ class FeatureJenkinsGlobalLibVersionImpl extends AbstractFeature {
         List<LibraryConfiguration> libraryConfigurationList = globalLibraries.getLibraries()
 
         LibraryConfiguration libraryConfiguration = libraryConfigurationList.find {it.name == JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}
-        logger.logInfo "test output 1:  ${libraryConfiguration.getRetriever()}"
+        logger.logInfo "test output 1:  ${((SCMSourceRetriever)libraryConfiguration.getRetriever()).getScm().getId()}"
         logger.logInfo "test output 2: ${libraryConfiguration.getRetriever().getDescriptor()} "
         String sharedLibProperty = "library.${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}.version"
         logger.logInfo "test output 3:  ${System.getProperty(sharedLibProperty)}"
