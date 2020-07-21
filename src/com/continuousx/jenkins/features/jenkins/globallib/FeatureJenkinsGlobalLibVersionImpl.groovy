@@ -25,21 +25,12 @@ class FeatureJenkinsGlobalLibVersionImpl extends AbstractFeature {
     @Override
     void runFeatureImpl() {
         EnvActionImpl pipelineEnv = this.jenkinsContext.env
-        logger.logInfo "displayName: ${pipelineEnv.getDisplayName()}"
         logger.logInfo "properties: ${pipelineEnv.getProperties().toString()}"
+        logger.logInfo "env: ${pipelineEnv.getEnvironment()toString()}"
+        logger.logInfo "env overwritten: ${pipelineEnv.getOverriddenEnvironment().toString()}"
         String sharedLibProperty = "library.${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}.version"
         logger.logInfo "${sharedLibProperty}: ${pipelineEnv.getProperty(sharedLibProperty)}"
 
-
-        GlobalLibraries globalLibraries = GlobalLibraries.get()
-        List<LibraryConfiguration> libraryConfigurationList = globalLibraries.getLibraries()
-
-        LibraryConfiguration libraryConfiguration = libraryConfigurationList.find {it.name == JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}
-        logger.logInfo "test output 1:  ${((SCMSourceRetriever)libraryConfiguration.getRetriever()).getScm()}"
-        logger.logInfo "test output 2: ${libraryConfiguration.getRetriever().getDescriptor()} "
-        logger.logInfo "test output 3:  ${sharedLibProperty}"
-        logger.logInfo "test output 4:  ${System.getProperty(sharedLibProperty)}"
-        logger.logInfo "test output 5:  ${this.jenkinsContext.env.library.${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}.version}"
     }
 
 }
