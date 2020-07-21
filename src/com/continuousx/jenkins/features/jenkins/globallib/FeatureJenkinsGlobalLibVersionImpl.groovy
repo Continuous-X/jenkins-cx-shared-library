@@ -22,8 +22,6 @@ class FeatureJenkinsGlobalLibVersionImpl extends AbstractFeature {
 
     @Override
     void runFeatureImpl() {
-        LibraryL
-
         GlobalLibraries globalLibraries = GlobalLibraries.get()
         List<LibraryConfiguration> libraryConfigurationList = globalLibraries.getLibraries()
 
