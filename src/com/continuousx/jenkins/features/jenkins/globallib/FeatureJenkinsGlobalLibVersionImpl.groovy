@@ -26,11 +26,11 @@ class FeatureJenkinsGlobalLibVersionImpl extends AbstractFeature {
         List<LibraryConfiguration> libraryConfigurationList = globalLibraries.getLibraries()
 
         LibraryConfiguration libraryConfiguration = libraryConfigurationList.find {it.name == JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}
-        logger.logInfo libraryConfiguration.getRetriever().getDescriptor().getGlobalPropertyType('version').toString()
-        logger.logInfo "libConfig: ${libraryConfiguration.getRetriever().getDescriptor()} "
+        logger.logInfo "test output 1:  ${libraryConfiguration.getRetriever().getDescriptor().getGlobalPropertyType('version').toString()}"
+        logger.logInfo "test output 2: ${libraryConfiguration.getRetriever().getDescriptor()} "
         String sharedLibProperty = "library.${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}.version"
-        logger.logInfo "${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}:  ${System.getProperty(sharedLibProperty)}"
-        logger.logInfo "${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}:  ${this.jenkinsContext.env.library.${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}.version}"
+        logger.logInfo "test output 3:  ${System.getProperty(sharedLibProperty)}"
+        logger.logInfo "test output 4:  ${this.jenkinsContext.env.library.${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}.version}"
     }
 
 }
