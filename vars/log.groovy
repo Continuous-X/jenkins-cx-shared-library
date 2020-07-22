@@ -5,7 +5,6 @@ def debug(String message) {
     echo "DEBUG: ${message}"
 }
 
-@NonCPS
 def info(String message) {
     echo "INFO: ${message}"
 }
