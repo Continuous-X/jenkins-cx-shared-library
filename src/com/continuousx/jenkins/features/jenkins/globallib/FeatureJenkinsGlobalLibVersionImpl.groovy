@@ -28,8 +28,8 @@ class FeatureJenkinsGlobalLibVersionImpl extends AbstractFeature {
         EnvActionImpl pipelineEnv = this.jenkinsContext.env
         String sharedLibProperty = "library.${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB}.version"
         logger.logInfo "${sharedLibProperty}: ${pipelineEnv.getEnvironment().get(sharedLibProperty)}"
-        pipelineEnv.setProperty(JenkinsEnv.CX_SHARED_LIB_BRANCH, pipelineEnv.getEnvironment().get(sharedLibProperty))
-        logger.logInfo "${JenkinsEnv.CX_SHARED_LIB_BRANCH}: ${pipelineEnv.getEnvironment().get(JenkinsEnv.CX_SHARED_LIB_BRANCH)}"
+        pipelineEnv.setProperty(JenkinsEnv.CX_SHARED_LIB_BRANCH.toString(), pipelineEnv.getEnvironment().get(sharedLibProperty))
+        logger.logInfo "${JenkinsEnv.CX_SHARED_LIB_BRANCH}: ${pipelineEnv.getEnvironment().get(JenkinsEnv.CX_SHARED_LIB_BRANCH.toString())}"
     }
 
 }
