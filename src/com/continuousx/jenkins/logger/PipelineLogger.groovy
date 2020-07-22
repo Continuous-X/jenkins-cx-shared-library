@@ -17,7 +17,6 @@ class PipelineLogger implements Serializable {
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
-    @NonCPS
     void logInfo(final String logText) {
         Objects.requireNonNull(logText)
         Objects.requireNonNull(logLevelType)
