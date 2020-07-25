@@ -8,7 +8,7 @@ def debug(String message) {
 
 @NonCPS
 def info(String message) {
-    echo "[${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB} INFO] ${message}"
+    sh "echo [${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB} INFO] ${message}"
 }
 
 @NonCPS
