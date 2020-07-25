@@ -7,6 +7,7 @@ import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.
 import com.continuousx.jenkins.logger.PipelineLogger
 import com.continuousx.utils.github.GitURLParser
 import com.continuousx.utils.jenkins.JenkinsPluginCheck
+import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
 
 abstract class AbstractStage implements Stage, Serializable {
 
@@ -18,7 +19,7 @@ abstract class AbstractStage implements Stage, Serializable {
      * for code completion
      * org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
      */
-    def currentBuild
+    RunWrapper currentBuild
     List<String> neededPlugins
     StageConfig stageConfig
 
@@ -36,28 +37,28 @@ abstract class AbstractStage implements Stage, Serializable {
         jenkinsContext = paramJenkinsContext
         neededPlugins = paramNeededPlugins
         stageConfig = paramStageConfig
-        currentBuild = this.jenkinsContext.currentBuild
+        currentBuild = this.jenkinsContext.currentBuild as RunWrapper
 
         logger = new PipelineLogger(jenkinsContext: jenkinsContext, logLevelType: stageConfig.logLevelType)
 
-        logger.logDebug("create stage ${stageConfig.type}")
+        logger.logDebug"create stage ${stageConfig.type}"
 
         measurement.active = stageConfig.active
         measurement.failOnError = stageConfig.failOnError
         measurement.stageType = stageConfig.type
         if (this.jenkinsContext.env.GIT_URL != null) {
-            final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
+            final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL.toString())
             measurement.setGHOrganization(gitUrlParser.getOrgaName())
             measurement.setGHRepository(gitUrlParser.getRepoName())
         }
 
         metrics = new InfluxDBFeatureBuilder(paramJenkinsContext, this.stageConfig.logLevelType).build()
-        logger.logInfo("Stage Constructor ready")
-        logger.logInfo("currentBuild ${currentBuild}")
-        logger.logInfo("displayName ${currentBuild.displayName}")
-        logger.logInfo("projectname ${currentBuild.projectName}")
-        logger.logInfo("properties ${currentBuild.properties}")
-        logger.logInfo("build variables ${currentBuild.buildVariables}")
+        logger.logDebug"Stage Constructor ready"
+        logger.logDebug"currentBuild ${currentBuild}"
+        logger.logDebug"displayName ${currentBuild.displayName}"
+        logger.logDebug"projectname ${currentBuild.projectName}"
+        logger.logDebug"properties ${currentBuild.properties}"
+        logger.logDebug"build variables ${currentBuild.buildVariables}"
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
