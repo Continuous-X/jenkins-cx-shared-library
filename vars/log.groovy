@@ -3,7 +3,7 @@ import com.continuousx.utils.jenkins.JenkinsConfig
 
 @NonCPS
 def debug(String message) {
-    sh "echo \033[0;33m[${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB} DEBUG]\033[0m ${message}"
+    sh script: "echo -e \"\033[0;33m[${JenkinsConfig.JENKINS_CONFIG_GLOBAL_LIBRARY_JENKINS_CX_SHARED_LIB} DEBUG]\033[0m ${message}\""
 }
 
 @NonCPS
