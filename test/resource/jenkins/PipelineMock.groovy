@@ -4,12 +4,10 @@ import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
 
 interface PipelineMock {
 
-    PipelineCurrentBuildMock currentBuild = new PipelineCurrentBuildMock()
-    PipelineEnvMock env = new PipelineEnvMock()
     PipelineLogMock log = new PipelineLogMock()
+    PipelineEnvMock env = new PipelineEnvMock()
+    public RunWrapper currentBuild
 
-    PipelineEnvMock env()
-    RunWrapper currentBuild()
     def sh(String command)
     def echo(String echo)
     def readFile(def file)

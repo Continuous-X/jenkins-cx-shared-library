@@ -5,7 +5,7 @@ import com.cloudbees.groovy.cps.NonCPS
 class PipelineLogger implements Serializable {
 
     private def jenkinsContext
-    private LogLevelType logLevelType = LogLevelType.WARNING
+    LogLevelType logLevelType = LogLevelType.WARNING
 
     PipelineLogger(final def jenkinsContext) {
         Objects.requireNonNull(jenkinsContext)

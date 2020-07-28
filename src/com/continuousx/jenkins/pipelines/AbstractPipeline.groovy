@@ -38,7 +38,8 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
         this.neededPlugins = neededPlugins
         this.pipelineConfig = config
         this.currentBuild = this.jenkinsContext.currentBuild
-        logger = new PipelineLogger(jenkinsContext: this.jenkinsContext, logLevelType: this.pipelineConfig.logLevelType)
+        logger = new PipelineLogger(this.jenkinsContext)
+        logger.setLogLevelType(this.pipelineConfig.getLogLevelType())
 
         if (this.jenkinsContext.env.GIT_URL != null) {
             GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)

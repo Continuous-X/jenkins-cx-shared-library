@@ -37,7 +37,8 @@ abstract class AbstractFeature implements Feature, Serializable{
         neededPlugins = paramNeededPlugins
         featureConfig = paramFeatureConfig
 
-        logger = new PipelineLogger(jenkinsContext: jenkinsContext, logLevelType: featureConfig.logLevelType)
+        logger = new PipelineLogger(jenkinsContext)
+        logger.logLevelType = featureConfig.logLevelType
 
         measurementOperating.featureType = featureConfig.type
         if (this.jenkinsContext.env.GIT_URL != null) {

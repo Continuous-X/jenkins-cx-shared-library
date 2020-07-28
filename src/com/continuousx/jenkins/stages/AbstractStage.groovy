@@ -39,7 +39,8 @@ abstract class AbstractStage implements Stage, Serializable {
         stageConfig = paramStageConfig
         currentBuild = this.jenkinsContext.currentBuild as RunWrapper
 
-        logger = new PipelineLogger(jenkinsContext: jenkinsContext, logLevelType: stageConfig.logLevelType)
+        logger = new PipelineLogger(jenkinsContext)
+        logger.logLevelType = stageConfig.logLevelType
 
         logger.logDebug"create stage ${stageConfig.type}"
 

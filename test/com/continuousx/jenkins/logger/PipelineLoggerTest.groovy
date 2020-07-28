@@ -15,10 +15,8 @@ class PipelineLoggerTest extends Specification {
     @Unroll
     def "should be checkPrintln is '#expectedCheckResult' if type in Logger is '#defineLogLevelType' and call 'log#checkLogLevelType'"() {
         expect:
-        final PipelineLogger logger = new PipelineLogger(
-                jenkinsContext: pipelineMock,
-                logLevelType: defineLogLevelType
-        )
+        final PipelineLogger logger = new PipelineLogger(pipelineMock)
+        logger.setLogLevelType(defineLogLevelType)
 
         assert logger.checkPrint(checkLogLevelType) == expectedCheckResult
 

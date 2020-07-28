@@ -30,7 +30,8 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature {
         this.jenkinsContext = jenkinsContext
         this.neededPlugins = ['influxdb']
         measurementOperating.featureType = TYPE
-        logger = new PipelineLogger(jenkinsContext: this.jenkinsContext, logLevelType: logLevelType)
+        logger = new PipelineLogger(this.jenkinsContext)
+        logger.logLevelType = logLevelType
         if (this.jenkinsContext.env.GIT_URL != null) {
             final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
             measurementOperating.setGHOrganization(gitUrlParser.getOrgaName())
