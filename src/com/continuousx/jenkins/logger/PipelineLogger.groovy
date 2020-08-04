@@ -17,7 +17,6 @@ class PipelineLogger implements Serializable {
     void logDebug(final String logText) {
         Objects.requireNonNull(logText)
         boolean checked = checkPrint(LogLevelType.DEBUG)
-        this.jenkinsContext.echo "log debug: ${checked}"
         checked ? this.jenkinsContext.log.debug(logText) : ''
     }
 
@@ -26,7 +25,6 @@ class PipelineLogger implements Serializable {
     void logInfo(final String logText) {
         Objects.requireNonNull(logText)
         boolean checked = checkPrint(LogLevelType.INFO)
-        this.jenkinsContext.echo "log info: ${checked}"
         checked ? this.jenkinsContext.log.info(logText) : ''
     }
 
@@ -35,7 +33,6 @@ class PipelineLogger implements Serializable {
     void logWarning(final String logText) {
         Objects.requireNonNull(logText)
         boolean checked = checkPrint(LogLevelType.WARNING)
-        this.jenkinsContext.echo "log warning: ${checked}"
         checked ? this.jenkinsContext.log.warning(logText) : ''
     }
 
@@ -44,7 +41,6 @@ class PipelineLogger implements Serializable {
     void logError(final String logText) {
         Objects.requireNonNull(logText)
         boolean checked = checkPrint(LogLevelType.ERROR)
-        this.jenkinsContext.echo "log error: ${checked}"
         checked ? this.jenkinsContext.log.error(logText) : ''
     }
 
@@ -53,7 +49,6 @@ class PipelineLogger implements Serializable {
     void logFatal(final String logText) {
         Objects.requireNonNull(logText)
         boolean checked = checkPrint(LogLevelType.FATAL)
-        this.jenkinsContext.echo "log fatal: ${checked}"
         checked ? this.jenkinsContext.log.fatal(logText) : ''
     }
 
