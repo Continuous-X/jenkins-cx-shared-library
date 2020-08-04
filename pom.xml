@@ -35,24 +35,6 @@
         <url>https://maven.pkg.github.com/Continuous-X/jenkins-cx-shared-library/</url>
     </scm>
 
-    <properties>
-        <groovy.core.version>2.4.20</groovy.core.version>
-        <groovy.gmaven.pluginVersion>1.6.1</groovy.gmaven.pluginVersion>
-
-        <jenkins-spock.version>2.0.0</jenkins-spock.version>
-
-        <junit.version>4.12</junit.version>
-        <junit.plugin.version>1.24</junit.plugin.version>
-        <surefire.pluginVersion>2.22.0</surefire.pluginVersion>
-
-        <logback.configration>logback-test.xml</logback.configration>
-        <logdir>${project.build.directory}/log</logdir>
-        <test.loglevel>ERROR</test.loglevel>
-        <test.pattern></test.pattern>
-        <log.logback.version>1.2.3</log.logback.version>
-        <log.slf4j.version>1.7.25</log.slf4j.version>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
             <!-- Transitive Dependencies that need Managing -->
@@ -68,33 +50,20 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.homeaway.devtools.jenkins</groupId>
-            <artifactId>jenkins-spock</artifactId>
-            <version>${jenkins-spock.version}</version>
+            <groupId>com.lesfurets</groupId>
+            <artifactId>jenkins-pipeline-unit</artifactId>
+            <version>1.5</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>${log.logback.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${log.logback.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>${groovy.core.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.cloudbees</groupId>
+                    <artifactId>groovy-cps</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- Mandatory dependencies for using Spock -->
         <dependency>
@@ -102,6 +71,42 @@
             <artifactId>spock-core</artifactId>
             <scope>test</scope>
         </dependency>
+<!--
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-junit4</artifactId>
+            <scope>test</scope>
+        </dependency>
+-->
+        <!-- Optional dependencies for using Spock -->
+        <!-- use a specific Groovy version rather than the one specified by spock-core -->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.4.20</version>
+        </dependency>
+<!--
+        <dependency> &lt;!&ndash; enables mocking of classes (in addition to interfaces) &ndash;&gt;
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.10.13</version>
+            <scope>test</scope>
+        </dependency>
+-->
+        <dependency> <!-- enables mocking of classes without default constructor (together with CGLIB) -->
+            <groupId>org.objenesis</groupId>
+            <artifactId>objenesis</artifactId>
+            <version>3.1</version>
+            <scope>test</scope>
+        </dependency>
+<!--
+        <dependency> &lt;!&ndash; only required if Hamcrest matchers are used &ndash;&gt;
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
+        </dependency>
+-->
     </dependencies>
 
     <build>
@@ -109,35 +114,9 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${surefire.pluginVersion}</version>
-                    <executions>
-                        <execution>
-                            <id>default-test</id>
-                            <goals>
-                                <goal>test</goal>
-                            </goals>
-                            <configuration>
-                                <forkCount>1</forkCount>
-                                <includes>
-                                    <include>${test.pattern}</include>
-                                </includes>
-                                <useManifestOnlyJar>false</useManifestOnlyJar>
-                                <systemPropertyVariables>
-                                    <root.loglevel>${test.loglevel}</root.loglevel>
-                                    <root.appender>Stdout</root.appender>
-                                    <test.loglevel>${test.loglevel}</test.loglevel>
-                                    <logdir>${logdir}</logdir>
-                                </systemPropertyVariables>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
                     <groupId>org.codehaus.gmavenplus</groupId>
                     <artifactId>gmavenplus-plugin</artifactId>
-                    <version>1.9.1</version>
+                    <version>1.9.0</version>
                     <executions>
                         <execution>
                             <goals>
@@ -149,7 +128,6 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <configScript>config.groovy</configScript>
                         <targetBytecode>1.8</targetBytecode>
                         <sources>
                             <source>
@@ -186,6 +164,28 @@
                             </testSource>
                         </testSources>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M5</version>
+                    <configuration>
+                        <failIfNoTests>false</failIfNoTests>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>test</id>
+                            <phase>test</phase>
+                            <configuration>
+                                <includes>
+                                    <include>**./*Test.groovy</include>
+                                </includes>
+                            </configuration>
+                            <goals>
+                                <goal>test</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

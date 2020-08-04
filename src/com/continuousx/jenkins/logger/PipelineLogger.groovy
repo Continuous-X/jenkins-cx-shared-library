@@ -16,35 +16,45 @@ class PipelineLogger implements Serializable {
     @NonCPS
     void logDebug(final String logText) {
         Objects.requireNonNull(logText)
-        checkPrint(LogLevelType.DEBUG) ? this.jenkinsContext.log.debug(logText) : ''
+        boolean checked = checkPrint(LogLevelType.DEBUG)
+        this.jenkinsContext.echo "log debug: ${checked}"
+        checked ? this.jenkinsContext.log.debug(logText) : ''
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
     void logInfo(final String logText) {
         Objects.requireNonNull(logText)
-        checkPrint(LogLevelType.INFO) ? this.jenkinsContext.log.info(logText) : ''
+        boolean checked = checkPrint(LogLevelType.INFO)
+        this.jenkinsContext.echo "log info: ${checked}"
+        checked ? this.jenkinsContext.log.info(logText) : ''
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
     void logWarning(final String logText) {
         Objects.requireNonNull(logText)
-        checkPrint(LogLevelType.WARNING) ? this.jenkinsContext.log.warning(logText) : ''
+        boolean checked = checkPrint(LogLevelType.WARNING)
+        this.jenkinsContext.echo "log warning: ${checked}"
+        checked ? this.jenkinsContext.log.warning(logText) : ''
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
     void logError(final String logText) {
         Objects.requireNonNull(logText)
-        checkPrint(LogLevelType.ERROR) ? this.jenkinsContext.log.error(logText) : ''
+        boolean checked = checkPrint(LogLevelType.ERROR)
+        this.jenkinsContext.echo "log error: ${checked}"
+        checked ? this.jenkinsContext.log.error(logText) : ''
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
     void logFatal(final String logText) {
         Objects.requireNonNull(logText)
-        checkPrint(LogLevelType.FATAL) ? this.jenkinsContext.log.fatal(logText) : ''
+        boolean checked = checkPrint(LogLevelType.FATAL)
+        this.jenkinsContext.echo "log fatal: ${checked}"
+        checked ? this.jenkinsContext.log.fatal(logText) : ''
     }
 
     @NonCPS
