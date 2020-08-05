@@ -4,8 +4,6 @@ import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.pipelines.Pipeline
 import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
-import groovy.mock.interceptor.MockFor
-import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
 import resource.jenkins.PipelineMock
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -17,7 +15,6 @@ class PipelineMavenBuildImplTest extends Specification {
 
     def setup() {
         pipelineMock = Mock(PipelineMock)
-        pipelineMock.currentBuild = GroovyMock(RunWrapper.class)
         featureBuilder = new PipelineMavenBuildBuilder(pipelineMock)
     }
 

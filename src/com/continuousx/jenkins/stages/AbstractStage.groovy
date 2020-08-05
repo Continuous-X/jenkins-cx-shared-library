@@ -19,7 +19,7 @@ abstract class AbstractStage implements Stage, Serializable {
      * for code completion
      * org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
      */
-    RunWrapper currentBuild
+    def currentBuild
     List<String> neededPlugins
     StageConfig stageConfig
 
@@ -37,7 +37,7 @@ abstract class AbstractStage implements Stage, Serializable {
         jenkinsContext = paramJenkinsContext
         neededPlugins = paramNeededPlugins
         stageConfig = paramStageConfig
-        currentBuild = this.jenkinsContext.currentBuild as RunWrapper
+        currentBuild = this.jenkinsContext.currentBuild
 
         logger = new PipelineLogger(jenkinsContext)
         logger.logLevelType = stageConfig.logLevelType

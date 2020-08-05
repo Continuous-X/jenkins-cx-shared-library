@@ -1,12 +1,10 @@
 package resource.jenkins
 
-import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
-
 interface PipelineMock {
 
-    PipelineLogMock log = new PipelineLogMock()
+    PipelineCurrentBuildMock currentBuild = new PipelineCurrentBuildMock()
     PipelineEnvMock env = new PipelineEnvMock()
-    public RunWrapper currentBuild
+    PipelineLogMock log = new PipelineLogMock()
 
     def sh(String command)
     def echo(String echo)
