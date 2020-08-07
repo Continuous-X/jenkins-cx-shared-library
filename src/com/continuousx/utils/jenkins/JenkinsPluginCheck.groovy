@@ -46,7 +46,7 @@ class JenkinsPluginCheck {
     @NonCPS
     JenkinsPluginCheck addNeededPluginList(List<String> pluginsList) {
         Objects.nonNull(pluginsList)
-        assert pluginsList.size() > 0
+        //assert pluginsList.size() > 0
 
         this.pluginListNeeded = pluginsList
         return this
