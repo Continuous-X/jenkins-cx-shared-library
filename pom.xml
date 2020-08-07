@@ -37,7 +37,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Transitive Dependencies that need Managing -->
             <dependency>
                 <groupId>org.spockframework</groupId>
                 <artifactId>spock-bom</artifactId>
@@ -52,7 +51,7 @@
         <dependency>
             <groupId>com.lesfurets</groupId>
             <artifactId>jenkins-pipeline-unit</artifactId>
-            <version>1.5</version>
+            <version>1.6</version>
             <scope>test</scope>
             <exclusions>
                 <exclusion>
@@ -103,6 +102,12 @@
             <version>3.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency> <!-- only required if Hamcrest matchers are used -->
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -112,7 +117,7 @@
                 <plugin>
                     <groupId>org.codehaus.gmavenplus</groupId>
                     <artifactId>gmavenplus-plugin</artifactId>
-                    <version>1.9.0</version>
+                    <version>1.10.0</version>
                     <executions>
                         <execution>
                             <goals>

@@ -6,6 +6,7 @@ import com.continuousx.jenkins.pipelines.PipelineConfig
 import com.continuousx.jenkins.pipelines.PipelineType
 import com.continuousx.jenkins.stages.github.protection.StageGithubProtectionCheckConfig
 import com.continuousx.jenkins.stages.maven.install.StageMavenCompileConfig
+import com.continuousx.jenkins.stages.scanner.StageScanHostConfig
 
 class PipelineMavenBuildConfig implements PipelineConfig {
 
@@ -14,21 +15,26 @@ class PipelineMavenBuildConfig implements PipelineConfig {
 
     StageMavenCompileConfig stageConfigMavenCompile = new StageMavenCompileConfig()
     StageGithubProtectionCheckConfig stageGithubProtectionCheckConfig = new StageGithubProtectionCheckConfig()
+    StageScanHostConfig stageScanHostConfig = new StageScanHostConfig()
 
     PipelineMavenBuildConfig(LogLevelType logLevelType = LogLevelType.WARNING) {
         Objects.requireNonNull(logLevelType)
         this.logLevelType = logLevelType
-    }
 
-    PipelineMavenBuildConfig configStageMavenCompile(final boolean active, final boolean failOnError) {
         this.stageConfigMavenCompile.logLevelType = this.logLevelType
-        this
+        this.stageGithubProtectionCheckConfig.logLevelType = this.logLevelType
+        this.stageScanHostConfig.logLevelType = this.logLevelType
     }
 
     PipelineMavenBuildConfig configStageGHProtectionCheck(final boolean active, final boolean failOnError) {
         this.stageGithubProtectionCheckConfig.active = active
         this.stageGithubProtectionCheckConfig.failOnError = failOnError
-        this.stageGithubProtectionCheckConfig.logLevelType = this.logLevelType
+        this
+    }
+
+    PipelineMavenBuildConfig configStageScanHost(final boolean active, final boolean failOnError) {
+        this.stageScanHostConfig.active = active
+        this.stageScanHostConfig.failOnError = failOnError
         this
     }
 
