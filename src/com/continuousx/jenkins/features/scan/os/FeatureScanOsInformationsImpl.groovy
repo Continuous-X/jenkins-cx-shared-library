@@ -9,7 +9,7 @@ class FeatureScanOsInformationsImpl extends AbstractFeature {
     @SuppressWarnings('GroovyUntypedAccess')
     protected FeatureScanOsInformationsImpl(final def jenkinsContext, final FeatureScanOsInformationsConfig featureConfig) {
         super(jenkinsContext,
-                ['workflow-cps-global-lib'],
+                [],
                 featureConfig)
     }
 
