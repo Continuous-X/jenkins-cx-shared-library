@@ -34,6 +34,18 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
                 }
             }
 
+            stage('host scan') {
+                when {
+                    expression { pipelineMavenBuild.stageScanHost.getStageConfig().isActive() }
+                    expression { BranchExpressionChecker.checkBranchExpression(pipelineMavenBuild.stageScanHost.getStageConfig().getAllowedBranch(), env.GIT_BRANCH) }
+                }
+                steps {
+                    script {
+                        pipelineMavenBuild.stageScanHost.runStage()
+                    }
+                }
+            }
+
             stage('protection check') {
                 when {
                     expression { pipelineMavenBuild.stageGHProtectionCheck.getStageConfig().isActive() }

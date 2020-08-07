@@ -5,11 +5,13 @@ import com.continuousx.jenkins.pipelines.AbstractPipeline
 import com.continuousx.jenkins.stages.Stage
 import com.continuousx.jenkins.stages.github.protection.StageGithubProtectionCheckBuilder
 import com.continuousx.jenkins.stages.maven.install.StageMavenCompileBuilder
+import com.continuousx.jenkins.stages.scanner.StageScanHostBuilder
 
 class PipelineMavenBuildImpl extends AbstractPipeline {
 
     Stage stageMavenInstall
     Stage stageGHProtectionCheck
+    Stage stageScanHost
 
     @SuppressWarnings(['GroovyUntypedAccess', 'GroovyVariableCanBeFinal'])
     protected PipelineMavenBuildImpl(
@@ -21,6 +23,9 @@ class PipelineMavenBuildImpl extends AbstractPipeline {
                 .build()
         stageGHProtectionCheck = new StageGithubProtectionCheckBuilder(jenkinsContext)
                 .withStageConfig(config.getStageGithubProtectionCheckConfig())
+                .build()
+        stageScanHost = new StageScanHostBuilder(jenkinsContext)
+                .withStageConfig(config.getStageScanHostConfig())
                 .build()
     }
 
