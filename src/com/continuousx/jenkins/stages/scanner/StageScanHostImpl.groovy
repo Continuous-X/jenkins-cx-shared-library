@@ -10,7 +10,7 @@ import com.continuousx.jenkins.stages.maven.install.StageMavenCompileConfig
 class StageScanHostImpl extends AbstractStage {
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected StageScanHostImpl(final def jenkinsContext, final StageScanHostConfig stageConfi, final PipelineLogger logger) {
+    protected StageScanHostImpl(final def jenkinsContext, final StageScanHostConfig stageConfig, final PipelineLogger logger) {
         super(jenkinsContext, ["workflow-basic-steps", "maven-plugin"], stageConfig, logger)
     }
 
