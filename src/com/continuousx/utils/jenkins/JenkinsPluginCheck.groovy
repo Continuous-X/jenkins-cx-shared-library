@@ -14,11 +14,18 @@ class JenkinsPluginCheck {
     private def jenkinsContext
     private PipelineLogger logger
 
-    JenkinsPluginCheck(def jenkinsContext, LogLevelType logLevelType = LogLevelType.INFO) {
+    JenkinsPluginCheck(def jenkinsContext) {
         Objects.nonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
-        logger = new PipelineLogger(jenkinsContext)
-        logger.logLevelType = logLevelType
+        this.logger = new PipelineLogger(this.jenkinsContext)
+        this.logger.setLogLevelType(LogLevelType.WARNING)
+    }
+
+    @NonCPS
+    JenkinsPluginCheck withLogger(final PipelineLogger logger) {
+        Objects.requireNonNull(logger)
+        this.logger = logger
+        this
     }
 
     @NonCPS

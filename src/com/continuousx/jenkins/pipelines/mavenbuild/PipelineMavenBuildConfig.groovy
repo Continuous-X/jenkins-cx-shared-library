@@ -20,10 +20,6 @@ class PipelineMavenBuildConfig implements PipelineConfig {
     PipelineMavenBuildConfig(LogLevelType logLevelType = LogLevelType.WARNING) {
         Objects.requireNonNull(logLevelType)
         this.logLevelType = logLevelType
-
-        this.stageConfigMavenCompile.logLevelType = this.logLevelType
-        this.stageGithubProtectionCheckConfig.logLevelType = this.logLevelType
-        this.stageScanHostConfig.logLevelType = this.logLevelType
     }
 
     PipelineMavenBuildConfig configStageGHProtectionCheck(final boolean active, final boolean failOnError) {

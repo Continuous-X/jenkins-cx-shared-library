@@ -28,10 +28,11 @@ abstract class AbstractStage implements Stage, Serializable {
     protected PipelineLogger logger
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected AbstractStage(final def paramJenkinsContext, final List<String> paramNeededPlugins, final StageConfig paramStageConfig) {
+    protected AbstractStage(final def paramJenkinsContext, final List<String> paramNeededPlugins, final StageConfig paramStageConfig, final PipelineLogger logger) {
         Objects.requireNonNull(paramJenkinsContext)
         Objects.requireNonNull(paramNeededPlugins)
         Objects.requireNonNull(paramStageConfig)
+        Objects.requireNonNull(logger)
 
         neededPlugins = []
         jenkinsContext = paramJenkinsContext
@@ -39,9 +40,7 @@ abstract class AbstractStage implements Stage, Serializable {
         stageConfig = paramStageConfig
         currentBuild = this.jenkinsContext.currentBuild
 
-        logger = new PipelineLogger(jenkinsContext)
-        logger.logLevelType = stageConfig.logLevelType
-
+        this.logger = logger
         logger.logDebug"create stage ${stageConfig.type}"
 
         measurement.active = stageConfig.active
@@ -65,6 +64,7 @@ abstract class AbstractStage implements Stage, Serializable {
     @SuppressWarnings('GroovyUntypedAccess')
     boolean checkNeededPlugins() {
         return new JenkinsPluginCheck(jenkinsContext)
+                .withLogger(this.logger)
                 .addInstalledPlugins()
                 .addNeededPluginList(neededPlugins)
                 .isPluginListInstalled()

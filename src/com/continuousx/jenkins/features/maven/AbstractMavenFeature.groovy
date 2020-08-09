@@ -3,6 +3,7 @@ package com.continuousx.jenkins.features.maven
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.features.AbstractFeature
 import com.continuousx.jenkins.features.FeatureConfig
+import com.continuousx.jenkins.logger.PipelineLogger
 
 abstract class AbstractMavenFeature extends AbstractFeature implements MavenFeature {
 
@@ -13,10 +14,12 @@ abstract class AbstractMavenFeature extends AbstractFeature implements MavenFeat
     protected AbstractMavenFeature(
             final def jenkinsContext,
             final List<String> neededPlugins,
-            final FeatureConfig featureConfig) {
+            final FeatureConfig featureConfig,
+            final PipelineLogger logger) {
         super(jenkinsContext,
                 neededPlugins << 'workflow-basic-steps',
-                featureConfig)
+                featureConfig,
+                logger)
     }
 
     abstract void runFeatureImpl()

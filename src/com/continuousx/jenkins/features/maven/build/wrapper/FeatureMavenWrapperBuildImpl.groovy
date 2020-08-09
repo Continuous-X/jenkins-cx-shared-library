@@ -2,12 +2,13 @@ package com.continuousx.jenkins.features.maven.build.wrapper
 
 import com.continuousx.jenkins.features.maven.AbstractMavenFeature
 import com.continuousx.jenkins.features.maven.MavenCommand
+import com.continuousx.jenkins.logger.PipelineLogger
 
 class FeatureMavenWrapperBuildImpl extends AbstractMavenFeature {
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected FeatureMavenWrapperBuildImpl(final def jenkinsContext, final FeatureMavenWrapperBuildConfig featureConfig) {
-        super(jenkinsContext, [], featureConfig)
+    protected FeatureMavenWrapperBuildImpl(final def jenkinsContext, final FeatureMavenWrapperBuildConfig featureConfig, final PipelineLogger logger) {
+        super(jenkinsContext, [], featureConfig, logger)
     }
 
     @SuppressWarnings('GroovyUntypedAccess')

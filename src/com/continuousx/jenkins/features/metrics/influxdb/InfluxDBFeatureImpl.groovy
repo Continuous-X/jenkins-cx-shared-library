@@ -89,6 +89,7 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature {
     @SuppressWarnings('GroovyUntypedAccess')
     private boolean checkNeededPlugins() {
         return new JenkinsPluginCheck(this.jenkinsContext)
+                .withLogger(this.logger)
                 .addInstalledPlugins()
                 .addNeededPluginList(neededPlugins)
                 .isPluginListInstalled()

@@ -20,12 +20,15 @@ class PipelineMavenBuildImpl extends AbstractPipeline {
         super(jenkinsContext, ["workflow-basic-steps", "maven-plugin"], config)
         stageMavenInstall = new StageMavenCompileBuilder(jenkinsContext)
                 .withStageConfig(config.getStageConfigMavenCompile())
+                .withLogger(this.logger)
                 .build()
         stageGHProtectionCheck = new StageGithubProtectionCheckBuilder(jenkinsContext)
                 .withStageConfig(config.getStageGithubProtectionCheckConfig())
+                .withLogger(this.logger)
                 .build()
         stageScanHost = new StageScanHostBuilder(jenkinsContext)
                 .withStageConfig(config.getStageScanHostConfig())
+                .withLogger(this.logger)
                 .build()
     }
 
