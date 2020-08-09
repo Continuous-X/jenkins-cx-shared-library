@@ -13,7 +13,7 @@ class GHBranchProtectionCheck implements RuleChecker {
     RuleBook ruleBook = new RuleBook()
 
     @Override
-    @NonCPS
+    //@NonCPS
     boolean checkRules(RuleSet ruleSet, final Object checkedObject, final PipelineLogger logger) {
         Objects.requireNonNull(ruleSet)
         Objects.requireNonNull(checkedObject)
