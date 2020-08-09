@@ -17,6 +17,7 @@ class InfluxDBFeatureBuilder {
         this.logger.setLogLevelType(LogLevelType.WARNING)
     }
 
+    @NonCPS
     InfluxDBFeatureBuilder withLogger(final PipelineLogger logger) {
         Objects.requireNonNull(logger)
         this.logger = logger
