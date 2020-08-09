@@ -28,7 +28,6 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
                     script {
                         FeatureJenkinsGlobalLibVersionImpl featureJenkinsGlobalLibVersion = new FeatureJenkinsGlobalLibVersionBuilder(delegate)
                                 .withFeatureConfig(new FeatureJenkinsGlobalLibVersionConfig())
-                                .withLogger(new PipelineLogger(delegate).setLogLevelType(LogLevelType.DEBUG))
                                 .build()
                         featureJenkinsGlobalLibVersion.runFeature()
                     }
