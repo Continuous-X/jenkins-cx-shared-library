@@ -24,8 +24,6 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
             stage('Init') {
                 steps {
                     script {
-                        sh "env"
-                        log.info "ENV: ${env}"
                         FeatureJenkinsGlobalLibVersionImpl featureJenkinsGlobalLibVersion = new FeatureJenkinsGlobalLibVersionBuilder(delegate)
                                 .withFeatureConfig(new FeatureJenkinsGlobalLibVersionConfig())
                                 .build()
