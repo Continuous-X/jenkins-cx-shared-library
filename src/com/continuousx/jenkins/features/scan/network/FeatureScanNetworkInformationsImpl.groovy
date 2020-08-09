@@ -17,8 +17,9 @@ class FeatureScanNetworkInformationsImpl extends AbstractFeature {
 
     @Override
     void runFeatureImpl() {
-        logger.logInfo "os.name: ${OS.OS_NAME}"
-        logger.logInfo "user.name: ${OS.USER_NAME}"
+        logger.logInfo "IP: ${InetAddress.getLocalHost()}"
+        logger.logInfo "IP(4): ${Inet4Address.getLocalHost()}"
+        logger.logInfo "IP(6): ${Inet6Address.getLocalHost()}"
     }
 
 }
