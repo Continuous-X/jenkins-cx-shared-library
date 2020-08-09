@@ -1,5 +1,7 @@
 package com.continuousx.utils.jenkins
 
+import com.cloudbees.groovy.cps.NonCPS
+
 enum JenkinsEnv {
 
     CX_SHARED_LIB_BRANCH,
@@ -8,6 +10,7 @@ enum JenkinsEnv {
     GIT_COMMIT
 
     @Override
+    @NonCPS
     String toString() {
         name()
     }
