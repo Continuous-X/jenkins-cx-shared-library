@@ -11,7 +11,7 @@ import com.continuousx.jenkins.stages.scanner.StageScanHostConfig
 class PipelineMavenBuildConfig implements PipelineConfig {
 
     final static PipelineType type = PipelineType.PIPELINE_MAVEN_BUILD
-    LogLevelType logLevelType = LogLevelType.WARNING
+    LogLevelType logLevelType
 
     StageMavenCompileConfig stageConfigMavenCompile = new StageMavenCompileConfig()
     StageGithubProtectionCheckConfig stageGithubProtectionCheckConfig = new StageGithubProtectionCheckConfig()

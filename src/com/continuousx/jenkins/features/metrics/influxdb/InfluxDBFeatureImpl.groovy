@@ -7,7 +7,6 @@ import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipeline
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipelineStage
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.result.MeasurementResult
-import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.logger.PipelineLogger
 import com.continuousx.utils.github.GitURLParser
 import com.continuousx.utils.jenkins.JenkinsPluginCheck
@@ -25,13 +24,12 @@ class InfluxDBFeatureImpl implements InfluxDBFeature, Feature {
     protected List<MeasurementOperatingPipeline> pipelineList = []
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected InfluxDBFeatureImpl(final def jenkinsContext, LogLevelType logLevelType = LogLevelType.WARNING) {
+    protected InfluxDBFeatureImpl(final def jenkinsContext, final PipelineLogger logger) {
         Objects.requireNonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
         this.neededPlugins = ['influxdb']
         measurementOperating.featureType = TYPE
-        logger = new PipelineLogger(this.jenkinsContext)
-        logger.logLevelType = logLevelType
+        this.logger = logger
         if (this.jenkinsContext.env.GIT_URL != null) {
             final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
             measurementOperating.setGHOrganization(gitUrlParser.getOrgaName())

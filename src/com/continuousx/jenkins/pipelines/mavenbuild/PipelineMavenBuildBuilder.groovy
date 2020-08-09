@@ -3,7 +3,7 @@ package com.continuousx.jenkins.pipelines.mavenbuild
 class PipelineMavenBuildBuilder {
 
     private def jenkinsContext
-    private PipelineMavenBuildConfig pipelineConfig = new PipelineMavenBuildConfig()
+    private PipelineMavenBuildConfig pipelineConfig
 
     @SuppressWarnings('GroovyUntypedAccess')
     PipelineMavenBuildBuilder(final def jenkinsContext) {

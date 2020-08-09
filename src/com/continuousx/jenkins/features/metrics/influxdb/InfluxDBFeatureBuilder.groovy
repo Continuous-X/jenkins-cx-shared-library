@@ -2,22 +2,30 @@ package com.continuousx.jenkins.features.metrics.influxdb
 
 import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.jenkins.logger.LogLevelType
+import com.continuousx.jenkins.logger.PipelineLogger
 
 class InfluxDBFeatureBuilder {
 
     private def jenkinsContext
-    private LogLevelType logLevelType
+    private PipelineLogger logger
 
     @SuppressWarnings('GroovyUntypedAccess')
-    InfluxDBFeatureBuilder(final def jenkinsContext, LogLevelType logLevelType1 = LogLevelType.WARNING) {
+    InfluxDBFeatureBuilder(final def jenkinsContext) {
         Objects.requireNonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
-        this.logLevelType = logLevelType1
+        this.logger = new PipelineLogger(this.jenkinsContext)
+        this.logger.setLogLevelType(LogLevelType.WARNING)
+    }
+
+    InfluxDBFeatureBuilder withLogger(final PipelineLogger logger) {
+        Objects.requireNonNull(logger)
+        this.logger = logger
+        this
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
     InfluxDBFeatureImpl build() {
-        new InfluxDBFeatureImpl(jenkinsContext, logLevelType)
+        new InfluxDBFeatureImpl(jenkinsContext, logger)
     }
 }
