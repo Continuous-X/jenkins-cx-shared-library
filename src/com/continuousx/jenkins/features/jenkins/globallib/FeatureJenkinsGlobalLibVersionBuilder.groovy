@@ -1,6 +1,6 @@
 package com.continuousx.jenkins.features.jenkins.globallib
 
-import com.cloudbees.groovy.cps.NonCPS
+
 import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.logger.PipelineLogger
 
@@ -31,7 +31,7 @@ class FeatureJenkinsGlobalLibVersionBuilder {
 
     @SuppressWarnings('GroovyUntypedAccess')
     FeatureJenkinsGlobalLibVersionImpl build() {
-        new FeatureJenkinsGlobalLibVersionImpl(jenkinsContext, featureConfig)
+        new FeatureJenkinsGlobalLibVersionImpl(jenkinsContext, featureConfig, logger)
     }
 
 }
