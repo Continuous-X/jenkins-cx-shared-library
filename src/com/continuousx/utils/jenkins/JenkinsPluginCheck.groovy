@@ -14,11 +14,11 @@ class JenkinsPluginCheck {
     private def jenkinsContext
     private PipelineLogger logger
 
-    JenkinsPluginCheck(def jenkinsContext) {
+    JenkinsPluginCheck(def jenkinsContext, LogLevelType logLevelType = LogLevelType.INFO) {
         Objects.nonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
         logger = new PipelineLogger(jenkinsContext)
-        logger.logLevelType= LogLevelType.INFO
+        logger.logLevelType = logLevelType
     }
 
     @NonCPS
@@ -46,8 +46,7 @@ class JenkinsPluginCheck {
     @NonCPS
     JenkinsPluginCheck addNeededPluginList(List<String> pluginsList) {
         Objects.nonNull(pluginsList)
-        //assert pluginsList.size() > 0
-
+        logger.logInfo "plugin list: ${pluginsList.size()}"
         this.pluginListNeeded = pluginsList
         return this
     }
