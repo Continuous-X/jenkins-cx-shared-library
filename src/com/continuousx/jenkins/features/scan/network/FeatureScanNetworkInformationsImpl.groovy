@@ -34,7 +34,17 @@ properties: ${inetAdresses.getProperties()}
             }
             logger.logInfo 'list interface adresses'
             networkInterface.getInterfaceAddresses().each {interfaceAdresses ->
-                logger.logInfo "adress: ${interfaceAdresses.getAddress().toString()} / broadcast: ${interfaceAdresses.getBroadcast().toString()}"
+                    logger.logInfo """
+adress: ${interfaceAdresses.getAddress()}
+    adress: ${interfaceAdresses.getAddress().getAddress()}
+    host adress: ${interfaceAdresses.getAddress().getHostAddress()}
+    host name: ${interfaceAdresses.getAddress().getHostName()}
+    host adress: ${interfaceAdresses.getAddress().getHostAddress()}
+    canonical host adress: ${interfaceAdresses.getAddress().getCanonicalHostName()}
+broadcast: ${interfaceAdresses.getBroadcast()}
+properties: ${interfaceAdresses.getProperties()}
+
+"""
             }
             logger.logInfo 'list sub network interfaces'
             networkInterface.getSubInterfaces().each {subInterfaces ->
