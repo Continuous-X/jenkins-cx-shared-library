@@ -23,8 +23,10 @@ class FeatureScanNetworkInformationsImpl extends AbstractFeature {
         NetworkInterface.getNetworkInterfaces().each {networkInterface ->
             logger.logInfo 'list inet adresses'
             networkInterface.getInetAddresses().each {inetAdresses ->
-                logger.logInfo "adress: ${inetAdresses.getHostAddress()} / name: ${inetAdresses.getHostName()}"
+                logger.logInfo "\ninet: ${inetAdresses.toString()}\n"
+                //logger.logInfo "adress: ${inetAdresses.getHostAddress()} / name: ${inetAdresses.getHostName()}"
             }
+/*
             logger.logInfo 'list interface adresses'
             networkInterface.getInterfaceAddresses().each {interfaceAdresses ->
                 logger.logInfo "adress: ${interfaceAdresses.getAddress().toString()} / broadcast: ${interfaceAdresses.getBroadcast().toString()}"
@@ -35,6 +37,7 @@ class FeatureScanNetworkInformationsImpl extends AbstractFeature {
                 subInterfaces.getInetAddresses().each {subInetAdresses ->
                     logger.logInfo "adress: ${subInetAdresses.getHostAddress()} / name: ${subInetAdresses.getHostName()}"
                 }
+*/
             }
         }
     }
