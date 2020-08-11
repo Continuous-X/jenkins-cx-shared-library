@@ -22,10 +22,12 @@ class FeatureScanNetworkInformationsImpl extends AbstractFeature {
         logger.logInfo "IP(6): ${Inet6Address.getLocalHost()}"
         logger.logInfo "network methods: ${NetworkInterface.getMethods()}"
         NetworkInterface.getNetworkInterfaces().each {networkInterface ->
-            String readedMac = networkInterface.getHardwareAddress()?.encodeHex().toString()
+            byte[] readedMac = networkInterface.getHardwareAddress()
             StringBuilder formatedMac = new StringBuilder()
-            readedMac?.toCharArray().eachWithIndex {myChar, index ->
-                index.mod(2) != 0 ? formatedMac.append(myChar).append('-') : formatedMac.append(myChar)
+            if (readedMac != null) {
+                readedMac.encodeHex().toString().toCharArray().eachWithIndex { myChar, index ->
+                    index.mod(2) != 0 ? formatedMac.append(myChar).append('-') : formatedMac.append(myChar)
+                }
             }
             logger.logInfo "list inet adresses (${networkInterface.getInetAddresses().toList().size()}): ${readedMac} / ${formatedMac}"
             networkInterface.getInetAddresses().each {inetAdresses ->
