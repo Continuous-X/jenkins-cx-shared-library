@@ -26,7 +26,8 @@ class FeatureScanNetworkInformationsImpl extends AbstractFeature {
             StringBuilder formatedMac = new StringBuilder()
             if (readedMac != null) {
                 readedMac.encodeHex().toString().toCharArray().eachWithIndex { myChar, index ->
-                    index.mod(2) == 0 && index < 10 ? formatedMac.append(myChar) : formatedMac.append(myChar).append('-')
+                    logger.logInfo "index (${index}): ${formatedMac}"
+                    index.mod(2) == 0 && index < 11 ? formatedMac.append(myChar) : formatedMac.append(myChar).append('-')
                 }
             }
             logger.logInfo "list inet adresses (${networkInterface.getInetAddresses().toList().size()}): ${readedMac} / ${formatedMac}"
