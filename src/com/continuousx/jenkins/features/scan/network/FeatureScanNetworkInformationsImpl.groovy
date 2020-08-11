@@ -37,8 +37,8 @@ class FeatureScanNetworkInformationsImpl extends AbstractFeature {
                 subInterfaces.getInetAddresses().each {subInetAdresses ->
                     logger.logInfo "adress: ${subInetAdresses.getHostAddress()} / name: ${subInetAdresses.getHostName()}"
                 }
-*/
             }
+*/
         }
     }
 
