@@ -21,7 +21,7 @@ class FeatureScanNetworkInformationsImpl extends AbstractFeature {
         logger.logInfo "IP(4): ${Inet4Address.getLocalHost()}"
         logger.logInfo "IP(6): ${Inet6Address.getLocalHost()}"
         NetworkInterface.getNetworkInterfaces().each {networkInterface ->
-            logger.logInfo 'list inet adresses'
+            logger.logInfo "list inet adresses (${networkInterface.getInetAddresses().toList().size()})"
             networkInterface.getInetAddresses().each {inetAdresses ->
                 logger.logInfo """
 adress: ${inetAdresses.getAddress()} 
@@ -32,7 +32,7 @@ properties: ${inetAdresses.getProperties()}
 
 """
             }
-            logger.logInfo 'list interface adresses'
+            logger.logInfo "list interface adresses (${networkInterface.getInterfaceAddresses().size()})"
             networkInterface.getInterfaceAddresses().each {interfaceAdresses ->
                     logger.logInfo """
 adress: ${interfaceAdresses.getAddress()}
@@ -46,7 +46,7 @@ properties: ${interfaceAdresses.getProperties()}
 
 """
             }
-            logger.logInfo 'list sub network interfaces'
+            logger.logInfo "list sub network interfaces (${networkInterface.getSubInterfaces().toList().size()})"
             networkInterface.getSubInterfaces().each {subInterfaces ->
                 logger.logInfo "\tsub network interface: ${subInterfaces.getDisplayName()}"
                 subInterfaces.getInetAddresses().each {subInetAdresses ->
