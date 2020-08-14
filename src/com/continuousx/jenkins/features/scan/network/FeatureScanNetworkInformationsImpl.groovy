@@ -29,7 +29,7 @@ class FeatureScanNetworkInformationsImpl extends AbstractFeature {
                     index.mod(2) == 0 ? formatedMac.append(myChar) : formatedMac.append(myChar).append('-')
                     logger.logInfo "index (${index}/${myChar}/${index.mod(2) == 0}): ${formatedMac}"
                 }
-                formatedMac.replace(formatedMac.substring(formatedMac.length()-1))
+                formatedMac.toString().replace(formatedMac.substring(formatedMac.length()-1),'')
             }
             logger.logInfo "list inet adresses (${networkInterface.getInetAddresses().toList().size()}): ${readedMac} / ${formatedMac}"
             networkInterface.getInetAddresses().each {inetAdresses ->
