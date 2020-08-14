@@ -67,7 +67,7 @@ properties: ${interfaceAdresses.getProperties()}
             }
 
             logger.logInfo 'get info from host'
-            logger.logInfo InetAddress.getByName('fritz.box')
+            logger.logInfo InetAddress.getByName('fritz.box').getHostAddress()
         }
     }
 
