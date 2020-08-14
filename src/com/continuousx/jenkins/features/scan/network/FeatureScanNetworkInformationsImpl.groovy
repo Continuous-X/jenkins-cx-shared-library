@@ -28,7 +28,7 @@ class FeatureScanNetworkInformationsImpl extends AbstractFeature {
             if (readedMac != null) {
                 StringBuilder formatedMacBuilder = new StringBuilder()
                 readedMac.encodeHex().toString().toCharArray().eachWithIndex { myChar, index ->
-                    index.mod(2) == 0 ? formatedMacBuilder.append(myChar) : formatedMacBuilder.append(myChar).append('-')
+                    index.mod(2) == 0 ? formatedMacBuilder.append(myChar) : formatedMacBuilder.append(myChar).append(':')
                     logger.logInfo "index (${index}/${myChar}/${index.mod(2) == 0}): ${formatedMacBuilder}"
                 }
                 formatedMac = StringUtils.chop(formatedMacBuilder.toString())
@@ -65,6 +65,9 @@ properties: ${interfaceAdresses.getProperties()}
                     logger.logInfo "adress: ${subInetAdresses.getHostAddress()} / name: ${subInetAdresses.getHostName()}"
                 }
             }
+
+            logger.logInfo 'get info from host'
+            logger.logInfo InetAddress.getByName('fritz.box')
         }
     }
 
