@@ -3,6 +3,7 @@ package com.continuousx.jenkins.features.scan.network
 import com.continuousx.jenkins.features.AbstractFeature
 import com.continuousx.jenkins.logger.PipelineLogger
 import com.continuousx.utils.scan.os.OS
+import org.apache.commons.lang3.StringUtils
 
 class FeatureScanNetworkInformationsImpl extends AbstractFeature {
 
@@ -23,13 +24,14 @@ class FeatureScanNetworkInformationsImpl extends AbstractFeature {
         logger.logInfo "network methods: ${NetworkInterface.getMethods()}"
         NetworkInterface.getNetworkInterfaces().each {networkInterface ->
             byte[] readedMac = networkInterface.getHardwareAddress()
-            StringBuilder formatedMac = new StringBuilder()
+            String formatedMac = ''
             if (readedMac != null) {
+                StringBuilder formatedMacBuilder = new StringBuilder()
                 readedMac.encodeHex().toString().toCharArray().eachWithIndex { myChar, index ->
-                    index.mod(2) == 0 ? formatedMac.append(myChar) : formatedMac.append(myChar).append('-')
-                    logger.logInfo "index (${index}/${myChar}/${index.mod(2) == 0}): ${formatedMac}"
+                    index.mod(2) == 0 ? formatedMacBuilder.append(myChar) : formatedMacBuilder.append(myChar).append('-')
+                    logger.logInfo "index (${index}/${myChar}/${index.mod(2) == 0}): ${formatedMacBuilder}"
                 }
-                formatedMac.toString().replace(formatedMac.substring(formatedMac.length()-1),'')
+                formatedMac = StringUtils.chop(formatedMacBuilder.toString())
             }
             logger.logInfo "list inet adresses (${networkInterface.getInetAddresses().toList().size()}): ${readedMac} / ${formatedMac}"
             networkInterface.getInetAddresses().each {inetAdresses ->
