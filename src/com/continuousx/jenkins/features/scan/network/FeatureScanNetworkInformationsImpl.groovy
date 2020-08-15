@@ -33,7 +33,7 @@ class FeatureScanNetworkInformationsImpl extends AbstractFeature {
                 }
                 formatedMac = StringUtils.chop(formatedMacBuilder.toString())
             }
-            logger.logInfo "list inet adresses (${networkInterface.getInetAddresses().toList().size()}): ${readedMac} / ${formatedMac}"
+            logger.logInfo "list inet adresses (${networkInterface.getInetAddresses().toList().size()}) / MAC ${readedMac} / ${formatedMac}"
             networkInterface.getInetAddresses().each {inetAdresses ->
                 logger.logInfo """
 adress: ${inetAdresses.getAddress()} 
@@ -68,6 +68,7 @@ properties: ${interfaceAdresses.getProperties()}
 
             logger.logInfo 'get info from host'
             logger.logInfo InetAddress.getByName('fritz.box').getHostAddress()
+            
         }
     }
 
