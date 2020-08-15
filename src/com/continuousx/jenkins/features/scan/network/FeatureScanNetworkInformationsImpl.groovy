@@ -72,7 +72,7 @@ properties: ${interfaceAdresses.getProperties()}
             logger.logInfo "router adress: ${routerAdress}"
             logger.logInfo 'scan ip\'s'
             Socket socket = new Socket()
-            0.step 255, 1, {segment ->
+            1.step 256, 1, {segment ->
 
                 logger.logInfo "scan '${routerSubAdress}.${segment}'"
             }
