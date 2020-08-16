@@ -12,7 +12,7 @@ class StageJenkinsConvertPluginsTxtBuilder {
 
     @SuppressWarnings('GroovyUntypedAccess')
     StageJenkinsConvertPluginsTxtBuilder(final def jenkinsContext) {
-        Objects.nonNull(jenkinsContext)
+        Objects.requireNonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
         this.logger = new PipelineLogger(this.jenkinsContext)
         this.logger.setLogLevelType(LogLevelType.WARNING)
@@ -20,7 +20,7 @@ class StageJenkinsConvertPluginsTxtBuilder {
 
     @NonCPS
     StageJenkinsConvertPluginsTxtBuilder withStageConfig(final StageJenkinsConvertPluginsTxtConfig stageConfig) {
-        Objects.nonNull(stageConfig)
+        Objects.requireNonNull(stageConfig)
         this.m_stageConfig = stageConfig
         return this
     }

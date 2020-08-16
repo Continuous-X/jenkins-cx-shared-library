@@ -31,7 +31,7 @@ class FeatureMavenDepToJenkinsPluginsTxtBuilder {
 
     @SuppressWarnings('GroovyUntypedAccess')
     FeatureMavenDepToJenkinsPluginsTxtImpl build() {
-        new FeatureMavenDepToJenkinsPluginsTxtImpl(jenkinsContext, featureConfig)
+        new FeatureMavenDepToJenkinsPluginsTxtImpl(jenkinsContext, featureConfig, logger)
     }
 
 }

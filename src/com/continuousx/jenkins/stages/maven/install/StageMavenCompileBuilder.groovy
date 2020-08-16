@@ -12,7 +12,7 @@ class StageMavenCompileBuilder {
 
     @SuppressWarnings('GroovyUntypedAccess')
     StageMavenCompileBuilder(final def jenkinsContext) {
-        Objects.nonNull(jenkinsContext)
+        Objects.requireNonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
         this.logger = new PipelineLogger(this.jenkinsContext)
         this.logger.setLogLevelType(LogLevelType.WARNING)
@@ -20,7 +20,7 @@ class StageMavenCompileBuilder {
 
     @NonCPS
     StageMavenCompileBuilder withStageConfig(final StageMavenCompileConfig stageConfig) {
-        Objects.nonNull(stageConfig)
+        Objects.requireNonNull(stageConfig)
         this.stageConfig = stageConfig
         this
     }

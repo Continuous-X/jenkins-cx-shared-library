@@ -59,8 +59,7 @@ class FeatureMavenDepToJenkinsPluginsTxtImplTest extends Specification {
         FeatureMavenDepToJenkinsPluginsTxtImpl feature = featureBuilder
                 .withFeatureConfig(
                         new FeatureMavenDepToJenkinsPluginsTxtConfig(
-                                failOnError: failOnError,
-                                logLevelType: loglevel
+                                failOnError: failOnError
                         )
                 )
                 .build()
@@ -68,15 +67,14 @@ class FeatureMavenDepToJenkinsPluginsTxtImplTest extends Specification {
         assert feature != null
 
         assert feature.featureConfig.failOnError == expectedFailOnError
-        assert feature.featureConfig.logLevelType == expectedLogLevel
 
         where:
-        failOnError || loglevel             || expectedFailOnError || expectedLogLevel
-        true        || LogLevelType.INFO    || true                || LogLevelType.INFO
-        false       || LogLevelType.INFO    || false               || LogLevelType.INFO
-        true        || LogLevelType.WARNING || true                || LogLevelType.WARNING
-        true        || LogLevelType.DEBUG   || true                || LogLevelType.DEBUG
-        true        || LogLevelType.ERROR   || true                || LogLevelType.ERROR
+        failOnError || expectedFailOnError
+        true        || true
+        false       || false
+        true        || true
+        true        || true
+        true        || true
     }
 
     def 'should be config Feature Object failed'() {

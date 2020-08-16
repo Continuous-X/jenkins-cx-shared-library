@@ -1,7 +1,6 @@
 package com.continuousx.utils.jenkins
 
-
-import com.continuousx.utils.jenkins.JenkinsPluginCheck
+import org.apache.commons.lang.ObjectUtils
 import org.codehaus.groovy.runtime.powerassert.PowerAssertionError
 import spock.lang.Specification
 
@@ -43,21 +42,6 @@ class JenkinsPluginCheckTest extends Specification {
         assert checkResult == false
     }
 
-    def "should be failed with empty needed lugin list"() {
-        given:
-        List<String> pluginListInstalled = ["test-plugin-1", "test-plugin-2", "test-plugin-3"]
-        List<String> pluginListNeeded = []
-        JenkinsPluginCheck pluginCheck = new JenkinsPluginCheck(pipelineMock)
-
-        when:
-        boolean checkResult = pluginCheck.addInstalledPlugins(pluginListInstalled)
-                .addNeededPluginList(pluginListNeeded)
-                .isPluginListInstalled()
-
-        then:
-        def ex = thrown(AssertionError)
-    }
-
     def "should be failed when needed plugin list is null"() {
         given:
         List<String> pluginListInstalled = ["test-plugin-1", "test-plugin-2", "test-plugin-3"]
@@ -83,7 +67,7 @@ class JenkinsPluginCheckTest extends Specification {
                 .isPluginListInstalled()
 
         then:
-        def ex = thrown(PowerAssertionError)
+        def ex = thrown(NullPointerException)
     }
 
 }

@@ -35,22 +35,20 @@ class FeatureGHProtectionCheckImplTest extends Specification {
         expect:
         Feature feature = builder.withFeatureConfig(
                 new FeatureGHProtectionCheckConfig(
-                        logLevelType: loglevel,
                         failOnError: failOnError
                 )
         ).build()
 
 
         assert feature != null
-        assert feature.featureConfig.logLevelType == expectedLogLevel
         assert feature.featureConfig.failOnError == expectedFailOnError
 
         where:
-        failOnError || loglevel             || expectedLogLevel     || expectedFailOnError
-        true        || LogLevelType.DEBUG   || LogLevelType.DEBUG   || true
-        true        || LogLevelType.INFO    || LogLevelType.INFO    || true
-        false       || LogLevelType.WARNING || LogLevelType.WARNING || false
-        false       || LogLevelType.ERROR   || LogLevelType.ERROR   || false
+        failOnError || expectedFailOnError
+        true        || true
+        true        || true
+        false       || false
+        false       || false
     }
 
     def 'should be config Feature Object failed'() {

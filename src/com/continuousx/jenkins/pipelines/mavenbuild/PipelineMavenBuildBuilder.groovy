@@ -7,12 +7,12 @@ class PipelineMavenBuildBuilder {
 
     @SuppressWarnings('GroovyUntypedAccess')
     PipelineMavenBuildBuilder(final def jenkinsContext) {
-        Objects.nonNull(jenkinsContext)
+        Objects.requireNonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
     }
 
     PipelineMavenBuildBuilder withPipelineConfig(final PipelineMavenBuildConfig pipelineConfig) {
-        Objects.nonNull(pipelineConfig)
+        Objects.requireNonNull(pipelineConfig)
         this.pipelineConfig = pipelineConfig
         this
     }

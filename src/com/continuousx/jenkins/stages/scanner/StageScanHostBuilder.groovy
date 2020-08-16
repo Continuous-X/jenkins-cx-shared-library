@@ -12,7 +12,7 @@ class StageScanHostBuilder {
 
     @SuppressWarnings('GroovyUntypedAccess')
     StageScanHostBuilder(final def jenkinsContext) {
-        Objects.nonNull(jenkinsContext)
+        Objects.requireNonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
         this.logger = new PipelineLogger(this.jenkinsContext)
         this.logger.setLogLevelType(LogLevelType.WARNING)
@@ -20,7 +20,7 @@ class StageScanHostBuilder {
 
     @NonCPS
     StageScanHostBuilder withStageConfig(final StageScanHostConfig stageConfig) {
-        Objects.nonNull(stageConfig)
+        Objects.requireNonNull(stageConfig)
         this.stageConfig = stageConfig
         this
     }

@@ -15,7 +15,7 @@ class JenkinsPluginCheck {
     private PipelineLogger logger
 
     JenkinsPluginCheck(def jenkinsContext) {
-        Objects.nonNull(jenkinsContext)
+        Objects.requireNonNull(jenkinsContext)
         this.jenkinsContext = jenkinsContext
         this.logger = new PipelineLogger(this.jenkinsContext)
         this.logger.setLogLevelType(LogLevelType.WARNING)
@@ -30,7 +30,7 @@ class JenkinsPluginCheck {
 
     @NonCPS
     private loadInstalledPlugins(def jenkins = Jenkins.getInstanceOrNull()) {
-        Objects.nonNull(jenkins)
+        Objects.requireNonNull(jenkins)
         this.pluginListInstalled = mapInstalledPlugins(jenkins?.getPluginManager()?.getPlugins())
     }
 
@@ -45,14 +45,14 @@ class JenkinsPluginCheck {
 
     @NonCPS
     JenkinsPluginCheck addInstalledPlugins(List<String> pluginsList = loadInstalledPlugins()) {
-        Objects.nonNull(pluginsList)
+        Objects.requireNonNull(pluginsList)
         this.pluginListInstalled = pluginsList
         return this
     }
 
     @NonCPS
     JenkinsPluginCheck addNeededPluginList(List<String> pluginsList) {
-        Objects.nonNull(pluginsList)
+        Objects.requireNonNull(pluginsList)
         logger.logInfo "plugin list: ${pluginsList.size()}"
         this.pluginListNeeded = pluginsList
         return this
@@ -73,7 +73,7 @@ class JenkinsPluginCheck {
 
     @NonCPS
     private boolean isPluginInstalled(String pluginName) {
-        Objects.nonNull(pluginName)
+        Objects.requireNonNull(pluginName)
         assert pluginName.length() > 0
         return pluginListInstalled.find{ it.equals(pluginName) }
     }
