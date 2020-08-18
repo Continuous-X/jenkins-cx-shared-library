@@ -73,8 +73,15 @@ properties: ${interfaceAdresses.getProperties()}
             logger.logInfo 'scan ip\'s'
             Socket socket = new Socket()
             1.step 256, 1, {segment ->
-
-                logger.logInfo "scan '${routerSubAdress}.${segment}'"
+                final String searchIP = "${routerSubAdress}.${segment}"
+                logger.logInfo "scan '${searchIP}'"
+                try {
+                    URLConnection connection = new URL(searchIP).openConnection()
+                    connection.connect()
+                    logger.logInfo "IP ${searchIP} in use - yeeeehaaaaa"
+                } catch (Exception exception) {
+                    logger.logError "IP ${searchIP} error - ${exception.message}"
+                }
             }
             
         }
