@@ -73,7 +73,7 @@ properties: ${interfaceAdresses.getProperties()}
             logger.logInfo 'scan ip\'s'
             Socket socket = new Socket()
             1.step 256, 1, {segment ->
-                final String searchIP = "${routerSubAdress}.${segment}"
+                final String searchIP = "http://${routerSubAdress}.${segment}
                 logger.logInfo "scan '${searchIP}'"
                 try {
                     URLConnection connection = new URL(searchIP).openConnection()
