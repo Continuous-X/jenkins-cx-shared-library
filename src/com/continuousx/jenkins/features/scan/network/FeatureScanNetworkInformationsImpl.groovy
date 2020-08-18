@@ -77,6 +77,7 @@ properties: ${interfaceAdresses.getProperties()}
                 logger.logInfo "scan '${searchIP}'"
                 try {
                     URLConnection connection = new URL(searchIP).openConnection()
+                    connection.setConnectTimeout(3000)
                     connection.connect()
                     logger.logInfo "IP ${searchIP} in use - yeeeehaaaaa"
                 } catch (Exception exception) {
