@@ -1,12 +1,11 @@
 package com.continuousx.jenkins.features.maven.dependencies
 
-import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.features.AbstractFeature
 import com.continuousx.jenkins.features.exceptions.FeatureException
+import com.continuousx.jenkins.logger.PipelineLogger
 import com.continuousx.utils.maven.MavenPom
 import org.apache.maven.model.Model
 import org.apache.maven.model.Parent
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader
 
 class FeatureMavenDepToJenkinsPluginsTxtImpl extends AbstractFeature {
 
@@ -16,10 +15,11 @@ class FeatureMavenDepToJenkinsPluginsTxtImpl extends AbstractFeature {
     private Model model
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected FeatureMavenDepToJenkinsPluginsTxtImpl(final def jenkinsContext, final FeatureMavenDepToJenkinsPluginsTxtConfig featureConfig) {
+    protected FeatureMavenDepToJenkinsPluginsTxtImpl(final def jenkinsContext, final FeatureMavenDepToJenkinsPluginsTxtConfig featureConfig, final PipelineLogger logger) {
         super(jenkinsContext,
                 ['workflow-basic-steps'],
-                featureConfig)
+                featureConfig,
+                logger)
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
@@ -29,7 +29,7 @@ class FeatureMavenDepToJenkinsPluginsTxtImpl extends AbstractFeature {
 
     @SuppressWarnings('GroovyUntypedAccess')
     FeatureMavenDepToJenkinsPluginsTxtImpl readPomXmlContent(String pomContent = loadPomContent()) throws FeatureException {
-        Objects.nonNull(pomContent)
+        Objects.requireNonNull(pomContent)
         this.model = new MavenPom(logger: logger).getMavenModel(pomContent)
         this
     }
@@ -48,7 +48,7 @@ class FeatureMavenDepToJenkinsPluginsTxtImpl extends AbstractFeature {
     }
 
     String convertDependencies2PluginsTxt() {
-        Objects.nonNull(model)
+        Objects.requireNonNull(model)
 
         StringBuilder content = new StringBuilder()
         model.getDependencyManagement().getDependencies().each { dependency ->

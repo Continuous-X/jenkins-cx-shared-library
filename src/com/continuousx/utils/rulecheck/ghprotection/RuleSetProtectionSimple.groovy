@@ -1,5 +1,6 @@
 package com.continuousx.utils.rulecheck.ghprotection
 
+import com.cloudbees.groovy.cps.NonCPS
 import com.continuousx.utils.rulecheck.Rule
 import com.continuousx.utils.rulecheck.RuleSet
 import com.continuousx.utils.rulecheck.ghprotection.rules.RuleProtectionActive
@@ -9,6 +10,7 @@ import com.continuousx.utils.rulecheck.ghprotection.rules.RuleProtectionRequireS
 class RuleSetProtectionSimple implements RuleSet {
 
     @Override
+    @NonCPS
     List<Rule> getRules() {
         List<Rule> ruleSet = [
                 new RuleProtectionActive(),

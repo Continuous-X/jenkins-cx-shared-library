@@ -5,6 +5,6 @@ class PipelineCurrentBuildMock {
     String displayName
     String projectName
     String properties
-    String buildVariables
+    Map<String, String> buildVariables
 
 }

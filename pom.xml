@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.cx.jenkins.image</groupId>
         <artifactId>parent</artifactId>
-        <version>v0.1.17</version>
+        <version>v0.1.35</version>
     </parent>
 
     <groupId>com.cx.jenkins.sharedlib</groupId>
@@ -40,7 +40,7 @@
             <dependency>
                 <groupId>org.spockframework</groupId>
                 <artifactId>spock-bom</artifactId>
-                <version>2.0-M4-groovy-3.0</version>
+                <version>1.3-groovy-2.4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -48,6 +48,22 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>com.lesfurets</groupId>
+            <artifactId>jenkins-pipeline-unit</artifactId>
+            <version>1.8</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.cloudbees</groupId>
+                    <artifactId>groovy-cps</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!-- Mandatory dependencies for using Spock -->
         <dependency>
             <groupId>org.spockframework</groupId>
@@ -66,12 +82,18 @@
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
-            <version>2.4.20</version>
+            <version>2.4.21</version>
         </dependency>
         <dependency> <!-- enables mocking of classes (in addition to interfaces) -->
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.10.18</version>
+            <version>1.10.20</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>3.3.0</version>
             <scope>test</scope>
         </dependency>
         <dependency> <!-- enables mocking of classes without default constructor (together with CGLIB) -->
@@ -95,7 +117,7 @@
                 <plugin>
                     <groupId>org.codehaus.gmavenplus</groupId>
                     <artifactId>gmavenplus-plugin</artifactId>
-                    <version>1.11.0</version>
+                    <version>1.12.1</version>
                     <executions>
                         <execution>
                             <goals>
@@ -108,6 +130,40 @@
                     </executions>
                     <configuration>
                         <targetBytecode>1.8</targetBytecode>
+                        <sources>
+                            <source>
+                                <directory>${project.basedir}/src</directory>
+                                <includes>
+                                    <include>**/*.groovy</include>
+                                </includes>
+                            </source>
+                            <source>
+                                <directory>${project.basedir}/resources</directory>
+                                <includes>
+                                    <include>**/*.groovy</include>
+                                </includes>
+                            </source>
+                            <source>
+                                <directory>${project.basedir}/vars</directory>
+                                <includes>
+                                    <include>**/*.groovy</include>
+                                </includes>
+                            </source>
+                            <source>
+                                <directory>${project.basedir}</directory>
+                                <includes>
+                                    <include>Jenkinsfile</include>
+                                </includes>
+                            </source>
+                        </sources>
+                        <testSources>
+                            <testSource>
+                                <directory>${project.basedir}/test</directory>
+                                <includes>
+                                    <include>**/*.groovy</include>
+                                </includes>
+                            </testSource>
+                        </testSources>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -117,6 +173,20 @@
                     <configuration>
                         <failIfNoTests>false</failIfNoTests>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <id>test</id>
+                            <phase>test</phase>
+                            <configuration>
+                                <includes>
+                                    <include>**./*Test.groovy</include>
+                                </includes>
+                            </configuration>
+                            <goals>
+                                <goal>test</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -124,60 +194,10 @@
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
-                <configuration>
-                    <sources>
-                        <source>
-                            <directory>${project.basedir}/src</directory>
-                            <includes>
-                                <include>**/*.groovy</include>
-                            </includes>
-                        </source>
-                        <source>
-                            <directory>${project.basedir}/resources</directory>
-                            <includes>
-                                <include>**/*.groovy</include>
-                            </includes>
-                        </source>
-                        <source>
-                            <directory>${project.basedir}/vars</directory>
-                            <includes>
-                                <include>**/*.groovy</include>
-                            </includes>
-                        </source>
-                        <source>
-                            <directory>${project.basedir}</directory>
-                            <includes>
-                                <include>Jenkinsfile</include>
-                            </includes>
-                        </source>
-                    </sources>
-                    <testSources>
-                        <testSource>
-                            <directory>${project.basedir}/test</directory>
-                            <includes>
-                                <include>**/*.groovy</include>
-                            </includes>
-                        </testSource>
-                    </testSources>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>test</id>
-                        <phase>test</phase>
-                        <configuration>
-                            <includes>
-                                <include>**./*Test.groovy</include>
-                            </includes>
-                        </configuration>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>com.github.spotbugs</groupId>

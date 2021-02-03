@@ -9,18 +9,11 @@ class FeatureMavenConfig implements FeatureConfig {
 
     final static FeatureType type = FeatureType.FEATURE_MAVEN_BUILD
     boolean failOnError = true
-    LogLevelType logLevelType = LogLevelType.INFO
 
     @Override
     @NonCPS
     FeatureType getType() {
         return type
-    }
-
-    @Override
-    @NonCPS
-    LogLevelType getLogLevelType() {
-        return logLevelType
     }
 
     @Override

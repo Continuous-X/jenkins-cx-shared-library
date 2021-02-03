@@ -4,6 +4,7 @@ package com.continuousx.jenkins.pipelines
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeature
 import com.continuousx.jenkins.features.metrics.influxdb.InfluxDBFeatureBuilder
 import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.MeasurementOperatingPipeline
+import com.continuousx.jenkins.logger.LogLevelType
 import com.continuousx.jenkins.logger.PipelineLogger
 import com.continuousx.utils.github.GitURLParser
 
@@ -38,7 +39,9 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
         this.neededPlugins = neededPlugins
         this.pipelineConfig = config
         this.currentBuild = this.jenkinsContext.currentBuild
-        logger = new PipelineLogger(jenkinsContext: this.jenkinsContext, logLevelType: this.pipelineConfig.logLevelType)
+
+        this.logger = new PipelineLogger(this.jenkinsContext)
+        this.logger.setLogLevelType(this.pipelineConfig.getLogLevelType())
 
         if (this.jenkinsContext.env.GIT_URL != null) {
             GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
@@ -47,7 +50,7 @@ abstract class AbstractPipeline implements Pipeline, Serializable {
         }
 
         measurement.pipelineType = pipelineConfig.type
-        metrics = new InfluxDBFeatureBuilder(jenkinsContext).build()
+        metrics = new InfluxDBFeatureBuilder(jenkinsContext).withLogger(logger).build()
     }
 
     abstract void runPipelineImpl()

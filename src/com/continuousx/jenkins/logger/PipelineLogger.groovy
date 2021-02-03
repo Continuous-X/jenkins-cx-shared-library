@@ -4,52 +4,52 @@ import com.cloudbees.groovy.cps.NonCPS
 
 class PipelineLogger implements Serializable {
 
-    def jenkinsContext
-    LogLevelType logLevelType
+    private def jenkinsContext
+    LogLevelType logLevelType = LogLevelType.WARNING
+
+    PipelineLogger(final def jenkinsContext) {
+        Objects.requireNonNull(jenkinsContext)
+        this.jenkinsContext = jenkinsContext
+    }
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
     void logDebug(final String logText) {
         Objects.requireNonNull(logText)
-        Objects.requireNonNull(logLevelType)
-        Objects.requireNonNull(jenkinsContext)
-        checkPrint(LogLevelType.DEBUG) ? this.jenkinsContext.log.debug(logText) : ''
+        boolean checked = checkPrint(LogLevelType.DEBUG)
+        checked ? this.jenkinsContext.log.debug(logText) : ''
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
     void logInfo(final String logText) {
         Objects.requireNonNull(logText)
-        Objects.requireNonNull(logLevelType)
-        Objects.requireNonNull(jenkinsContext)
-        checkPrint(LogLevelType.INFO) ? this.jenkinsContext.log.info(logText) : ''
+        boolean checked = checkPrint(LogLevelType.INFO)
+        checked ? this.jenkinsContext.log.info(logText) : ''
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
     void logWarning(final String logText) {
         Objects.requireNonNull(logText)
-        Objects.requireNonNull(logLevelType)
-        Objects.requireNonNull(jenkinsContext)
-        checkPrint(LogLevelType.WARNING) ? this.jenkinsContext.log.warning(logText) : ''
+        boolean checked = checkPrint(LogLevelType.WARNING)
+        checked ? this.jenkinsContext.log.warning(logText) : ''
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
     void logError(final String logText) {
         Objects.requireNonNull(logText)
-        Objects.requireNonNull(logLevelType)
-        Objects.requireNonNull(jenkinsContext)
-        checkPrint(LogLevelType.ERROR) ? this.jenkinsContext.log.error(logText) : ''
+        boolean checked = checkPrint(LogLevelType.ERROR)
+        checked ? this.jenkinsContext.log.error(logText) : ''
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
     @NonCPS
     void logFatal(final String logText) {
         Objects.requireNonNull(logText)
-        Objects.requireNonNull(logLevelType)
-        Objects.requireNonNull(jenkinsContext)
-        checkPrint(LogLevelType.FATAL) ? this.jenkinsContext.log.fatal(logText) : ''
+        boolean checked = checkPrint(LogLevelType.FATAL)
+        checked ? this.jenkinsContext.log.fatal(logText) : ''
     }
 
     @NonCPS

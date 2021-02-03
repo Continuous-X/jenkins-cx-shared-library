@@ -1,6 +1,6 @@
 package resource.jenkins
 
-class PipelineEnvMock {
+class PipelineEnvMock /*extends EnvActionImpl*/ {
 
     String GIT_URL = 'https://github.com/Continuous-X/jenkins-cx.git'
     String HTTP_PROXY_HOST = 'proxy'

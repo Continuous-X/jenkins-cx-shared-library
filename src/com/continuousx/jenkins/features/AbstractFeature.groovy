@@ -27,17 +27,20 @@ abstract class AbstractFeature implements Feature, Serializable{
     protected AbstractFeature(
             final def paramJenkinsContext,
             final List<String> paramNeededPlugins,
-            final FeatureConfig paramFeatureConfig) {
+            final FeatureConfig paramFeatureConfig,
+            final PipelineLogger logger) {
         Objects.requireNonNull(paramJenkinsContext)
         Objects.requireNonNull(paramNeededPlugins)
         Objects.requireNonNull(paramFeatureConfig)
+        Objects.requireNonNull(logger)
 
         neededPlugins = []
         jenkinsContext = paramJenkinsContext
         neededPlugins = paramNeededPlugins
         featureConfig = paramFeatureConfig
 
-        logger = new PipelineLogger(jenkinsContext: jenkinsContext, logLevelType: featureConfig.logLevelType)
+        this.logger = logger
+        logger.logDebug"create feature ${featureConfig.type}"
 
         measurementOperating.featureType = featureConfig.type
         if (this.jenkinsContext.env.GIT_URL != null) {
@@ -46,12 +49,13 @@ abstract class AbstractFeature implements Feature, Serializable{
             measurementOperating.setGHRepository(gitUrlParser.getRepoName())
         }
 
-        metrics = new InfluxDBFeatureBuilder(jenkinsContext).build()
+        metrics = new InfluxDBFeatureBuilder(jenkinsContext).withLogger(logger).build()
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
     boolean checkNeededPlugins() {
         return new JenkinsPluginCheck(jenkinsContext)
+                .withLogger(this.logger)
                 .addInstalledPlugins()
                 .addNeededPluginList(neededPlugins)
                 .isPluginListInstalled()

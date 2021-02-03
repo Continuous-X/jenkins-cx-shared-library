@@ -7,6 +7,7 @@ import com.continuousx.jenkins.features.metrics.influxdb.measurements.operating.
 import com.continuousx.jenkins.logger.PipelineLogger
 import com.continuousx.utils.github.GitURLParser
 import com.continuousx.utils.jenkins.JenkinsPluginCheck
+import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
 
 abstract class AbstractStage implements Stage, Serializable {
 
@@ -27,10 +28,11 @@ abstract class AbstractStage implements Stage, Serializable {
     protected PipelineLogger logger
 
     @SuppressWarnings('GroovyUntypedAccess')
-    protected AbstractStage(final def paramJenkinsContext, final List<String> paramNeededPlugins, final StageConfig paramStageConfig) {
+    protected AbstractStage(final def paramJenkinsContext, final List<String> paramNeededPlugins, final StageConfig paramStageConfig, final PipelineLogger logger) {
         Objects.requireNonNull(paramJenkinsContext)
         Objects.requireNonNull(paramNeededPlugins)
         Objects.requireNonNull(paramStageConfig)
+        Objects.requireNonNull(logger)
 
         neededPlugins = []
         jenkinsContext = paramJenkinsContext
@@ -38,31 +40,31 @@ abstract class AbstractStage implements Stage, Serializable {
         stageConfig = paramStageConfig
         currentBuild = this.jenkinsContext.currentBuild
 
-        logger = new PipelineLogger(jenkinsContext: jenkinsContext, logLevelType: stageConfig.logLevelType)
-
-        logger.logDebug("create stage ${stageConfig.type}")
+        this.logger = logger
+        logger.logDebug"create stage ${stageConfig.type}"
 
         measurement.active = stageConfig.active
         measurement.failOnError = stageConfig.failOnError
         measurement.stageType = stageConfig.type
         if (this.jenkinsContext.env.GIT_URL != null) {
-            final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL)
+            final GitURLParser gitUrlParser = new GitURLParser(this.jenkinsContext.env.GIT_URL.toString())
             measurement.setGHOrganization(gitUrlParser.getOrgaName())
             measurement.setGHRepository(gitUrlParser.getRepoName())
         }
 
-        metrics = new InfluxDBFeatureBuilder(paramJenkinsContext).build()
-        logger.logInfo("Stage Constructor ready")
-        logger.logInfo("currentBuild ${currentBuild}")
-        logger.logInfo("displayName ${currentBuild.displayName}")
-        logger.logInfo("projectname ${currentBuild.projectName}")
-        logger.logInfo("properties ${currentBuild.properties}")
-        logger.logInfo("build variables ${currentBuild.buildVariables}")
+        metrics = new InfluxDBFeatureBuilder(paramJenkinsContext).withLogger(logger).build()
+        logger.logDebug"Stage Constructor ready"
+        logger.logDebug"currentBuild ${currentBuild}"
+        logger.logDebug"displayName ${currentBuild.displayName}"
+        logger.logDebug"projectname ${currentBuild.projectName}"
+        logger.logDebug"properties ${currentBuild.properties}"
+        logger.logDebug"build variables ${currentBuild.buildVariables}"
     }
 
     @SuppressWarnings('GroovyUntypedAccess')
     boolean checkNeededPlugins() {
         return new JenkinsPluginCheck(jenkinsContext)
+                .withLogger(this.logger)
                 .addInstalledPlugins()
                 .addNeededPluginList(neededPlugins)
                 .isPluginListInstalled()

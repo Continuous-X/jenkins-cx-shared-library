@@ -1,8 +1,13 @@
+import com.continuousx.jenkins.features.jenkins.globallib.FeatureJenkinsGlobalLibVersionBuilder
+import com.continuousx.jenkins.features.jenkins.globallib.FeatureJenkinsGlobalLibVersionConfig
+import com.continuousx.jenkins.features.jenkins.globallib.FeatureJenkinsGlobalLibVersionImpl
 import com.continuousx.jenkins.logger.LogLevelType
+import com.continuousx.jenkins.logger.PipelineLogger
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildBuilder
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildConfig
 import com.continuousx.jenkins.pipelines.mavenbuild.PipelineMavenBuildImpl
 import com.continuousx.utils.github.BranchExpressionChecker
+import sun.rmi.runtime.Log
 
 def call(final PipelineMavenBuildConfig pipelineConfig) {
 
@@ -21,7 +26,22 @@ def call(final PipelineMavenBuildConfig pipelineConfig) {
             stage('Init') {
                 steps {
                     script {
-                        pipelineConfig.logLevelType == LogLevelType.DEBUG ? log.debug("start pipeline ${pipelineConfig.type}") : ''
+                        FeatureJenkinsGlobalLibVersionImpl featureJenkinsGlobalLibVersion = new FeatureJenkinsGlobalLibVersionBuilder(delegate)
+                                .withFeatureConfig(new FeatureJenkinsGlobalLibVersionConfig())
+                                .build()
+                        featureJenkinsGlobalLibVersion.runFeature()
+                    }
+                }
+            }
+
+            stage('host scan') {
+                when {
+                    expression { pipelineMavenBuild.stageScanHost.getStageConfig().isActive() }
+                    expression { BranchExpressionChecker.checkBranchExpression(pipelineMavenBuild.stageScanHost.getStageConfig().getAllowedBranch(), env.GIT_BRANCH) }
+                }
+                steps {
+                    script {
+                        pipelineMavenBuild.stageScanHost.runStage()
                     }
                 }
             }
