@@ -42,7 +42,7 @@ jobs:
       - id: gh_release
         name: Release
         uses: softprops/action-gh-release@v1
-        if: github.ref == 'refs/heads/master2'
+        if: github.ref == 'refs/heads/master'
         with:
           body_path: RELEASE.md
           draft: false
