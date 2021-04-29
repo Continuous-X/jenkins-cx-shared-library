@@ -1,0 +1,33 @@
+version: 2
+registries:
+  maven-repository-maven-pkg-github-com-continuous-x-jenkins-cx:
+    type: maven-repository
+    url: https://maven.pkg.github.com/Continuous-X/jenkins-cx/
+    username: mikeschmid71@googlemail.com
+    password: "${{secrets.MAVEN_REPOSITORY_MAVEN_PKG_GITHUB_COM_CONTINUOUS_X_JENKINS_CX_PASSWORD}}"
+
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 99
+  target-branch: master
+  ignore:
+  - dependency-name: net.bytebuddy:byte-buddy
+    versions:
+    - 1.10.19
+    - 1.10.21
+    - 1.10.22
+  - dependency-name: org.codehaus.gmavenplus:gmavenplus-plugin
+    versions:
+    - 1.12.1
+  - dependency-name: org.codehaus.groovy:groovy-all
+    versions:
+    - 2.4.21
+  commit-message:
+    prefix: fix
+    prefix-development: chore
+    include: scope
+  registries:
+  - maven-repository-maven-pkg-github-com-continuous-x-jenkins-cx
